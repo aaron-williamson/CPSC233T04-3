@@ -25,8 +25,8 @@ public class Ent_Enemy extends Ent_Movable{
 			}
 		}
 		
-		int difx=target.xpos-this.xpos;
-		int dify=target.ypos-this.ypos;
+		int difx=target.getX()-xpos;
+		int dify=target.getY()-ypos;
 		
 		//if we need to move both horizontally and vertically, choose one randomly
 		if(difx!=0 && dify!=0){

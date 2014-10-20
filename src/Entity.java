@@ -1,29 +1,54 @@
 public class Entity{
-	String getClassID(){return "base_entity";} //a unique identifier for this entity type
+	public String getClassID(){return "base_entity";} //a unique identifier for this entity type
 
-	String debuggraphic(){return "E";} //character to draw for the debug graphics
-	boolean isPassable(){return true;} //can other ents walk ontop of this ent
+	public String debuggraphic(){return "E";} //character to draw for the debug graphics
+	public boolean isPassable(){return true;} //can other ents walk ontop of this ent
 
-	int xpos;
-	int ypos;
+	private int xpos;
+	private int ypos;
 	boolean passable=true;
 	
-	void setPos(int x,int y){
+	/** 
+	 * Set the entity position
+	 * @param x
+	 * @param y
+	 */
+	public void setPos(int x,int y){
 		xpos=x;
 		ypos=y;
 	};
 	
-	void think(){
+	/**
+	 * Get the entity x pos
+	 * @return xpos
+	 */
+	public int getX(){
+		return xpos;
+	}
+	
+	/**
+	 * Get the entity y pos
+	 * @return ypos
+	 */
+	public int getY(){
+		return ypos;
+	}
+	
+	public void think(){
 		
 	};
 	
-	void onCollide(Entity ent){
+	public void onCollide(Entity ent){
 		
 	};
 	
-	//get the distance between this ent and another ent
-	double distance(Entity ent){
-		return Math.sqrt(Math.pow(xpos-ent.xpos,2)+Math.pow(ypos-ent.ypos,2));
+	/**
+	 * Get the distance between this entity and another
+	 * @param ent the other entity
+	 * @return distance between ents
+	 */
+	public double distance(Entity ent){
+		return Math.sqrt(Math.pow(xpos-ent.getX(),2)+Math.pow(ypos-ent.getY(),2));
 	};
 	
 };

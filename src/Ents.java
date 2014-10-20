@@ -66,7 +66,7 @@ public class Ents{
 	public static boolean isEntInPos(int x,int y){
 		Entity[] entsarray=Ents.getAll();
 		for(int i=0;i<entsarray.length;i++){
-			if(entsarray[i].xpos==x && entsarray[i].ypos==y){
+			if(entsarray[i].getX()==x && entsarray[i].getY()==y){
 				return true;
 			}
 		}
@@ -82,7 +82,7 @@ public class Ents{
 	public static Entity getEntInPos(int x,int y){
 		Entity[] entsarray=Ents.getAll();
 		for(int i=0;i<entsarray.length;i++){
-			if(entsarray[i].xpos==x && entsarray[i].ypos==y){
+			if(entsarray[i].getX()==x && entsarray[i].getY()==y){
 				return entsarray[i];
 			}
 		}

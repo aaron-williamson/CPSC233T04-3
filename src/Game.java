@@ -1,12 +1,20 @@
 import java.util.Scanner;
 
-public class Game extends Entity{
+public class Game{
 	public static String endmessage="Undefined game over condition";
 	public static boolean endgame=false;
 	public static MapMakerV1 rpgmap=new MapMakerV1();
 	
 	public static Scanner in=new Scanner(System.in);
 	public static String playername="NONAME";
+	
+	public static void update(){
+		//draw debug graphics
+		DebugGraphics.printall(rpgmap);
+		
+		//Have the entities think
+		Ents.allThink();
+	}
 	
 	public static void main(String[] args){
 		System.out.println("lets start the game!");
@@ -42,11 +50,7 @@ public class Game extends Entity{
 		//main game loop
 		while(!endgame){
 			
-			//draw debug graphics
-			DebugGraphics.printall(rpgmap);
-			
-			//Have the entities think
-			Ents.allThink();
+			update();
 		}
 		
 		in.close();
