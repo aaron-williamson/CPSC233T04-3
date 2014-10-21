@@ -1,16 +1,16 @@
 import java.util.Scanner;
 
 public class Ent_Player extends Ent_Movable{
-	String getClassID(){return "player";}
+	public String getClassID(){return "player";}
 	
-	String debuggraphic(){return "P";}
+	public String debuggraphic(){return "P";}
 	
 	//lose the game if something runs into the player
-	void onCollide(Entity ent){
+	public void onCollide(Entity ent){
 		Game.loseGame();
 	};
 	
-	void think(){
+	public void think(){
 		boolean needmove=true;
 
 		

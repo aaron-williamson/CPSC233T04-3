@@ -1,16 +1,16 @@
 import java.util.Random;
 
 public class Ent_Enemy extends Ent_Movable{
-	String getClassID(){return "enemy";}
+	public String getClassID(){return "enemy";}
 	
-	String debuggraphic(){return "E";}
+	public String debuggraphic(){return "E";}
 	
 	//lose the game if the player runs into an enemy
-	void onCollide(Entity ent){
+	public void onCollide(Entity ent){
 		Game.loseGame();
 	};
 	
-	void think(){
+	public void think(){
 		//super cheap 'ai' here
 		
 		//get the nearest player
@@ -25,8 +25,8 @@ public class Ent_Enemy extends Ent_Movable{
 			}
 		}
 		
-		int difx=target.getX()-xpos;
-		int dify=target.getY()-ypos;
+		int difx=target.getX()-this.getX();
+		int dify=target.getY()-this.getY();
 		
 		//if we need to move both horizontally and vertically, choose one randomly
 		if(difx!=0 && dify!=0){

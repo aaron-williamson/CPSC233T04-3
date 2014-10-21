@@ -1,8 +1,8 @@
 public class Ent_Goal extends Entity{
-	String getClassID(){return "goal";}
-	String debuggraphic(){return "G";}
+	public String getClassID(){return "goal";}
+	public String debuggraphic(){return "G";}
 	
-	void onCollide(Entity ent){
+	public void onCollide(Entity ent){
 		Game.winGame();
 	};
 };
