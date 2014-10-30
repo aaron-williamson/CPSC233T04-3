@@ -1,9 +1,9 @@
 public class Ent_Movable extends Entity{
-	String getClassID(){return "movable_entity";}
+	public String getClassID(){return "movable_entity";}
 	
-	String debuggraphic(){return "M";}
+	public String debuggraphic(){return "M";}
 	
-	boolean moveTo(int x,int y,boolean ... verbose){
+	public boolean moveTo(int x,int y,boolean ... verbose){
 		boolean domove=false;
 		
 		if(Game.rpgmap.isPassable(x,y)){
@@ -29,17 +29,17 @@ public class Ent_Movable extends Entity{
 		}
 	};
 	
-	boolean moveUp(boolean ... verbose){
-		return moveTo(xpos,ypos-1,verbose);
+	public boolean moveUp(boolean ... verbose){
+		return moveTo(this.getX(),this.getY()-1,verbose);
 	};
-	boolean moveDown(boolean ... verbose){
-		return moveTo(xpos,ypos+1,verbose);
+	public boolean moveDown(boolean ... verbose){
+		return moveTo(this.getX(),this.getY()+1,verbose);
 	};
-	boolean moveLeft(boolean ... verbose){
-		return moveTo(xpos-1,ypos,verbose);
+	public boolean moveLeft(boolean ... verbose){
+		return moveTo(this.getX()-1,this.getY(),verbose);
 	};
-	boolean moveRight(boolean ... verbose){
-		return moveTo(xpos+1,ypos,verbose);
+	public boolean moveRight(boolean ... verbose){
+		return moveTo(this.getX()+1,this.getY(),verbose);
 	};
 	
 };

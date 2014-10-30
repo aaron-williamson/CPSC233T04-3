@@ -29,7 +29,7 @@ public class DebugGraphics {
 
 		for(int i=0;i<entsarray.length;i++){
 			Entity ent=entsarray[i];
-			printbuffer[ent.getY()][ent.getX()]=ent.debuggraphic();
+			printbuffer[ent.ypos][ent.xpos]=ent.debuggraphic();
 		}
 		
 		//super cheap way to clear screen for demo

@@ -3,22 +3,15 @@ import java.util.List;
 import java.util.ArrayList;
 //this is mostly entity utility functions
 public class Ents{
-	private static List<Entity> entitylist=new ArrayList<Entity>();
+	public static List<Entity> entitylist=new ArrayList<Entity>();
 	
-	/**
-	 * returns an array of all entities in the ent manager.
-	 * @return Entity[] containing all ents
-	 */
+	//get an array of all entities
 	public static Entity[] getAll(){
 		Entity[] entsarray=new Entity[1];
 		return entitylist.toArray(entsarray);
 	}
 	
-	/**
-	 * Returns the number of entities of a given classid
-	 * @param classid classid you want to count
-	 * @return number of ents
-	 */
+	//this function returns the amount of entities with a given classid
 	public static int countByClass(String classid){
 		int n=0;
 		int size=entitylist.size();
@@ -31,11 +24,7 @@ public class Ents{
 		return n;
 	}
 	
-	/**
-	 * Returns all of the entities of a given classid
-	 * @param classid classid of entities you want
-	 * @return Entity[] containing entities of class classid
-	 */
+	//this function returns all entities of a specified class id
 	public static Entity[] getByClass(String classid){
 		Entity[] entsarray=new Entity[countByClass(classid)];
 		int size=entitylist.size();
@@ -49,49 +38,35 @@ public class Ents{
 		return entsarray;
 	}
 	
-	/**
-	 * Add and entity to the entity manager, do this for any entity you make.
-	 * @param ent entity to add
-	 */
+	//add an entity to the entity array
 	public static void addEnt(Entity ent){
 		entitylist.add(ent); 
 	}
 	
-	/**
-	 * Returns true if there is an entity in the position, false otherwise
-	 * @param x x pos
-	 * @param y y pos
-	 * @return boolean
-	 */
+	//returns true if there is any entity in pos (x,y)
 	public static boolean isEntInPos(int x,int y){
 		Entity[] entsarray=Ents.getAll();
 		for(int i=0;i<entsarray.length;i++){
-			if(entsarray[i].getX()==x && entsarray[i].getY()==y){
+			if(entsarray[i].xpos==x && entsarray[i].ypos==y){
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	/**
-	 * Gets the entity in pos x,y. If no entity in pos, returns null
-	 * @param x x pos
-	 * @param y y pos
-	 * @return Entity or null
-	 */
+	//get Entity in pos (x,y)
+	//can use getEntInPos(x,y)!=null instead of isEntInPos(x,y)
 	public static Entity getEntInPos(int x,int y){
 		Entity[] entsarray=Ents.getAll();
 		for(int i=0;i<entsarray.length;i++){
-			if(entsarray[i].getX()==x && entsarray[i].getY()==y){
+			if(entsarray[i].xpos==x && entsarray[i].ypos==y){
 				return entsarray[i];
 			}
 		}
 		return null;
 	}
 	
-	/**
-	 * Calls Entity.think() for all entities in the entity manager.
-	 */
+	//calls think() on all entities
 	public static void allThink(){
 		Entity[] entsarray=Ents.getAll();
 		for(int i=0;i<entsarray.length;i++){
