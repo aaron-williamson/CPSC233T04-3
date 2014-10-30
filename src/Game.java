@@ -67,4 +67,5 @@ public class Game{
 		endmessage="Congrats, "+playername+"\nThe winner is You!";
 		endgame=true;
 	}
+	//Begins combat
 };

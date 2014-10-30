@@ -2,15 +2,7 @@ import java.util.List;
 
 public class CombatV2
 {
-	public void turn()
-	{
+	public void beginCombat() {
 
 	}
-
-	public int attack(Player attacker)
-	{
-
-	}
-
-	
 }
