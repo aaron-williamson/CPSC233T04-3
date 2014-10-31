@@ -1,47 +1,4 @@
-public class Entity{
-	public String getClassID(){return "base_entity";} //a unique identifier for this entity type
-
-	public String debuggraphic(){return "E";} //character to draw for the debug graphics
-	public boolean isPassable(){return true;} //can other ents walk ontop of this ent
-
-	private int xpos;
-	private int ypos;
-	boolean passable=true;
-	
-	/** 
-	 * Set the entity position
-	 * @param x
-	 * @param y
-	 */
-	public void setPos(int x,int y){
-		xpos=x;
-		ypos=y;
-	};
-	
-	/**
-	 * Get the entity x pos
-	 * @return xpos
-	 */
-	public int getX(){
-		return xpos;
-	}
-	
-	/**
-	 * Get the entity y pos
-	 * @return ypos
-	 */
-	public int getY(){
-		return ypos;
-	}
-	
-	public void think(){
-		
-	};
-	
-	public void onCollide(Entity ent){
-		
-	};
-
+public class Ent_Combat extends Ent_Movable {
 	private int entEND = 5;
 	private int entSTR = 5;
 	private int entLCK = 5;
@@ -49,18 +6,6 @@ public class Entity{
 	private int entHIT = (80 + (entLCK / 2)) - 1;
 	private int entCRIT = entLCK - 1;
 	
-	/**
-	 * Get the distance between this entity and another
-	 * @param ent the other entity
-	 * @return distance between ents
-	 */
-	public double distance(Entity ent){
-		return Math.sqrt(Math.pow(xpos-ent.getX(),2)+Math.pow(ypos-ent.getY(),2));
-	};
-
-	// Combat stuff from here onward
-
-
 	/**
 	 * Getter Function for entEND (Endurance stat)
 	 * 
@@ -116,6 +61,33 @@ public class Entity{
 	}
 
 	/**
+	 * Setter Function for entEND (Endurance stat)
+	 * 
+	 * @param endurance the player's endurance stat
+	 */
+	public void setEntEND(int endurance) {
+		entEND = endurance;
+	}
+
+	/**
+	 * Getter Function for entSTR (Strength stat)
+	 * 
+	 * @param strength the player's strength stat
+	 */
+	public void setEntSTR(int strength) {
+		entSTR = strength;
+	}
+
+	/**
+	 *  Function for entLCK (Luck stat)
+	 * 
+	 * @param luck the player's luck stat
+	 */
+	public void setEntLCK(int luck) {
+		entLCK = luck;
+	}
+
+	/**
 	 * Setter funciton for entHP (Health stat)
 	 *
 	 * @param health the value health should be set to
@@ -123,5 +95,22 @@ public class Entity{
 	public void setEntHP(int health) {
 		entHP = health;
 	}
-	
-};
+
+	/**
+	 * Setter function for entHIT (Hit chance stat)
+	 * 
+	 * @param hitChance the player's hit chance stat
+	 */
+	public void setEntHIT(int hitChance) {
+		entHIT = hitChance;
+	}
+
+	/**
+	 * Setter function for entCRIT (Critical hit chance stat)
+	 * 
+	 * @param critical the player's critical hit chance stat
+	 */
+	public void setEntCRIT(int critical) {
+		entCRIT = critical;
+	}
+}

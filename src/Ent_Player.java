@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Ent_Player extends Ent_Movable{
+public class Ent_Player extends Ent_Combat{
 	public String getClassID(){return "player";}
 	
 	public String debuggraphic(){return "P";}
@@ -40,10 +40,16 @@ public class Ent_Player extends Ent_Movable{
 	}
 
 	// Player stats for combat
-	private int entEND = 10;
-	private int entSTR = 15;
-	private int entLCK = 5;
-	private int entHP = entEND * 10;
-	private int entHIT = (80 + (entLCK / 2)) - 1;
-	private int entCRIT = entLCK - 1;
-};
+
+	/**
+	 * Default constructor sets all of the players stats
+	 */
+	public Ent_Player() {
+		setEntEND(10);
+		setEntSTR(15);
+		setEntLCK(5);
+		setEntHP(getEntEND() * 10);
+		setEntHIT((80 + (getEntLCK() / 2)) - 1);
+		setEntCRIT(getEntLCK() - 1);
+	}
+}
