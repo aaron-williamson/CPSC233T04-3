@@ -111,4 +111,13 @@ public class Ent_Enemy extends Ent_Movable{
 	public int getEntCRIT() {
 		return this.entCRIT;
 	}
+
+	/**
+	 * Setter funciton for entHP (Health stat)
+	 *
+	 * @param health the value health should be set to
+	 */
+	public void setEntHP(int health) {
+		this.entHP = health;
+	}
 };
