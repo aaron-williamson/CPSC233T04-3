@@ -35,6 +35,7 @@ public class Game{
 		//add a player
 		Ent_Player player=new Ent_Player();
 		player.setPos(1,rpgmap.mapheight-2);
+		player.setName(playername);
 		Ents.addEnt(player);
 		
 		//add a goal to the bottom right corner

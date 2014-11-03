@@ -1,6 +1,8 @@
 public class Entity{
 	public String getClassID(){return "base_entity";} //a unique identifier for this entity type
 
+	public String getName(){return "name";}
+
 	public String debuggraphic(){return "E";} //character to draw for the debug graphics
 	public boolean isPassable(){return true;} //can other ents walk ontop of this ent
 

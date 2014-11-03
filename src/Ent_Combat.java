@@ -5,6 +5,13 @@ public class Ent_Combat extends Ent_Movable {
 	private int entHP = entEND * 10;
 	private int entHIT = (80 + (entLCK / 2)) - 1;
 	private int entCRIT = entLCK - 1;
+	private int entBlock = 0;
+	private boolean isDead = false;
+	private String name;
+
+	public void turn() {
+
+	}
 	
 	/**
 	 * Getter Function for entEND (Endurance stat)
@@ -112,5 +119,59 @@ public class Ent_Combat extends Ent_Movable {
 	 */
 	public void setEntCRIT(int critical) {
 		entCRIT = critical;
+	}
+
+	/**
+	 * Getter function for isAlive (Whether or not the entity is alive)
+	 *
+	 * @return isAlive the life status of this entity
+	 */
+	public boolean getIsAlive() {
+		return isAlive;
+	}
+
+	/**
+	 * Setter function for isAlive (Whether or not the entity is alive)
+	 *
+	 * @param alive specifies whether or not the entity is alive
+	 */
+	public void setIsAlive(boolean alive) {
+		isAlive = alive;
+	}
+
+	/**
+	 * Setter function for name (Entities name)
+	 *
+	 * @param aName the desired name
+	 */
+	public void setName(String aName) {
+		name = aName;
+	}
+
+	/**
+	 * Getter function for Name (Entities name)
+	 *
+	 * @return name the entities name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Setter function for entBlock (Entities blocking)
+	 *
+	 * @param block the desired block value
+	 */
+	public void setEntBlock(int block) {
+		entBlock = block;
+	}
+
+	/**
+	 * Getter function for entBlock (Entities blocking)
+	 *
+	 * @return entBlock the entities name
+	 */
+	public String getEntBlock() {
+		return entBlock;
 	}
 }

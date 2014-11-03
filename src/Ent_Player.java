@@ -7,7 +7,7 @@ public class Ent_Player extends Ent_Combat{
 	
 	//lose the game if something runs into the player
 	public void onCollide(Entity ent){
-		CombatV2.beginCombat();
+		CombatV2.beginCombat(this, ent);
 	};
 
 	//lose the game if the player dies
@@ -51,5 +51,27 @@ public class Ent_Player extends Ent_Combat{
 		setEntHP(getEntEND() * 10);
 		setEntHIT((80 + (getEntLCK() / 2)) - 1);
 		setEntCRIT(getEntLCK() - 1);
+		setName("Player");
+	}
+
+	public void turn(Entity enemy) {
+		this.setBlock(0);
+
+		String playerCommand;
+
+		System.out.println("What would you like to do?");
+		playerCommand = Game.in.nextLine();
+
+		if (playerCommand.equals("attack") || playerCommand.equals("Attack") || playerCommand.equals("a")) {
+			CombatV2.attack(this, enemy);
+		}
+
+		else if (playerCommand.equals("defend") || playerCommand.equals("Defend") || playerCommand.equals("d")) {
+			CombatV2.defend(this);
+		}
+
+		else {
+			System.out.println("That input is invalid. Turn is void.");
+		}
 	}
 }

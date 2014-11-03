@@ -1,134 +1,136 @@
-import java.util.List;
+import java.util.Random;
 
 public class CombatV2
 {
-	public void beginCombat() {
+	private Random rand = new Random();
 
+	private boolean isCrit(Entity ent) {
+		boolean criticalHit = false;
+
+		int crit = rand.nextInt(100);
+
+		if (crit <= ent.getEntCRIT()) {
+			criticalHit = true;
+			System.out.print("CRITICAL HIT! ");
+		}
+
+		return criticalHit;
 	}
 
-	public void attack() {
-		// Check first to see if the attack hits
-		int attackHit = rand.nextInt(100);
+	private boolean isHit(Entity ent) {
+		boolean entHit = false;
 
-		// If the player hits
-		if (attackHit <= playerHitChance)
+		int hit = rand.nextInt(100);
+
+		if (hit <= ent.getEntHIT())
+			entHit = true;
+
+		return entHit;
+	}
+
+	private int damage(Entity ent) {
+		int damageDealt;
+		if (isCrit(ent))
+			damageDealt = 2 * (ent.getEntSTR() + rand.nextInt(10 + (2 * (ent.getEntLCK() / 2))));
+		else
+			damageDealt = ent.getEntSTR() + rand.nextInt(10 + (2 * (ent.getEntLCK() / 2)));
+
+		return damageDealt;
+	}
+
+	public void attack(Entity attacker, Entity defender) {
+
+		// If the attack hits
+		if (isHit(attacker))
 		{
-			// Determine if it was a critical hit
-			int criticalHit = rand.nextInt(100);
-			// If it's a critical hit
-			if (criticalHit <= playerCritChance)
-			{
-				// Calculate player's damage dealt
-				int damageDealt = 2 * (playerSTR + rand.nextInt(10 + (2 * (playerLCK / 2))));
+			// Get the damage dealt (including whether or not it is a critical hit)
+			int damageDealt = damage(attacker);
 
-				// If the bandit isn't blocking do damage to health
-				if (banditBlock == 0)
+			// If the defender is not blocking do damage to health
+			if (defender.getEntBlock() == 0)
+			{
+				defender.setEntHP(defender.getEntHP() - damageDealt);
+				System.out.println(attacker.getName() + " dealt " + damageDealt + " damage to " + defender.getName() + "!");
+				// Check to see if attacker killed the defender
+				if (defender.getEntHP() > 0)
 				{
-					banditHealth = banditHealth - damageDealt;
-					System.out.println("CRITICAL HIT! You dealt " + damageDealt + " damage to the bandit!");
-					// Check to see if player killed the bandit
-					if (banditHealth > 0)
-					{
-						System.out.println("His health is now: " + banditHealth + "\n");
-					}
-					else
-					{
-						System.out.println("You have killed the bandit!\n");
-						banditDead = true;
-					}
+					System.out.println(defender.getName() + "'s health is now: " + defender.getEntHP() + "\n");
 				}
-				// If the bandit is blocking calculate blocked damage and damage/dealt
 				else
 				{
-					banditBlock = banditBlock - damageDealt;
-
-					// If the bandit blocked the entire attack
-					if (banditBlock >= 0)
-					{
-						System.out.println("The bandit blocked your attack!");
-						System.out.println("His HP is still: " + banditHealth + "\n");
-					}
-					// If the attack wasn't blocked take the extra damage from the bandit's health
-					else
-					{
-						banditHealth = banditHealth + banditBlock;
-						System.out.println("CRITICAL HIT! You broke the bandit's block and did " + -banditBlock + " damage to him!");
-						// Check to see if player killed the bandit
-						if (banditHealth > 0)
-						{
-							System.out.println("His health is now: " + banditHealth + "\n");
-						}
-						else
-						{
-							System.out.println("You have killed the bandit!\n");
-							banditDead = true;
-						}
-					}
+					System.out.println(attacker.getName() + " killed " + defender.getName() + "!\n");
+					defender.setIsAlive(false);
 				}
 			}
-			// If it's not a critical hit
+
+			// If the defender is blocking calculate blocked damage and damage/dealt
 			else
 			{
-				// Calculate player's damage dealt
-				int damageDealt = playerSTR + rand.nextInt(10 + (2 * (playerLCK / 2)));
+				boolean blockBroken;
 
-				// If the bandit isn't blocking do damage to health
-				if (banditBlock == 0)
+				if (damageDealt >= defender.getEntBlock())
+					blockBroken = false;
+				else
+					blockBroken = true;
+
+				// If the defender blocked the entire attack
+				if (!blockBroken)
 				{
-					banditHealth = banditHealth - damageDealt;
-					System.out.println("You dealt " + damageDealt + " damage to the bandit!");
-					// Check to see if player killed the bandit
-					if (banditHealth > 0)
-					{
-						System.out.println("His health is now: " + banditHealth + "\n");
-					}
-					else
-					{
-						System.out.println("You have killed the bandit!\n");
-						banditDead = true;
-					}
+					System.out.println(defender.getName() + " blocked " + attacker.getName() + "'s' attack!");
+					System.out.println(defender.getName() + "'s' HP is still: " + defender.getEntHP() + "\n");
 				}
-				// If the bandit is blocking calculate blocked damage and damage/dealt
+				// If the attack wasn't blocked take the extra damage from the defenders's health
 				else
 				{
-					banditBlock = banditBlock - damageDealt;
+					defender.setEntHP((defender.getEntHP() + defender.getEntBlock()) - damageDealt);
+					System.out.println(attacker.getName() + " broke " + defender.getName() + "'s' block and did " + -(defender.getEntBlock() - damageDealt) + " damage to " + defender.getName() + "!");
 
-					// If the bandit blocked the entire attack
-					if (banditBlock >= 0)
+					// Check to see if attacker killed the defender
+					if (defender.getEntHP() > 0)
 					{
-						System.out.println("The bandit blocked your attack!");
-						System.out.println("His HP is still: " + banditHealth + "\n");
+						System.out.println("His health is now: " + defender.getEntHP() + "\n");
 					}
-					// If the attack wasn't blocked take the extra damage from the bandit's health
 					else
 					{
-						banditHealth = banditHealth + banditBlock;
-						System.out.println("You broke the bandit's block and did " + -banditBlock + " damage to him!");
-						// Check to see if player killed the bandit
-						if (banditHealth > 0)
-						{
-							System.out.println("His health is now: " + banditHealth + "\n");
-						}
-						else
-						{
-							System.out.println("You have killed the bandit!\n");
-							banditDead = true;
-						}
+						System.out.println(attacker.getName() + " killed " + defender.getName() + "!\n");
+						defender.setIsAlive = false;
 					}
 				}
 			}
 		}
 
-		// If the player missed
+		// If the attacker missed
 		else
 		{
-			System.out.println("You missed!");
-			System.out.println("The bandit's health is still: " + banditHealth + "\n");
+			System.out.println(attacker.getName() + " missed!");
+			System.out.println(defender.getName() + "'s health is still: " + defender.getEntHP() + "\n");
 		}
 	}
 
-	public void defend() {
-		playerBlock = 5 + ((playerSTR + playerEND)/2);
-		System.out.println("You will defend the next physical attack for up to " + playerBlock + " damage!\n");
+	public void defend(Entity ent) {
+		int entBlock = 5 + ((ent.getEntSTR() + ent.getEntEND())/2);
+
+		ent.setBlock(entBlock);
+
+		System.out.println("You will defend the next physical attack for up to " + entBlock + " damage!\n");
+	}
+
+	
+
+	public void beginCombat(Entity player, Entity enemy) {
+		// Clear the screen
+		System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+
+		int turnNum = 1;
+		System.out.println("Prepare yourself " + player.getName() + "You have begun combat with " + enemy.getName());
+
+		while (player.getIsAlive() && enemy.getIsAlive()) {
+			System.out.println("Your HP: " + player.getEntHP());
+			System.out.println(enemy.getName() + "'s HP: " + enemy.getHP());
+			player.turn(enemy);
+			if (enemy.getIsAlive())
+				enemy.turn(player, turnNum);
+			turnNum++;
+		}
 	}
 }
