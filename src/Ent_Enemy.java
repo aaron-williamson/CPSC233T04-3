@@ -6,8 +6,8 @@ public class Ent_Enemy extends Ent_Combat{
 	public String debuggraphic(){return "E";}
 	
 	//lose the game if the player runs into an enemy
-	public void onCollide(Ent_Combat enemy){
-		beginCombat(enemy);
+	public void onCollide(Ent_Combat enemy) {
+		Game.beginCombat();
 	};
 	
 	public void think(){
@@ -54,19 +54,19 @@ public class Ent_Enemy extends Ent_Combat{
 	 * Default Contructor sets the combat stats for Ent_Enemy
 	 */
 	public Ent_Enemy() {
-		setEntEND(5);
-		setEntSTR(5);
-		setEntLCK(1);
-		setEntHP(getEntEND() * 10);
-		setEntHIT((80 + (getEntLCK() / 2)) - 1);
-		setEntCRIT(getEntLCK() - 1);
-		setName("Bandit");
+		entEND = 5;
+		entSTR = 5;
+		entLCK = 1;
+		entHP = entEND * 10;
+		entHIT = (80 + (entLCK / 2)) - 1;
+		entCRIT = entLCK - 1;
+		name = "Bandit";
 	}
 
 	public void turn(Ent_Combat enemy, int turnNum) {
 		Random rand = new Random();
 
-		setEntBlock(0);
+		entBlock = 0;
 
 		// If it's the first turn attack
 		if (turnNum == 1) {
@@ -78,7 +78,7 @@ public class Ent_Enemy extends Ent_Combat{
 			int banditAction = rand.nextInt(5);
 
 			// If at or above 50% HP, there is an 80% chance ent_enemy will attack
-			if (this.getEntHP() >= (this.getEntHP() / 2)) {
+			if (entHP >= (entHP / 2)) {
 				if (banditAction > 0) {
 					attack(enemy);
 				}

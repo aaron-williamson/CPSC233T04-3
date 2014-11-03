@@ -35,8 +35,9 @@ public class Game{
 		//add a player
 		Ent_Player player=new Ent_Player();
 		player.setPos(1,rpgmap.mapheight-2);
-		player.setName(playername);
+		player.name = playername;
 		Ents.addEnt(player);
+		CombatMGR.addCombat(player);
 		
 		//add a goal to the bottom right corner
 		Ent_Goal goal=new Ent_Goal();
@@ -47,6 +48,7 @@ public class Game{
 		Ent_Enemy enemy=new Ent_Enemy();
 		enemy.setPos(1,1);
 		Ents.addEnt(enemy);
+		CombatMGR.addCombat(enemy);
 		
 		//main game loop
 		while(!endgame){
@@ -69,4 +71,28 @@ public class Game{
 		endgame=true;
 	}
 	//Begins combat
+
+	public static void beginCombat() {
+		Ent_Combat[] combatEnts = CombatMGR.getAll();
+		endgame = true;
+		// Clear the screen
+		System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+
+		int turnNum = 1;
+		System.out.println("Prepare yourself " + combatEnts[0].name + "You have begun combat with " + combatEnts[1].name);
+
+		while (combatEnts[0].isAlive && combatEnts[1].isAlive) {
+			System.out.println("Your HP: " + combatEnts[0].entHP);
+			System.out.println(combatEnts[1].name + "'s HP: " + combatEnts[1].entHP);
+			combatEnts[0].turn(combatEnts[1], turnNum);
+			if (combatEnts[1].isAlive)
+				combatEnts[1].turn(combatEnts[0], turnNum);
+			turnNum++;
+		}
+
+		if (combatEnts[0].isAlive)
+			winGame();
+		else 
+			loseGame();
+	}
 };

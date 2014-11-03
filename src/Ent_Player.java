@@ -7,8 +7,8 @@ public class Ent_Player extends Ent_Combat{
 	
 	//lose the game if something runs into the player
 	public void onCollide(Ent_Combat enemy){
-		beginCombat(enemy);
-	};
+		Game.beginCombat();
+	}
 
 	//lose the game if the player dies
 	public void isDead(){
@@ -45,17 +45,17 @@ public class Ent_Player extends Ent_Combat{
 	 * Default constructor sets all of the players stats
 	 */
 	public Ent_Player() {
-		setEntEND(10);
-		setEntSTR(15);
-		setEntLCK(5);
-		setEntHP(getEntEND() * 10);
-		setEntHIT((80 + (getEntLCK() / 2)) - 1);
-		setEntCRIT(getEntLCK() - 1);
-		setName("Player");
+		entEND = 10;
+		entSTR = 15;
+		entLCK = 5;
+		entHP = entEND * 10;
+		entHIT = (80 + (entLCK / 2)) - 1;
+		entCRIT = entLCK - 1;
+		name = "Player";
 	}
 
 	public void turn(Ent_Combat enemy, int turnNum) {
-		this.setBlock(0);
+		entBlock = 0;
 
 		String playerCommand;
 
