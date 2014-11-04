@@ -8,6 +8,7 @@ public class Ent_Movable extends Entity{
 		
 		if(Game.rpgmap.isPassable(x,y)){
 			Entity collidedent=Ents.getEntInPos(x,y);
+			System.out.print(collidedent);
 			if(collidedent!=null){
 				collidedent.onCollide(this);
 				if(collidedent.isPassable()){

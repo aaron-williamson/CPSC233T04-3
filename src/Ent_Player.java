@@ -6,8 +6,9 @@ public class Ent_Player extends Ent_Combat{
 	public String debuggraphic(){return "P";}
 	
 	//lose the game if something runs into the player
-	public void onCollide(Ent_Combat enemy){
+	public void onCollide(Entity enemy){
 		Game.beginCombat();
+		System.out.println("TEST");
 	}
 
 	//lose the game if the player dies

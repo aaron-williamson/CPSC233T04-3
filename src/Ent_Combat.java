@@ -68,7 +68,7 @@ public class Ent_Combat extends Ent_Movable {
 				defender.entHP = defender.entHP - damageDealt;
 				System.out.println(name + " dealt " + damageDealt + " damage to " + defender.name + "!");
 				// Check to see if attacker killed the defender
-				if (defender.getEntHP() > 0)
+				if (defender.entHP > 0)
 				{
 					System.out.println(defender.name + "'s health is now: " + defender.entHP + "\n");
 				}

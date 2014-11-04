@@ -1,13 +1,14 @@
 import java.util.Random;
 
-public class Ent_Enemy extends Ent_Combat{
+public class Ent_Enemy extends Ent_Combat {
 	public String getClassID(){return "enemy";}
 	
 	public String debuggraphic(){return "E";}
 	
 	//lose the game if the player runs into an enemy
-	public void onCollide(Ent_Combat enemy) {
+	public void onCollide(Entity enemy) {
 		Game.beginCombat();
+		System.out.println("TEST");
 	};
 	
 	public void think(){

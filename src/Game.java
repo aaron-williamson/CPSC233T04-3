@@ -4,16 +4,35 @@ public class Game{
 	public static String endmessage="Undefined game over condition";
 	public static boolean endgame=false;
 	public static MapMakerV1 rpgmap=new MapMakerV1();
+	public static boolean inCombat = false;
 	
 	public static Scanner in=new Scanner(System.in);
 	public static String playername="NONAME";
+	public static int turnNum = 1;
 	
 	public static void update(){
-		//draw debug graphics
-		DebugGraphics.printall(rpgmap);
-		
-		//Have the entities think
-		Ents.allThink();
+		if (!inCombat) {
+			//draw debug graphics
+			DebugGraphics.printall(rpgmap);
+			
+			//Have the entities think
+			Ents.allThink();
+		}
+		else {
+			Ent_Combat[] combatEnts = CombatMGR.getAll();
+
+			System.out.println("Your HP: " + combatEnts[0].entHP);
+			System.out.println(combatEnts[1].name + "'s HP: " + combatEnts[1].entHP);
+			combatEnts[0].turn(combatEnts[1], turnNum);
+			if (combatEnts[1].isAlive)
+				combatEnts[1].turn(combatEnts[0], turnNum);
+			turnNum++;
+
+			if (!combatEnts[1].isAlive)
+				winGame();
+			else if (!combatEnts[0].isAlive)
+				loseGame();
+		}
 	}
 	
 	public static void main(String[] args){
@@ -73,26 +92,12 @@ public class Game{
 	//Begins combat
 
 	public static void beginCombat() {
+		inCombat = true;
 		Ent_Combat[] combatEnts = CombatMGR.getAll();
-		endgame = true;
 		// Clear the screen
 		System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
 		int turnNum = 1;
 		System.out.println("Prepare yourself " + combatEnts[0].name + "You have begun combat with " + combatEnts[1].name);
-
-		while (combatEnts[0].isAlive && combatEnts[1].isAlive) {
-			System.out.println("Your HP: " + combatEnts[0].entHP);
-			System.out.println(combatEnts[1].name + "'s HP: " + combatEnts[1].entHP);
-			combatEnts[0].turn(combatEnts[1], turnNum);
-			if (combatEnts[1].isAlive)
-				combatEnts[1].turn(combatEnts[0], turnNum);
-			turnNum++;
-		}
-
-		if (combatEnts[0].isAlive)
-			winGame();
-		else 
-			loseGame();
 	}
 };
