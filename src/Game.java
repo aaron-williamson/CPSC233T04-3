@@ -22,7 +22,7 @@ public class Game{
 			Ent_Combat[] combatEnts = CombatMGR.getAll();
 
 			System.out.println("Your HP: " + combatEnts[0].entHP);
-			System.out.println(combatEnts[1].name + "'s HP: " + combatEnts[1].entHP);
+			System.out.println(combatEnts[1].name + "'s HP: " + combatEnts[1].entHP + "\n");
 			combatEnts[0].turn(combatEnts[1], turnNum);
 			if (combatEnts[1].isAlive)
 				combatEnts[1].turn(combatEnts[0], turnNum);
@@ -36,7 +36,7 @@ public class Game{
 	}
 	
 	public static void main(String[] args){
-		System.out.println("lets start the game!");
+		System.out.println("Lets start the game!");
 		
 		//this is just for demo, so no input validation.
 		System.out.printf("What is your name? ");
@@ -98,6 +98,6 @@ public class Game{
 		System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
 		int turnNum = 1;
-		System.out.println("Prepare yourself " + combatEnts[0].name + "You have begun combat with " + combatEnts[1].name);
+		System.out.println("Prepare yourself, " + combatEnts[0].name + ", you have begun combat with: " + combatEnts[1].name + "!\n");
 	}
 };

@@ -8,7 +8,6 @@ public class Ent_Player extends Ent_Combat{
 	//lose the game if something runs into the player
 	public void onCollide(Entity enemy){
 		Game.beginCombat();
-		System.out.println("TEST");
 	}
 
 	//lose the game if the player dies
@@ -48,7 +47,7 @@ public class Ent_Player extends Ent_Combat{
 	public Ent_Player() {
 		entEND = 10;
 		entSTR = 15;
-		entLCK = 5;
+		entLCK = 10;
 		entHP = entEND * 10;
 		entHIT = (80 + (entLCK / 2)) - 1;
 		entCRIT = entLCK - 1;
@@ -60,7 +59,7 @@ public class Ent_Player extends Ent_Combat{
 
 		String playerCommand;
 
-		System.out.println("What would you like to do?");
+		System.out.println("Your turn!\nWhat would you like to do?");
 		playerCommand = Game.in.nextLine();
 
 		if (playerCommand.equals("attack") || playerCommand.equals("Attack") || playerCommand.equals("a")) {

@@ -84,7 +84,7 @@ public class Ent_Combat extends Ent_Movable {
 			{
 				boolean blockBroken;
 
-				if (damageDealt >= defender.entBlock)
+				if (damageDealt <= defender.entBlock)
 					blockBroken = false;
 				else
 					blockBroken = true;
@@ -92,20 +92,20 @@ public class Ent_Combat extends Ent_Movable {
 				// If the defender blocked the entire attack
 				if (!blockBroken)
 				{
-					System.out.println(defender.name + " blocked " + name + "'s' attack!");
-					System.out.println(defender.name + "'s' HP is still: " + defender.entHP + "\n");
+					System.out.println(defender.name + " blocked " + name + "'s attack!");
+					System.out.println(defender.name + "'s HP is still: " + defender.entHP + "\n");
 				}
 				// If the attack wasn't blocked take the extra damage from the defenders's health
 				else
 				{
-					entHP = (defender.entHP + defender.entBlock) - damageDealt;
-					System.out.println(name + " broke " + defender.name + "'s' block and did " + -(defender.entBlock - damageDealt) + " damage to "
+					defender.entHP = defender.entHP + (defender.entBlock - damageDealt);
+					System.out.println(name + " broke " + defender.name + "'s block and did " + -(defender.entBlock - damageDealt) + " damage to "
 						+ defender.name + "!");
 
 					// Check to see if attacker killed the defender
 					if (defender.entHP > 0)
 					{
-						System.out.println("His health is now: " + defender.entHP + "\n");
+						System.out.println(defender.name + "'s health is now: " + defender.entHP + "\n");
 					}
 					else
 					{
@@ -125,7 +125,7 @@ public class Ent_Combat extends Ent_Movable {
 	}
 
 	public void defend() {
-		entBlock = 5 + (entSTR + entEND/2);
+		entBlock = 5 + ((entSTR + entEND)/2);
 
 		System.out.println(name + " will defend the next physical attack for up to " + entBlock + " damage!\n");
 	}
