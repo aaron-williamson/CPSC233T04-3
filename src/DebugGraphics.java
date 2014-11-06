@@ -1,6 +1,6 @@
 public class DebugGraphics {
 	
-	static String[] Mapgraphics = {"Û" , " "};
+	static String[] Mapgraphics = {"X" , " "};
 	
 	public static void printmap(MapMakerV1 rpgmap){
 		for(int i = 0; i < rpgmap.mapheight; i++){
