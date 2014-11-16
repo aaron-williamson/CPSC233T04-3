@@ -1,12 +1,26 @@
-public class Entity{
-	public String getClassID(){return "base_entity";} //a unique identifier for this entity type
-
-	public String debuggraphic(){return "E";} //character to draw for the debug graphics
-	public boolean isPassable(){return true;} //can other ents walk ontop of this ent
-
+public abstract class Entity{
 	private int xpos;
 	private int ypos;
-	boolean passable=true;
+	
+	Entity(){
+		//add this entity to the game's entity manager
+		Game.getGame().getEntities().addEnt(this);
+	}
+	
+	/**
+	 * Gets a unique id for this entity type.
+	 * @return string of the id
+	 */
+	public abstract String getClassID();
+
+	public String debuggraphic(){return "E";} //character to draw for the debug graphics
+	
+	/**
+	 * Returns true if other entities can walk overtop of this one.
+	 * @return
+	 */
+	public boolean isPassable(){return true;}
+	
 	
 	/** 
 	 * Set the entity position
@@ -33,14 +47,22 @@ public class Entity{
 	public int getY(){
 		return ypos;
 	}
-	
+
+	/**
+	 * Called each update of the game loop
+	 */
 	public void think(){
 		
 	};
 	
+	/**
+	 * Called when another entity collides with this entity.
+	 * @param Entity that collided
+	 */
 	public void onCollide(Entity ent){
 		
 	};
+
 	
 	/**
 	 * Get the distance between this entity and another

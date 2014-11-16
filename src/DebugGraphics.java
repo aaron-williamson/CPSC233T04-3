@@ -2,7 +2,7 @@ public class DebugGraphics {
 	
 	static String[] Mapgraphics = {"X" , " "};
 	
-	public static void printmap(MapMakerV1 rpgmap){
+	public static void printmap(RPGMap rpgmap){
 		for(int i = 0; i < rpgmap.mapheight; i++){
 			for(int j = 0; j < rpgmap.mapwidth; j++){
 					System.out.print(Mapgraphics[rpgmap.mapGrid[i][j]]);
@@ -14,7 +14,7 @@ public class DebugGraphics {
 		}		
 	} 
 	
-	public static void printall(MapMakerV1 rpgmap){
+	public static void printall(RPGMap rpgmap){
 		String[][] printbuffer=new String[rpgmap.mapheight][rpgmap.mapwidth];
 		
 		//add the map to the print buffer
@@ -25,10 +25,10 @@ public class DebugGraphics {
 		}	
 		
 		//add the entities to the print buffer, overwriting the map graphics
-		Entity[] entsarray=Ents.getAll();
+		Entity[] entityArray=Game.getGame().getEntities().getAll();
 
-		for(int i=0;i<entsarray.length;i++){
-			Entity ent=entsarray[i];
+		for(int i=0;i<entityArray.length;i++){
+			Entity ent=entityArray[i];
 			printbuffer[ent.getY()][ent.getX()]=ent.debuggraphic();
 		}
 		

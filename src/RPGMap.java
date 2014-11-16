@@ -1,11 +1,16 @@
-public class MapMakerV1 {
+public class RPGMap {
 	
 	static String[] debuggraphics = {"X"," "};
 	static int mapwidth = 15;
 	static int mapheight = 11;
+	
 	int[][] mapGrid = new int [mapheight][mapwidth];
 	
-	void makeblankmap(){
+	RPGMap(){
+		makeblankmap();
+	}
+	
+	private void makeblankmap(){
 		for(int i = 0; i < mapheight ; i++){
 			for(int j = 0; j < mapwidth ; j++){
 				if(i == 0 || i == mapheight-1 || j == 0 || j == mapwidth-1){
@@ -17,7 +22,7 @@ public class MapMakerV1 {
 			}
 		}
 	}
-	void makerowmap(){
+	private void makerowmap(){
 		for(int i = 0; i < mapheight ; i++){
 			for(int j = 0; j < mapwidth ; j++){
 				if(i == 0 || i == mapheight-1 || j == 0 || j == mapwidth-1){
@@ -33,29 +38,13 @@ public class MapMakerV1 {
 		}
 	}
 	
-	void drawdebug(){
-		for (int i = 0; i < mapheight ; i++){
-			for(int j = 0; j < mapwidth ; j++){
-				System.out.print(debuggraphics[mapGrid[i][j]]);
-				if(j >= 10){
-					System.out.print("\n");
-				}
-			}
-		}
-
-	}
+	/**
+	 * Returns true if a position on the map is passable or not
+	 * @param x coordinate
+	 * @param y coordinate
+	 * @return boolean true if position on map is passable
+	 */
 	boolean isPassable(int x,int y){
 		return mapGrid[y][x]==1;
 	}
-
-	
-	/*public static void main (String[] args){
-		MapMakerV1 RPGmap = new MapMakerV1();
-		RPGmap.makerowmap();
-		
-		RPGmap.drawdebug();
-	
-	
-	
-	}*/
 }

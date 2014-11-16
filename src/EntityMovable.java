@@ -1,4 +1,4 @@
-public class Ent_Movable extends Entity{
+public class EntityMovable extends Entity{
 	public String getClassID(){return "movable_entity";}
 	
 	public String debuggraphic(){return "M";}
@@ -6,8 +6,8 @@ public class Ent_Movable extends Entity{
 	public boolean moveTo(int x,int y,boolean ... verbose){
 		boolean domove=false;
 		
-		if(Game.rpgmap.isPassable(x,y)){
-			Entity collidedent=Ents.getEntInPos(x,y);
+		if(Game.getGame().rpgmap.isPassable(x,y)){
+			Entity collidedent=Game.getGame().getEntities().getEntInPos(x,y);
 			if(collidedent!=null){
 				collidedent.onCollide(this);
 				if(collidedent.isPassable()){

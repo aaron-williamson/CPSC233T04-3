@@ -2,14 +2,14 @@ import java.util.List;
 
 import java.util.ArrayList;
 //this is mostly entity utility functions
-public class Ents{
-	private static List<Entity> entitylist=new ArrayList<Entity>();
+public class Entities{
+	private List<Entity> entitylist=new ArrayList<Entity>();
 	
 	/**
 	 * returns an array of all entities in the ent manager.
 	 * @return Entity[] containing all ents
 	 */
-	public static Entity[] getAll(){
+	public Entity[] getAll(){
 		Entity[] entsarray=new Entity[1];
 		return entitylist.toArray(entsarray);
 	}
@@ -19,7 +19,7 @@ public class Ents{
 	 * @param classid classid you want to count
 	 * @return number of ents
 	 */
-	public static int countByClass(String classid){
+	public int countByClass(String classid){
 		int n=0;
 		int size=entitylist.size();
 		
@@ -36,7 +36,7 @@ public class Ents{
 	 * @param classid classid of entities you want
 	 * @return Entity[] containing entities of class classid
 	 */
-	public static Entity[] getByClass(String classid){
+	public Entity[] getByClass(String classid){
 		Entity[] entsarray=new Entity[countByClass(classid)];
 		int size=entitylist.size();
 		for(int i=0;i<size;i++){
@@ -53,7 +53,7 @@ public class Ents{
 	 * Add and entity to the entity manager, do this for any entity you make.
 	 * @param ent entity to add
 	 */
-	public static void addEnt(Entity ent){
+	public void addEnt(Entity ent){
 		entitylist.add(ent); 
 	}
 	
@@ -63,8 +63,8 @@ public class Ents{
 	 * @param y y pos
 	 * @return boolean
 	 */
-	public static boolean isEntInPos(int x,int y){
-		Entity[] entsarray=Ents.getAll();
+	public boolean isEntInPos(int x,int y){
+		Entity[] entsarray=getAll();
 		for(int i=0;i<entsarray.length;i++){
 			if(entsarray[i].getX()==x && entsarray[i].getY()==y){
 				return true;
@@ -79,8 +79,8 @@ public class Ents{
 	 * @param y y pos
 	 * @return Entity or null
 	 */
-	public static Entity getEntInPos(int x,int y){
-		Entity[] entsarray=Ents.getAll();
+	public Entity getEntInPos(int x,int y){
+		Entity[] entsarray=getAll();
 		for(int i=0;i<entsarray.length;i++){
 			if(entsarray[i].getX()==x && entsarray[i].getY()==y){
 				return entsarray[i];
@@ -92,8 +92,8 @@ public class Ents{
 	/**
 	 * Calls Entity.think() for all entities in the entity manager.
 	 */
-	public static void allThink(){
-		Entity[] entsarray=Ents.getAll();
+	public void allThink(){
+		Entity[] entsarray=getAll();
 		for(int i=0;i<entsarray.length;i++){
 			entsarray[i].think();
 		}

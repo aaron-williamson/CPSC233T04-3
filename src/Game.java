@@ -1,69 +1,119 @@
 import java.util.Scanner;
 
-public class Game{
-	public static String endmessage="Undefined game over condition";
-	public static boolean endgame=false;
-	public static MapMakerV1 rpgmap=new MapMakerV1();
+import javax.swing.Timer;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Game implements ActionListener{
+	public static Game game;
+	public static int timerSpeed=1000;//delay in ms between game updates
 	
-	public static Scanner in=new Scanner(System.in);
-	public static String playername="NONAME";
+	public String endmessage="Undefined game over condition";
+	public boolean endgame=false;
+	public RPGMap rpgmap;
+	public RPGGUI gui;
+	public Entities entities;
 	
-	public static void update(){
-		//draw debug graphics
-		DebugGraphics.printall(rpgmap);
+	public Scanner in;
+	public String playername="NONAME";
+	
+	public Timer timer;
+	
+	Game(){
+		Game.game=this;
+		in=new Scanner(System.in);
 		
-		//Have the entities think
-		Ents.allThink();
-	}
-	
-	public static void main(String[] args){
 		System.out.println("lets start the game!");
 		
 		//this is just for demo, so no input validation.
 		System.out.printf("What is your name? ");
 		playername=in.nextLine();
-		System.out.printf("Would you like a blank(0) or rows(1) map? ");
-		String maptype=in.nextLine();
+		
+		//make the entity manager
+		entities=new Entities();
 		
 		//intialize the map
-		if(maptype.equals("1")){
-			rpgmap.makerowmap();
-		}else{
-			rpgmap.makeblankmap();
-		}
+		rpgmap=new RPGMap();
 		
 		//add a player
-		Ent_Player player=new Ent_Player();
-		player.setPos(1,rpgmap.mapheight-2);
-		Ents.addEnt(player);
+		EntityPlayer player=new EntityPlayer();
+		player.setPos(1,RPGMap.mapheight-2);
 		
 		//add a goal to the bottom right corner
-		Ent_Goal goal=new Ent_Goal();
-		goal.setPos(rpgmap.mapwidth-2,rpgmap.mapheight-2);
-		Ents.addEnt(goal);
+		EntityGoal goal=new EntityGoal();
+		goal.setPos(RPGMap.mapwidth-2,RPGMap.mapheight-2);
 		
 		//add an enemy
-		Ent_Enemy enemy=new Ent_Enemy();
+		EntityEnemy enemy=new EntityEnemy();
 		enemy.setPos(1,1);
-		Ents.addEnt(enemy);
 		
-		//main game loop
-		while(!endgame){
+		//make the gui
+		gui=new RPGGUI();
+		
+		//make the timer
+		timer=new Timer(Game.timerSpeed,(ActionListener)this);
+		timer.start();
+		
+	}
+	
+	public static Game getGame(){
+		return Game.game;
+	}
+	
+	/**
+	 * Gets the game's entity manager
+	 * @return
+	 */
+	public Entities getEntities(){
+		return entities;
+	}
+	
+	/**
+	 * Gets the game's GUI.
+	 * @return
+	 */
+	public RPGGUI getGUI(){
+		return gui;
+	}
+	
+	/**
+	 * The update function for the game, call it once to run a single frame
+	 */
+	public void update(){
+		if(!endgame){
+			//draw debug graphics
+			DebugGraphics.printall(rpgmap);
 			
-			update();
+			//Have the entities think
+			getEntities().allThink();
+		}else{
+			
+		}
+	}
+	
+	public static void main(String[] args){
+		Game.game=new Game();
+		
+		while(!Game.getGame().endgame){
+		//	Game.getGame().update();
 		}
 		
-		in.close();
-		
-		System.out.println(endmessage);
+		Game.getGame().in.close();
+		System.out.println(Game.getGame().endmessage);
 	}
+	
+	public void actionPerformed(ActionEvent event) {
+		Game.getGame().update();
+    }
+	
 	//ends the game, sets lose message
-	public static void loseGame(){
+	public void loseGame(){
 		endmessage=playername+" died a terrible death.";
 		endgame=true;
 	}
 	//ends the game, sets win message
-	public static void winGame(){
+	public void winGame(){
 		endmessage="Congrats, "+playername+"\nThe winner is You!";
 		endgame=true;
 	}
