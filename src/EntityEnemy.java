@@ -10,7 +10,7 @@ public class EntityEnemy extends EntityMovable{
 		Game.getGame().loseGame();
 	};
 	
-	public void think(){
+	public void think(long time){
 		//super cheap 'ai' here
 		
 		//get the nearest player

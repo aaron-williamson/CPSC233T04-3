@@ -8,7 +8,7 @@ public class EntityPlayer extends EntityMovable{
 		Game.getGame().loseGame();
 	};
 	
-	public void think(){
+	public void think(long time){
 		//I cant use a switch here, huah huah
 		if(Game.getGame().gui.isKeyDown(38)){
 			moveUp(false);

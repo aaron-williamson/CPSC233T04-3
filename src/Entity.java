@@ -59,7 +59,7 @@ public abstract class Entity{
 	/**
 	 * Called each update of the game loop
 	 */
-	public void think(){
+	public void think(long time){
 		
 	};
 	

@@ -95,6 +95,7 @@ public class Game implements ActionListener{
 			
 			//Have the entities think
 			getEntities().allThink();
+			getGUI().redrawMap();
 		}else{
 			
 		}

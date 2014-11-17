@@ -95,7 +95,7 @@ public class Entities{
 	public void allThink(){
 		Entity[] entsarray=getAll();
 		for(int i=0;i<entsarray.length;i++){
-			entsarray[i].think();
+			entsarray[i].think(0);
 		}
 	}
 };

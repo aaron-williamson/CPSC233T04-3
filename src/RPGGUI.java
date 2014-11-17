@@ -4,7 +4,6 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class RPGGUI extends JFrame implements KeyListener, ActionListener {
-	public static int timerSpeed=33;//redraw the gui on this interval
 	private static int mapPanelSizeOffset=180;
 	private static int defaultWidth=800;
 	private static int defaultHeight=600;
@@ -15,9 +14,6 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 	//private JLabel maplabel=new JLabel("<html>RPG Game of AWESOMENESS!!<br>Made by: T04-03<br>Press Space Bar to continue</html>",JLabel.CENTER);
 	private MapPanel mapPanel;
 	private boolean[] keyDownArray=new boolean[256];
-	
-	public Timer timer;
-	private String timerCommand="timer";
 	
     public RPGGUI() {
 		/*keyCodesDictionary[32]="Enter";
@@ -69,10 +65,6 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
         setVisible(true);
-        
-        timer=new Timer(RPGGUI.timerSpeed,(ActionListener)this);
-        timer.setActionCommand(timerCommand);
-		timer.start();
     }
     
     /**
@@ -113,15 +105,17 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 	
 	}
 	
+	/**
+	 * Redraws the map panel
+	 */
+	public void redrawMap(){
+		mapPanel.setSize(getSize().width,getSize().height-RPGGUI.mapPanelSizeOffset);
+		mapPanel.repaint();
+	}
+	
 	public void actionPerformed(ActionEvent event) {
 		String command=event.getActionCommand();
 				
-		if(command==timerCommand){
-			mapPanel.repaint();
-			mapPanel.setSize(getSize().width,getSize().height-RPGGUI.mapPanelSizeOffset);
-		}else{
-			//test code, buttons need to do stuff
-			printLine(">"+event.getActionCommand()+" pressed.");
-		}
+		printLine(">"+command+" pressed.");
     }
 }
