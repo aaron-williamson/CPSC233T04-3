@@ -3,14 +3,29 @@ import javax.swing.*;
 
 public class MapPanel extends JComponent{
 	public int tileSize=32;
-	static private String[] mapImagePaths = {"../img/water.png" ,"../img/grass.png"};
-	private Image[] mapImages=new Image[MapPanel.mapImagePaths.length];
+	private String[] mapImagePaths = {"../img/water.png" ,"../img/grass.png"};
+	private Image[] mapImages=new Image[mapImagePaths.length];
 	
 	MapPanel(){
-		//load all the images we'll need
-		for(int i=0;i<MapPanel.mapImagePaths.length;i++){
-			mapImages[i]=Toolkit.getDefaultToolkit().getImage(MapPanel.mapImagePaths[i]);
+		loadTileImages();
+	}
+	
+	/**
+	 * reload the tile images, use if you've changed the tileset
+	 */
+	public void loadTileImages(){
+		for(int i=0;i<mapImagePaths.length;i++){
+			mapImages[i]=Toolkit.getDefaultToolkit().getImage(mapImagePaths[i]);
 		}
+	}
+	
+	/**
+	 * Sets a specific tileid to a new image path, use if you want to change the tileset
+	 * @param tileId
+	 * @param str
+	 */
+	public void setTileImage(int tileId,String str){
+		mapImagePaths[tileId]=str;
 	}
 	
 	/**
