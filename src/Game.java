@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class Game implements ActionListener{
 	public static Game game;
-	public static int timerSpeed=300;//delay in ms between game updates
+	private static int timerSpeed=16;//delay in ms between game updates
 	
 	public String endmessage="Undefined game over condition";
 	public boolean endgame=false;
@@ -59,8 +59,20 @@ public class Game implements ActionListener{
 		
 	}
 	
+	/**
+	 * Get the game instance
+	 * @return
+	 */
 	public static Game getGame(){
 		return Game.game;
+	}
+	
+	/**
+	 * Get the timer speed of the game, I dont want anyone changing this after the game is started.
+	 * @return
+	 */
+	public int getTimerSpeed(){
+		return Game.timerSpeed;
 	}
 	
 	/**
