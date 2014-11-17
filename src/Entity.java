@@ -1,10 +1,14 @@
+import java.awt.*;
+
 public abstract class Entity{
 	private int xpos;
 	private int ypos;
+	private Image defaultImage;
 	
 	Entity(){
 		//add this entity to the game's entity manager
 		Game.getGame().getEntities().addEnt(this);
+		defaultImage=Toolkit.getDefaultToolkit().getImage("../img/entity.png");
 	}
 	
 	/**
@@ -12,6 +16,10 @@ public abstract class Entity{
 	 * @return string of the id
 	 */
 	public abstract String getClassID();
+	
+	public Image getImage(long timestamp){
+		return defaultImage;
+	}
 
 	public String debuggraphic(){return "E";} //character to draw for the debug graphics
 	

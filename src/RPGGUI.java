@@ -1,14 +1,23 @@
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 public class RPGGUI extends JFrame implements KeyListener, ActionListener {
+	public static int timerSpeed=33;//redraw the gui on this interval
+	private static int mapPanelSizeOffset=180;
+	private static int defaultWidth=800;
+	private static int defaultHeight=600;
 	private JTextArea textbox=new JTextArea();
 	private int buttonCount=7;
 	private int textboxMaxLines=6;
 	private JButton buttons[]= new JButton[buttonCount];
-	private JLabel maplabel=new JLabel("<html>RPG Game of AWESOMENESS!!<br>Made by: T04-03<br>Press Space Bar to continue</html>",JLabel.CENTER);
+	//private JLabel maplabel=new JLabel("<html>RPG Game of AWESOMENESS!!<br>Made by: T04-03<br>Press Space Bar to continue</html>",JLabel.CENTER);
+	private MapPanel mapPanel;
 	private boolean[] keyDownArray=new boolean[256];
+	
+	public Timer timer;
+	private String timerCommand="timer";
 	
     public RPGGUI() {
 		/*keyCodesDictionary[32]="Enter";
@@ -29,8 +38,10 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 		JPanel p = new JPanel();
 		JPanel p2 = new JPanel(new BorderLayout());
 		
-		maplabel.setFont(maplabel.getFont().deriveFont(42f));
-		add(maplabel);
+		//add the map panel
+		mapPanel=new MapPanel();
+		mapPanel.setSize(RPGGUI.defaultWidth,RPGGUI.defaultHeight-RPGGUI.mapPanelSizeOffset);
+		add(mapPanel,BorderLayout.SOUTH);
 		
 		//set up the combat log textbox
 		textbox.setText(">Combat Log");
@@ -53,11 +64,15 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 		p2.add(p,BorderLayout.SOUTH);
 		add(p2,BorderLayout.SOUTH);
 		
-		setPreferredSize(new Dimension(800, 600));
+		setPreferredSize(new Dimension(RPGGUI.defaultWidth,RPGGUI.defaultHeight));
 		
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
         setVisible(true);
+        
+        timer=new Timer(RPGGUI.timerSpeed,(ActionListener)this);
+        timer.setActionCommand(timerCommand);
+		timer.start();
     }
     
     /**
@@ -99,7 +114,14 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent event) {
-		//test code, buttons need to do stuff
-		printLine(">"+event.getActionCommand()+" pressed.");
+		String command=event.getActionCommand();
+				
+		if(command==timerCommand){
+			mapPanel.repaint();
+			mapPanel.setSize(getSize().width,getSize().height-RPGGUI.mapPanelSizeOffset);
+		}else{
+			//test code, buttons need to do stuff
+			printLine(">"+event.getActionCommand()+" pressed.");
+		}
     }
 }

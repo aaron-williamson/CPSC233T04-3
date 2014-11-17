@@ -1,10 +1,10 @@
 public class RPGMap {
 	
 	static String[] debuggraphics = {"X"," "};
-	static int mapwidth = 15;
-	static int mapheight = 11;
+	static public int mapwidth = 32;
+	static public int mapheight = 11;
 	
-	int[][] mapGrid = new int [mapheight][mapwidth];
+	public int[][] mapGrid = new int [mapheight][mapwidth];
 	
 	RPGMap(){
 		makeblankmap();

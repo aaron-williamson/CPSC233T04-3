@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class Game implements ActionListener{
 	public static Game game;
-	public static int timerSpeed=1000;//delay in ms between game updates
+	public static int timerSpeed=300;//delay in ms between game updates
 	
 	public String endmessage="Undefined game over condition";
 	public boolean endgame=false;
@@ -45,8 +45,8 @@ public class Game implements ActionListener{
 		goal.setPos(RPGMap.mapwidth-2,RPGMap.mapheight-2);
 		
 		//add an enemy
-		EntityEnemy enemy=new EntityEnemy();
-		enemy.setPos(1,1);
+		//EntityEnemy enemy=new EntityEnemy();
+		//enemy.setPos(1,1);
 		
 		//make the gui
 		gui=new RPGGUI();
@@ -75,6 +75,14 @@ public class Game implements ActionListener{
 	 */
 	public RPGGUI getGUI(){
 		return gui;
+	}
+	
+	/**
+	 * Gets the game's Map.
+	 * @return RPGMAP map
+	 */
+	public RPGMap getMap(){
+		return rpgmap;
 	}
 	
 	/**

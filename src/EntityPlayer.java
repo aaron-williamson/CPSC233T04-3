@@ -16,7 +16,7 @@ public class EntityPlayer extends EntityMovable{
 			moveRight(false);
 		}else if(Game.getGame().gui.isKeyDown(37)){
 			moveLeft();
-		}else if(Game.getGame().gui.isKeyDown(39)){
+		}else if(Game.getGame().gui.isKeyDown(40)){
 			moveDown();
 		}
 	}
