@@ -4,6 +4,7 @@ public abstract class Entity{
 	private int xpos;
 	private int ypos;
 	private Image defaultImage;
+	private long nextThink=-1;
 	
 	Entity(){
 		//add this entity to the game's entity manager
@@ -17,7 +18,11 @@ public abstract class Entity{
 	 */
 	public abstract String getClassID();
 	
-	public Image getImage(long timestamp){
+	/**
+	 * get the image to display for this entity
+	 * @return Image
+	 */
+	public Image getImage(){
 		return defaultImage;
 	}
 
@@ -62,6 +67,22 @@ public abstract class Entity{
 	public void think(long time){
 		
 	};
+	
+	/**
+	 * set the next time that this entity should think
+	 * @param long nextTime
+	 */
+	public void setNextThink(long nextTime){
+		nextThink=nextTime;
+	}
+	
+	/**
+	 * get the next time that this entity should think
+	 * @return long
+	 */
+	public long getNextThink(){
+		return nextThink;
+	}
 	
 	/**
 	 * Called when another entity collides with this entity.

@@ -20,6 +20,8 @@ public class Game implements ActionListener{
 	
 	public Timer timer;
 	
+	private long time=0;
+	
 	Game(){
 		Game.game=this;
 		in=new Scanner(System.in);
@@ -86,10 +88,19 @@ public class Game implements ActionListener{
 	}
 	
 	/**
+	 * gets the current time in milliseconds that the game has run
+	 * @return long time
+	 */
+	public long getTime(){
+		return time;
+	}
+	
+	/**
 	 * The update function for the game, call it once to run a single frame
 	 */
 	public void update(){
 		if(!endgame){
+			time=(time+Game.timerSpeed)%(Long.MAX_VALUE-Game.timerSpeed-1);
 			//draw debug graphics
 			DebugGraphics.printall(rpgmap);
 			

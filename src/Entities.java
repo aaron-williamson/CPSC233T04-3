@@ -93,9 +93,12 @@ public class Entities{
 	 * Calls Entity.think() for all entities in the entity manager.
 	 */
 	public void allThink(){
-		Entity[] entsarray=getAll();
-		for(int i=0;i<entsarray.length;i++){
-			entsarray[i].think(0);
+		Entity[] entityArray=getAll();
+		long time=Game.getGame().getTime();
+		for(int i=0;i<entityArray.length;i++){
+			if(entityArray[i].getNextThink()<=time){
+				entityArray[i].think(time);
+			}
 		}
 	}
 };
