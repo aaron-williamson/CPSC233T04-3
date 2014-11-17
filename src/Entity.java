@@ -1,8 +1,8 @@
 import java.awt.*;
 
 public abstract class Entity{
-	private int xpos;
-	private int ypos;
+	private int xPos;
+	private int yPos;
 	private Image defaultImage;
 	private long nextThink=-1;
 	
@@ -41,8 +41,8 @@ public abstract class Entity{
 	 * @param y
 	 */
 	public void setPos(int x,int y){
-		xpos=x;
-		ypos=y;
+		xPos=x;
+		yPos=y;
 	};
 	
 	/**
@@ -50,7 +50,7 @@ public abstract class Entity{
 	 * @return xpos
 	 */
 	public int getX(){
-		return xpos;
+		return xPos;
 	}
 	
 	/**
@@ -58,7 +58,7 @@ public abstract class Entity{
 	 * @return ypos
 	 */
 	public int getY(){
-		return ypos;
+		return yPos;
 	}
 
 	/**
@@ -99,7 +99,7 @@ public abstract class Entity{
 	 * @return distance between ents
 	 */
 	public double distance(Entity ent){
-		return Math.sqrt(Math.pow(xpos-ent.getX(),2)+Math.pow(ypos-ent.getY(),2));
+		return Math.sqrt(Math.pow(getX()-ent.getX(),2)+Math.pow(getY()-ent.getY(),2));
 	};
 	
 };

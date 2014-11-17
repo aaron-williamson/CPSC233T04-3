@@ -1,5 +1,9 @@
 public class EntityMovable extends Entity{
 	public String getClassID(){return "movable_entity";}
+	private int moveSpeed=10;
+	private boolean moving=false;
+	private int oldX;//used for interpolation of entity position
+	private int oldY;
 	
 	public boolean moveTo(int x,int y){
 		boolean domove=false;
@@ -17,13 +21,64 @@ public class EntityMovable extends Entity{
 		}
 		
 		if(domove){
+			oldX=getX();
+			oldY=getY();
 			setPos(x,y);
-			setNextThink(Game.getGame().getTime()+Game.getGame().getTimerSpeed()*10);
+			moving=true;
+			setNextThink(Game.getGame().getTime()+Game.getGame().getTimerSpeed()*getMoveSpeed());
 			return true;
 		}else{
 			return false;
 		}
 	};
+	
+	/**
+	 * Sets the Entity's movement speed,
+	 * it takes the entity this many game ticks to move from one tile to the next
+	 * @param speed
+	 */
+	public void setMoveSpeed(int speed){
+		if(speed>0){
+			moveSpeed=speed;
+		}
+	}
+	
+	/**
+	 * get the old x pos before this entity last moved
+	 * @return
+	 */
+	public int getOldX(){
+		return oldX;
+	}
+	
+	/**
+	 * get the old y pos before this entity last moved
+	 * @return
+	 */
+	public int getOldY(){
+		return oldY;
+	}
+	
+	/**
+	 * get the Entity's movement speed.
+	 * it takes the entity this many game ticks to move from one tile to the next
+	 * @return
+	 */
+	public int getMoveSpeed(){
+		return moveSpeed;
+	}
+	
+	/**
+	 * get weather the entity is currently moving or not
+	 * @return
+	 */
+	public boolean isMoving(){
+		return moving;
+	}
+	
+	public void think(long time){
+		moving=false;
+	}
 	
 	public boolean moveUp(){
 		return moveTo(this.getX(),this.getY()-1);
