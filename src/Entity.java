@@ -91,7 +91,15 @@ public abstract class Entity{
 	public void onCollide(Entity ent){
 		
 	};
-
+	
+	/**
+	 * get weather the entity can move
+	 * @return
+	 */
+	public boolean isMovable(){
+		return false;
+	}
+	
 	
 	/**
 	 * Get the distance between this entity and another

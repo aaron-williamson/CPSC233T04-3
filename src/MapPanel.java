@@ -57,7 +57,12 @@ public class MapPanel extends JComponent{
 			int xpos=entityArray[i].getX()*tileSize;
 			int ypos=entityArray[i].getY()*tileSize;
 			Image img=entityArray[i].getImage();
-			//g.drawString(entityArray[i].debuggraphic(),xpos-offsetX,ypos-offsetY);
+			
+			if(entityArray[i].isMovable()){
+				EntityMovable movable=(EntityMovable)entityArray[i];
+				xpos+=movable.getInterpolationX()*tileSize;
+				ypos+=movable.getInterpolationY()*tileSize;
+			}
 			g.drawImage(img,xpos-offsetX,ypos-offsetY,tileSize,tileSize,this);
 		}
 	}
@@ -74,6 +79,10 @@ public class MapPanel extends JComponent{
 		if(player!=null){
 			offsetX=player.getX()*tileSize-getSize().width/2+tileSize/2;
 			offsetY=player.getY()*tileSize-getSize().height/2+tileSize/2;
+			
+			EntityMovable movable=(EntityMovable)player;
+			offsetX+=movable.getInterpolationX()*tileSize;
+			offsetY+=movable.getInterpolationY()*tileSize;
 		}
 		
 		drawMap(g,offsetX,offsetY);

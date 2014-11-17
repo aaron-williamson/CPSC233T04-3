@@ -1,6 +1,6 @@
 public class EntityMovable extends Entity{
 	public String getClassID(){return "movable_entity";}
-	private int moveSpeed=10;
+	private int moveSpeed=4;
 	private boolean moving=false;
 	private int oldX;//used for interpolation of entity position
 	private int oldY;
@@ -47,7 +47,7 @@ public class EntityMovable extends Entity{
 	 * get the old x pos before this entity last moved
 	 * @return
 	 */
-	public int getOldX(){
+	private int getOldX(){
 		return oldX;
 	}
 	
@@ -55,8 +55,40 @@ public class EntityMovable extends Entity{
 	 * get the old y pos before this entity last moved
 	 * @return
 	 */
-	public int getOldY(){
+	private int getOldY(){
 		return oldY;
+	}
+	
+	/**
+	 * get the interpolation value between 0 and 1 for movement interpolation
+	 * @return
+	 */
+	private double getMovementInterp(){
+		return (double)(Game.getGame().getTime()-getNextThink())/(double)(Game.getGame().getTimerSpeed()*getMoveSpeed());
+	}
+	
+	/**
+	 * get the Y interpolation offset
+	 * @return
+	 */
+	public double getInterpolationY(){
+		if(isMoving()){
+			return -(getOldY()-getY())*getMovementInterp();
+		}else{
+			return 0;
+		}
+	}
+	
+	/**
+	 * get the x interpolation offset
+	 * @return
+	 */
+	public double getInterpolationX(){
+			if(isMoving()){
+				return -(getOldX()-getX())*getMovementInterp();
+			}else{
+				return 0;
+			}
 	}
 	
 	/**
@@ -66,6 +98,14 @@ public class EntityMovable extends Entity{
 	 */
 	public int getMoveSpeed(){
 		return moveSpeed;
+	}
+	
+	/**
+	 * get weather the entity can move,
+	 * @return
+	 */
+	public boolean isMovable(){
+		return true;
 	}
 	
 	/**
