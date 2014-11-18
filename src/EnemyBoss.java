@@ -11,4 +11,7 @@ public class EnemyBoss extends EntityEnemy {
 		combatCriticalMessage="HIS ATTACK WAS JUST TOO AWESOME!!!!!!";
 		combatDefendMessage="JUST STANDS THERE BEING SO AWESOME THAT YOUR ATTACKS DO LESS DAMAGE.";
 	}
+
+	public void think(long time){
+	}
 }

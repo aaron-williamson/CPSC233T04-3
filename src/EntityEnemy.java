@@ -52,6 +52,5 @@ public class EntityEnemy extends EntityCombat{
 		}else if(dify<0){
 			this.moveUp();
 		}
-		
 	}
 };

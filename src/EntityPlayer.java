@@ -23,9 +23,9 @@ public class EntityPlayer extends EntityCombat{
 	
 	public EntityPlayer(int xcoord, int ycoord){
 		super(xcoord, ycoord);
-		combatEndurance=8;
-		combatStrength=8;
-		combatLuck=8;
+		combatEndurance=10;
+		combatStrength=15;
+		combatLuck=10;
 		combatXP=8;
 		
 		combatAttackMessage="attacks with her sword!";
