@@ -78,36 +78,6 @@ public class MapPanel extends JComponent{
 	}
 	
 	/**
-	 * Draws the health bar for a EntityCombat
-	 * @param g
-	 * @param xpos
-	 * @param ypos
-	 * @param width
-	 * @param height
-	 * @param entity
-	 */
-	private void drawHealthBar(Graphics g,int xpos,int ypos,int width,int height,EntityCombat entity){
-		double r=(double)entity.getHealth()/(double)entity.getMaxHealth();
-		
-		g.setColor(Color.BLACK);
-		g.fillRect(xpos,ypos,width,height);
-		
-		xpos+=2;
-		ypos+=2;
-		width-=4;
-		height-=4;
-		
-		g.setColor(new Color((float)0.8,(float)0.0,(float)0.0));
-		g.fillRect(xpos, ypos, (int)(r*width), height);
-		
-		g.setColor(new Color((float)0.3,(float)0.0,(float)0.0));
-		g.fillRect(xpos+(int)(width*r), ypos, (int)(width*(1-r)), height);
-		
-		g.setColor(Color.WHITE);
-		g.drawString(entity.getHealth()+"/"+entity.getMaxHealth(), xpos+2, ypos+10);
-	}
-	
-	/**
 	 * darkens the entire map
 	 */
 	private void drawBlackMask(Graphics g){
@@ -138,8 +108,8 @@ public class MapPanel extends JComponent{
 		
 		if(Game.getGame().getCombat().isInCombat()){
 			drawBlackMask(g);
-			drawHealthBar(g,16,getHeight()-24,getWidth()/3,16,(EntityCombat)Game.getGame().getCombat().getPlayer());
-			drawHealthBar(g,getWidth()-32-getWidth()/3,getHeight()-24,getWidth()/3,16,(EntityCombat)Game.getGame().getCombat().getEnemy());
+			Game.getGame().getCombat().getPlayer().drawHealthBar(g,16,getHeight()-24,getWidth()/3,16,(float)0.9,(float)0.0,(float)0.9);
+			Game.getGame().getCombat().getEnemy().drawHealthBar(g,getWidth()-32-getWidth()/3,getHeight()-24,getWidth()/3,16,(float)0.9,(float)0.0,(float)0.0);
 		}
 	}
 	

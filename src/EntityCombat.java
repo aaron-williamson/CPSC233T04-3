@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.Random;
 
 public class EntityCombat extends EntityMovable{
@@ -163,12 +165,10 @@ public class EntityCombat extends EntityMovable{
 	}
 	
 	/**
-	 * Called to do the turn of the entity, the ai for combat goes in here
+	 * attacks or defend, the most basic enemy ai
 	 * @param defender
 	 */
-	public void doTurn(EntityCombat defender){
-		combatDefense=0;
-		
+	public void attackOrDefend(EntityCombat defender){
 		double defendChance=0.2;
 		if(getHealth()<getMaxHealth()/2){
 			defendChance*=2;
@@ -179,6 +179,49 @@ public class EntityCombat extends EntityMovable{
 		}else{
 			attack(defender);
 		}
+	}
+	
+	/**
+	 * Called to do the turn of the entity, the ai for combat goes in here
+	 * @param defender
+	 */
+	public void doTurn(EntityCombat defender){
+		//reset defense to zero incase the last move was defend
+		combatDefense=0;
 		
+		attackOrDefend(defender);
+	}
+	
+	/**
+	 * Draws the health bar for a EntityCombat
+	 * @param g
+	 * @param xpos
+	 * @param ypos
+	 * @param width
+	 * @param height
+	 * @param entity
+	 * @param color R
+	 * @param color G
+	 * @param color B
+	 */
+	public void drawHealthBar(Graphics g,int xpos,int ypos,int width,int height, float colR, float colG, float colB){
+		double r=(double)getHealth()/(double)getMaxHealth();
+		
+		g.setColor(Color.BLACK);
+		g.fillRect(xpos,ypos,width,height);
+		
+		xpos+=2;
+		ypos+=2;
+		width-=4;
+		height-=4;
+		
+		g.setColor(new Color((float)(colR*0.5),(float)(colG*0.5),(float)(colB*0.5)));
+		g.fillRect(xpos,ypos,width,height);
+		
+		g.setColor(new Color(colR,colG,colB));
+		g.fillRect(xpos, ypos, (int)(r*width), height);
+		
+		g.setColor(Color.WHITE);
+		g.drawString(getHealth()+"/"+getMaxHealth(), xpos+2, ypos+10);
 	}
 };

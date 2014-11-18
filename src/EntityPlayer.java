@@ -36,6 +36,11 @@ public class EntityPlayer extends EntityCombat{
 		setHealth(getMaxHealth());
 	}
 	
+	public EntityPlayer(String name, int xcoord, int ycoord){
+		this(xcoord,ycoord);
+		playerName=name;
+	}
+	
 	public Image getImage(){
 		Image displayImage=animImage[1][0];
 		if(isMoving()){
