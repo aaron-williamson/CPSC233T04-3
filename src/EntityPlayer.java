@@ -1,6 +1,6 @@
 import java.awt.Toolkit;
-import java.util.Random;
 import java.awt.*;
+import javax.swing.JOptionPane;
 
 public class EntityPlayer extends EntityCombat{
 	private String playerName="Player";
@@ -23,6 +23,9 @@ public class EntityPlayer extends EntityCombat{
 	
 	public EntityPlayer(int xcoord, int ycoord){
 		super(xcoord, ycoord);
+		
+		setMoveSpeed(6);
+		
 		combatEndurance=10;
 		combatStrength=15;
 		combatLuck=10;
@@ -34,11 +37,8 @@ public class EntityPlayer extends EntityCombat{
 		combatDefendMessage="raises her shield.";
 		
 		setHealth(getMaxHealth());
-	}
-	
-	public EntityPlayer(String name, int xcoord, int ycoord){
-		this(xcoord,ycoord);
-		playerName=name;
+		
+		playerName=JOptionPane.showInputDialog(null,"What is your name?",Game.title,JOptionPane.QUESTION_MESSAGE);
 	}
 	
 	public Image getImage(){
@@ -81,10 +81,10 @@ public class EntityPlayer extends EntityCombat{
 		if(Game.getGame().getGUI().isKeyDown(38) || Game.getGame().getGUI().isKeyDown(87)){
 			moveUp();
 			animationDirection=0;
-		}else if(Game.getGame().getGUI().isKeyDown(39) || Game.getGame().getGUI().isKeyDown(65)){
+		}else if(Game.getGame().getGUI().isKeyDown(39) || Game.getGame().getGUI().isKeyDown(68)){
 			moveRight();
 			animationDirection=2;
-		}else if(Game.getGame().getGUI().isKeyDown(37) || Game.getGame().getGUI().isKeyDown(68)){
+		}else if(Game.getGame().getGUI().isKeyDown(37) || Game.getGame().getGUI().isKeyDown(65)){
 			moveLeft();
 			animationDirection=3;
 		}else if(Game.getGame().getGUI().isKeyDown(40) || Game.getGame().getGUI().isKeyDown(83)){

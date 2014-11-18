@@ -1,12 +1,11 @@
-import java.util.Scanner;
-
 import javax.swing.Timer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Game implements ActionListener{
-	public static Game game;
+	private static Game game;
+	public static String title="Temple Raider"; 
 	private static int timerSpeed=16;//delay in ms between game updates
 	
 	private String endmessage="Undefined game over condition";
@@ -50,7 +49,7 @@ public class Game implements ActionListener{
 		EntityGoal goal=new EntityGoal(RPGMap.mapwidth-2,RPGMap.mapheight-2);
 		
 		//add an enemy
-		EntityEnemy enemy=new EnemyMummy(1,1);
+		EntityEnemy enemy=new EnemyWolf(1,1);
 	}
 	
 	/**

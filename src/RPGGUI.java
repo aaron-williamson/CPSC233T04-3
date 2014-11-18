@@ -16,15 +16,7 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 	private boolean[] keyDownArray=new boolean[256];
 	
     public RPGGUI() {
-		/*keyCodesDictionary[32]="Enter";
-		keyCodesDictionary[38]="North";
-		keyCodesDictionary[87]="North";
-		keyCodesDictionary[39]="East";
-		keyCodesDictionary[68]="East";
-		keyCodesDictionary[40]="South";
-		keyCodesDictionary[83]="South";
-		keyCodesDictionary[37]="West";
-		keyCodesDictionary[65]="West";*/
+    	super(Game.title);
 		
 		//add key listener, make frame focusable so it works properly
 		this.addKeyListener(this);
