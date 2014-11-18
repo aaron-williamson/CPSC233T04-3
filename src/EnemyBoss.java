@@ -1,12 +1,10 @@
 public class EnemyBoss extends EntityEnemy {
 	public EnemyBoss() {
-		entEND = 20;
-		entSTR = 30;
-		entLCK = 15;
-		entHP = entEND * 10;
-		entHIT = (80 + (entLCK / 2)) - 1;
-		entCRIT = entLCK - 1;
-		name = "BIG BAD BOSS";
-		givesExp = 9001;
+		combatEndurance = 20;
+		combatStrength = 30;
+		combatLuck = 15;
+		setHealth(getMaxHealth());
+		combatName = "BIG BAD BOSS";
+		combatXP = 9001;
 	}
 }
