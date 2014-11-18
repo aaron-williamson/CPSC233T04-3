@@ -14,6 +14,8 @@ public class Game implements ActionListener{
 	public RPGMap rpgmap;
 	public RPGGUI gui;
 	public Entities entities;
+
+	private boolean inCombat = false;
 	
 	public Scanner in;
 	public String playername="NONAME";
@@ -40,6 +42,7 @@ public class Game implements ActionListener{
 		
 		//add a player
 		EntityPlayer player=new EntityPlayer();
+		EntityPlayer.name = playername;
 		player.setPos(1,RPGMap.mapheight-2);
 		
 		//add a goal to the bottom right corner
@@ -47,8 +50,8 @@ public class Game implements ActionListener{
 		goal.setPos(RPGMap.mapwidth-2,RPGMap.mapheight-2);
 		
 		//add an enemy
-		//EntityEnemy enemy=new EntityEnemy();
-		//enemy.setPos(1,1);
+		EntityEnemy enemy=new EntityEnemy();
+		enemy.setPos(1,1);
 		
 		//make the gui
 		gui=new RPGGUI();
@@ -112,13 +115,34 @@ public class Game implements ActionListener{
 	 */
 	public void update(){
 		if(!endgame){
-			time=(time+Game.timerSpeed)%(Long.MAX_VALUE-Game.timerSpeed-1);
-			//draw debug graphics
-			DebugGraphics.printall(rpgmap);
-			
-			//Have the entities think
-			getEntities().allThink();
-			getGUI().redrawMap();
+			if (!inCombat) {
+				time=(time+Game.timerSpeed)%(Long.MAX_VALUE-Game.timerSpeed-1);
+				//draw debug graphics
+				//DebugGraphics.printall(rpgmap);
+				
+				//Have the entities think
+				getEntities().allThink();
+				getGUI().redrawMap();
+			}
+			else {
+				EntityCombat[] combatEnts = CombatMGR.getAll();
+
+				System.out.println("Your HP: " + combatEnts[0].entHP);
+				System.out.println(combatEnts[1].name + "'s HP: " + combatEnts[1].entHP + "\n");
+
+				// Player's turn
+				combatEnts[0].turn(combatEnts[1], turnNum);
+
+				// If enemy is dead, do enemy's turn
+				if (combatEnts[1].isAlive)
+					combatEnts[1].turn(combatEnts[0], turnNum);
+				turnNum++;
+
+				if (!combatEnts[1].isAlive)
+					removeEntity(combatEnts);
+				else if (!combatEnts[0].isAlive)
+					loseGame();
+			}
 		}else{
 			
 		}
@@ -148,5 +172,9 @@ public class Game implements ActionListener{
 	public void winGame(){
 		endmessage="Congrats, "+playername+"\nThe winner is You!";
 		endgame=true;
+	}
+
+	public void beginCombat() {
+		inCombat = true;
 	}
 };
