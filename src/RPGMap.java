@@ -44,7 +44,7 @@ public class RPGMap {
 	 * @param y coordinate
 	 * @return boolean true if position on map is passable
 	 */
-	boolean isPassable(int x,int y){
+	public boolean isPassable(int x,int y){
 		return mapGrid[y][x]==1;
 	}
 }

@@ -49,7 +49,7 @@ public class Game implements ActionListener{
 		EntityGoal goal=new EntityGoal(RPGMap.mapwidth-2,RPGMap.mapheight-2);
 		
 		//add an enemy
-		EntityEnemy enemy=new EnemyForestBandit(1,1);
+		EntityEnemy enemy=new BatUpDown(1,1);
 	}
 	
 	/**
