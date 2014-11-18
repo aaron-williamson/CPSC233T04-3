@@ -24,6 +24,8 @@ public class Game implements ActionListener{
 	
 	private long time=0;
 	
+	private static int turnNum = 1;
+	
 	Game(){
 		Game.game=this;
 		in=new Scanner(System.in);
@@ -42,7 +44,7 @@ public class Game implements ActionListener{
 		
 		//add a player
 		EntityPlayer player=new EntityPlayer();
-		EntityPlayer.name = playername;
+		player.name = playername;
 		player.setPos(1,RPGMap.mapheight-2);
 		
 		//add a goal to the bottom right corner
@@ -139,7 +141,8 @@ public class Game implements ActionListener{
 				turnNum++;
 
 				if (!combatEnts[1].isAlive)
-					removeEntity(combatEnts);
+					;
+					//removeEntity(combatEnts);
 				else if (!combatEnts[0].isAlive)
 					loseGame();
 			}

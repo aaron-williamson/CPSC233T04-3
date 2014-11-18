@@ -39,10 +39,10 @@ public class EntityPlayer extends EntityCombat{
 	public void combatTurn(EntityCombat enemy, int turnNum) {
 		entBlock = 0;
 
-		String playerCommand;
+		String playerCommand = "attack";
 
 		System.out.println("Your turn!\nWhat would you like to do?");
-		playerCommand = Game.in.nextLine();
+		//playerCommand = Game.in.nextLine();
 
 		if (playerCommand.equals("attack") || playerCommand.equals("Attack") || playerCommand.equals("a")) {
 			attack(enemy);

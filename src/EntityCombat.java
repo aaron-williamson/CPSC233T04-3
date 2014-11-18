@@ -34,24 +34,15 @@ public class EntityCombat extends EntityMovable {
 	}
 
 	private boolean isHit() {
-		boolean isHit = false;
-
 		int hit = rand.nextInt(100);
-
-		if (hit <= entHIT)
-			isHit = true;
-
-		return isHit;
+		return (hit <= entHIT);
 	}
 
 	private int damage() {
-		int damageDealt;
 		if (isCrit())
-			damageDealt = 2 * (entSTR + rand.nextInt(10 + (2 * (entLCK / 2))));
+			return (2 * (entSTR + rand.nextInt(10 + (2 * (entLCK / 2)))));
 		else
-			damageDealt = entSTR + rand.nextInt(10 + (2 * (entLCK / 2)));
-
-		return damageDealt;
+			return (entSTR + rand.nextInt(10 + (2 * (entLCK / 2))));
 	}
 
 	public void attack(EntityCombat defender) {
