@@ -49,7 +49,7 @@ public class Game implements ActionListener{
 		EntityGoal goal=new EntityGoal(RPGMap.mapwidth-2,RPGMap.mapheight-2);
 		
 		//add an enemy
-		EntityEnemy enemy=new EnemyCultist(1,1);
+		EntityEnemy enemy=new EnemyForestBandit(1,1);
 	}
 	
 	/**
@@ -132,12 +132,6 @@ public class Game implements ActionListener{
 	
 	public static void main(String[] args){
 		Game.game=new Game();
-		
-		while(!Game.getGame().endgame){
-		//	Game.getGame().update();
-		}
-	
-		System.out.println(Game.getGame().endmessage);
 	}
 	
 	public void actionPerformed(ActionEvent event) {

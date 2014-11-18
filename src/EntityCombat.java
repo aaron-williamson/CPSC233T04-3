@@ -6,7 +6,7 @@ public class EntityCombat extends EntityMovable{
 	protected int combatEndurance;
 	protected int combatStrength;
 	protected int combatLuck;
-	private double combatDefense;
+	protected double combatDefense;
 	protected String combatName;
 	protected int combatXP;
 	private int combatHealth;
@@ -116,7 +116,7 @@ public class EntityCombat extends EntityMovable{
 	 * @param defender
 	 * @return
 	 */
-	private int getDamage(EntityCombat defender){
+	public int getDamage(EntityCombat defender){
 		int damage=combatStrength;
 		damage+=rand.nextInt(5+combatLuck);
 		damage*=1-defender.getDefense();
