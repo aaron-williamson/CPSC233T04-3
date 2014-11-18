@@ -7,5 +7,6 @@ public class EnemyBarbarian extends EntityEnemy {
 		setHealth(getMaxHealth());
 		combatName = "Barbarian";
 		combatXP = 4;
+		combatAttackMessage="swing's his axe!";
 	}
 }

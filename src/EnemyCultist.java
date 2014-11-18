@@ -7,5 +7,9 @@ public class EnemyCultist extends EntityEnemy {
 		setHealth(getMaxHealth());
 		combatName = "Cultist";
 		combatXP = 4;
+		combatAttackMessage="chants some gibberish so loud that it hurts!";
+		combatMissMessage="He didn't chant loud enough!";
+		combatCriticalMessage="It turned out to be a Celine Dion song!";
+		combatDefendMessage="sits down and starts meditating, negating some of your damage.";
 	}
 }

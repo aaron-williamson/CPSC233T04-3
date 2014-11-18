@@ -7,5 +7,8 @@ public class EnemyBat extends EntityEnemy {
 		setHealth(getMaxHealth());
 		combatName = "Bat";
 		combatXP = 2;
+		combatAttackMessage="flies at you violently!";
+		combatCriticalMessage="IT GOT YOU RIGHT IN THE EYE!!";
+		combatDefendMessage="hides itself with its wings.";
 	}
 }

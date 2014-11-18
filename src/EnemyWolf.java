@@ -7,5 +7,6 @@ public class EnemyWolf extends EntityEnemy {
 		setHealth(getMaxHealth());
 		combatName = "Wolf";
 		combatXP = 1;
+		combatAttackMessage="tries to bite you!";
 	}
 }

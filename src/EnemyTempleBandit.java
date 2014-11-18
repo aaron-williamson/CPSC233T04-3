@@ -7,5 +7,6 @@ public class EnemyTempleBandit extends EntityEnemy {
 		setHealth(getMaxHealth());
 		combatName = "Temple Bandit";
 		combatXP = 2;
+		combatAttackMessage="stabs you with his sword!";
 	}
 }

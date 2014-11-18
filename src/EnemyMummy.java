@@ -7,5 +7,8 @@ public class EnemyMummy extends EntityEnemy {
 		setHealth(getMaxHealth());
 		combatName = "Mummy";
 		combatXP = 2;
+		combatAttackMessage="swipes at you with what remains of it's arm!";
+		combatCriticalMessage="Some of his arm broke off inside you! EW!";
+		combatDefendMessage="stiffens up.";
 	}
 }

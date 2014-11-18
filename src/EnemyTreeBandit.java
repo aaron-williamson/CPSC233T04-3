@@ -7,5 +7,6 @@ public class EnemyTreeBandit extends EntityEnemy {
 		setHealth(getMaxHealth());
 		combatName = "Tree";
 		combatXP = 1;
+		combatAttackMessage="hits you with a branch!";
 	}
 }
