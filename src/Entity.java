@@ -8,7 +8,7 @@ public abstract class Entity{
 	
 	Entity(){
 		//add this entity to the game's entity manager
-		Game.getGame().getEntities().addEnt(this);
+		Game.getGame().getEntities().addEntity(this);
 		defaultImage=Toolkit.getDefaultToolkit().getImage("../img/entity.png");
 	}
 	
@@ -25,8 +25,6 @@ public abstract class Entity{
 	public Image getImage(){
 		return defaultImage;
 	}
-
-	public String debuggraphic(){return "E";} //character to draw for the debug graphics
 	
 	/**
 	 * Returns true if other entities can walk overtop of this one.
@@ -83,6 +81,14 @@ public abstract class Entity{
 	public long getNextThink(){
 		return nextThink;
 	}
+	
+	public void remove(){
+		setNextThink(Long.MAX_VALUE);
+		setPos(-999,-999);
+		defaultImage=null;
+		Game.getGame().getEntities().removeEntity(this);
+	}
+	
 	
 	/**
 	 * Called when another entity collides with this entity.

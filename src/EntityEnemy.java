@@ -1,13 +1,18 @@
 import java.util.Random;
 
-public class EntityEnemy extends EntityMovable{
+public class EntityEnemy extends EntityCombat{
 	public String getClassID(){return "enemy";}
 	
-	public String debuggraphic(){return "E";}
+	EntityEnemy(){
+		super();
+		setMoveSpeed(16);
+	}
 	
 	//lose the game if the player runs into an enemy
 	public void onCollide(Entity ent){
-		Game.getGame().loseGame();
+		if(ent.getClassID().equals("player")){
+			Game.getGame().getCombat().startCombat((EntityPlayer)ent, (EntityCombat)this, true);
+		}
 	};
 	
 	public void think(long time){

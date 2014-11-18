@@ -39,7 +39,12 @@ public class MapPanel extends JComponent{
 		
 		for(int i=0;i<rpgmap.mapGrid[0].length;i++){
 			for(int j=0;j<rpgmap.mapGrid.length;j++){
-				g.drawImage(mapImages[rpgmap.mapGrid[j][i]],i*tileSize-offsetX,j*tileSize-offsetY,tileSize,tileSize,this);
+				int xpos=i*tileSize-offsetX;
+				int ypos=j*tileSize-offsetY;
+				
+				if(xpos>-tileSize&&xpos<getWidth()&&ypos>-tileSize&&ypos<getHeight()){
+					g.drawImage(mapImages[rpgmap.mapGrid[j][i]],xpos,ypos,tileSize,tileSize,this);
+				}
 			}
 		}
 	}
@@ -63,8 +68,51 @@ public class MapPanel extends JComponent{
 				xpos+=movable.getInterpolationX()*tileSize;
 				ypos+=movable.getInterpolationY()*tileSize;
 			}
-			g.drawImage(img,xpos-offsetX,ypos-offsetY,tileSize,tileSize,this);
+			
+			xpos-=offsetX;
+			ypos-=offsetY;
+			if(xpos>-tileSize&&xpos<getWidth()&&ypos>-tileSize&&ypos<getHeight()){
+				g.drawImage(img,xpos,ypos,tileSize,tileSize,this);
+			}
 		}
+	}
+	
+	/**
+	 * Draws the health bar for a EntityCombat
+	 * @param g
+	 * @param xpos
+	 * @param ypos
+	 * @param width
+	 * @param height
+	 * @param entity
+	 */
+	private void drawHealthBar(Graphics g,int xpos,int ypos,int width,int height,EntityCombat entity){
+		double r=(double)entity.getHealth()/(double)entity.getMaxHealth();
+		
+		g.setColor(Color.BLACK);
+		g.fillRect(xpos,ypos,width,height);
+		
+		xpos+=2;
+		ypos+=2;
+		width-=4;
+		height-=4;
+		
+		g.setColor(new Color((float)0.8,(float)0.0,(float)0.0));
+		g.fillRect(xpos, ypos, (int)(r*width), height);
+		
+		g.setColor(new Color((float)0.3,(float)0.0,(float)0.0));
+		g.fillRect(xpos+(int)(width*r), ypos, (int)(width*(1-r)), height);
+		
+		g.setColor(Color.WHITE);
+		g.drawString(entity.getHealth()+"/"+entity.getMaxHealth(), xpos+2, ypos+10);
+	}
+	
+	/**
+	 * darkens the entire map
+	 */
+	private void drawBlackMask(Graphics g){
+		g.setColor(new Color((float)0.0,(float)0.0,(float)0.0,(float)0.5));
+		g.fillRect(0, 0, getWidth(), getHeight());
 	}
 	
 	@Override
@@ -87,6 +135,12 @@ public class MapPanel extends JComponent{
 		
 		drawMap(g,offsetX,offsetY);
 		drawEntities(g,offsetX,offsetY);
+		
+		if(Game.getGame().getCombat().isInCombat()){
+			drawBlackMask(g);
+			drawHealthBar(g,16,getHeight()-24,getWidth()/3,16,(EntityCombat)Game.getGame().getCombat().getPlayer());
+			drawHealthBar(g,getWidth()-32-getWidth()/3,getHeight()-24,getWidth()/3,16,(EntityCombat)Game.getGame().getCombat().getEnemy());
+		}
 	}
 	
 }

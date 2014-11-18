@@ -8,9 +8,9 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 	private static int defaultWidth=800;
 	private static int defaultHeight=600;
 	private JTextArea textbox=new JTextArea();
-	private int buttonCount=7;
+	private String[] buttonText={"Attack","Defend","Start Game","Exit Game"};
 	private int textboxMaxLines=6;
-	private JButton buttons[]= new JButton[buttonCount];
+	private JButton buttons[]= new JButton[buttonText.length];
 	//private JLabel maplabel=new JLabel("<html>RPG Game of AWESOMENESS!!<br>Made by: T04-03<br>Press Space Bar to continue</html>",JLabel.CENTER);
 	private MapPanel mapPanel;
 	private boolean[] keyDownArray=new boolean[256];
@@ -40,7 +40,6 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 		add(mapPanel,BorderLayout.SOUTH);
 		
 		//set up the combat log textbox
-		textbox.setText(">Combat Log");
 		for(int i=0;i<textboxMaxLines-1;i++){
 			textbox.append(" \n");
 		}
@@ -49,13 +48,17 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 		p2.add(textbox,BorderLayout.NORTH);
 		
 		//set up the buttons
-		for(int i=0;i<buttonCount;i++){
-			buttons[i]=new JButton("Button"+(i+1));
-			buttons[i].setActionCommand("Button"+(i+1));
-			buttons[i].addActionListener(this);
+		for(int i=0;i<buttonText.length;i++){
+			buttons[i]=new JButton(buttonText[i]);
 			buttons[i].setFocusable(false);
 			p.add(buttons[i]);
 		}
+		
+		buttons[0].setActionCommand(Combat.attackActionCommand);
+		buttons[0].addActionListener(Game.getGame().getCombat());
+		buttons[1].setActionCommand(Combat.defendActionCommand);
+		buttons[1].addActionListener(Game.getGame().getCombat());
+		
 		
 		p2.add(p,BorderLayout.SOUTH);
 		add(p2,BorderLayout.SOUTH);

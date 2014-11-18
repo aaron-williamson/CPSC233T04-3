@@ -1,6 +1,6 @@
 public class EntityMovable extends Entity{
 	public String getClassID(){return "movable_entity";}
-	private int moveSpeed=4;
+	private int moveSpeed=6;
 	private boolean moving=false;
 	private int oldX;//used for interpolation of entity position
 	private int oldY;
@@ -8,7 +8,7 @@ public class EntityMovable extends Entity{
 	public boolean moveTo(int x,int y){
 		boolean domove=false;
 		
-		if(Game.getGame().rpgmap.isPassable(x,y)){
+		if(Game.getGame().getMap().isPassable(x,y)){
 			Entity collidedent=Game.getGame().getEntities().getEntInPos(x,y);
 			if(collidedent!=null){
 				collidedent.onCollide(this);

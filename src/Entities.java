@@ -3,15 +3,15 @@ import java.util.List;
 import java.util.ArrayList;
 //this is mostly entity utility functions
 public class Entities{
-	private List<Entity> entitylist=new ArrayList<Entity>();
+	private List<Entity> entityList=new ArrayList<Entity>();
 	
 	/**
 	 * returns an array of all entities in the ent manager.
 	 * @return Entity[] containing all ents
 	 */
 	public Entity[] getAll(){
-		Entity[] entsarray=new Entity[1];
-		return entitylist.toArray(entsarray);
+		Entity[] entsarray=new Entity[0];
+		return entityList.toArray(entsarray);
 	}
 	
 	/**
@@ -21,10 +21,10 @@ public class Entities{
 	 */
 	public int countByClass(String classid){
 		int n=0;
-		int size=entitylist.size();
+		int size=entityList.size();
 		
 		for(int i=0;i<size;i++){
-			if(classid.equalsIgnoreCase(entitylist.get(i).getClassID())){
+			if(classid.equalsIgnoreCase(entityList.get(i).getClassID())){
 				n++;
 			}
 		}
@@ -38,9 +38,9 @@ public class Entities{
 	 */
 	public Entity[] getByClass(String classid){
 		Entity[] entsarray=new Entity[countByClass(classid)];
-		int size=entitylist.size();
+		int size=entityList.size();
 		for(int i=0;i<size;i++){
-			Entity ent=entitylist.get(i);
+			Entity ent=entityList.get(i);
 			if(classid.equalsIgnoreCase(ent.getClassID())){
 				entsarray[i]=ent;
 			}
@@ -53,8 +53,21 @@ public class Entities{
 	 * Add and entity to the entity manager, do this for any entity you make.
 	 * @param ent entity to add
 	 */
-	public void addEnt(Entity ent){
-		entitylist.add(ent); 
+	public void addEntity(Entity ent){
+		entityList.add(ent); 
+	}
+	
+	/**
+	 * Remove an entity from the entity manager
+	 * @param ent
+	 */
+	public void removeEntity(Entity ent){
+		for(int i=0;i<entityList.size();i++){
+			if(ent==entityList.get(i)){
+				entityList.remove(i);
+				break;
+			}
+		}
 	}
 	
 	/**

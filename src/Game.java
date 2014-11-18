@@ -9,34 +9,39 @@ public class Game implements ActionListener{
 	public static Game game;
 	private static int timerSpeed=16;//delay in ms between game updates
 	
-	public String endmessage="Undefined game over condition";
-	public boolean endgame=false;
-	public RPGMap rpgmap;
-	public RPGGUI gui;
-	public Entities entities;
+	private String endmessage="Undefined game over condition";
+	private boolean endgame=false;
+	private RPGMap rpgmap;
+	private RPGGUI gui;
+	private Entities entities;
+	private Combat combat;
 	
-	public Scanner in;
 	public String playername="NONAME";
 	
-	public Timer timer;
+	private Timer timer;
 	
 	private long time=0;
 	
 	Game(){
 		Game.game=this;
-		in=new Scanner(System.in);
 		
 		System.out.println("lets start the game!");
-		
-		//this is just for demo, so no input validation.
-		System.out.printf("What is your name? ");
-		playername=in.nextLine();
 		
 		//make the entity manager
 		entities=new Entities();
 		
+		//make the combat manager
+		combat=new Combat();
+				
 		//intialize the map
 		rpgmap=new RPGMap();
+		
+		//make the gui
+		gui=new RPGGUI();
+		
+		//make the timer
+		timer=new Timer(Game.timerSpeed,(ActionListener)this);
+		timer.start();
 		
 		//add a player
 		EntityPlayer player=new EntityPlayer();
@@ -47,16 +52,8 @@ public class Game implements ActionListener{
 		goal.setPos(RPGMap.mapwidth-2,RPGMap.mapheight-2);
 		
 		//add an enemy
-		//EntityEnemy enemy=new EntityEnemy();
-		//enemy.setPos(1,1);
-		
-		//make the gui
-		gui=new RPGGUI();
-		
-		//make the timer
-		timer=new Timer(Game.timerSpeed,(ActionListener)this);
-		timer.start();
-		
+		EntityEnemy enemy=new EntityEnemy();
+		enemy.setPos(1,1);
 	}
 	
 	/**
@@ -73,6 +70,18 @@ public class Game implements ActionListener{
 	 */
 	public int getTimerSpeed(){
 		return Game.timerSpeed;
+	}
+	
+	/**
+	 * call this to pause the game, give it true to pause, false to unpause
+	 * @param pause
+	 */
+	public void pauseTimer(boolean pause){
+		if(pause){
+			timer.stop();
+		}else{
+			timer.start();
+		}
 	}
 	
 	/**
@@ -99,6 +108,10 @@ public class Game implements ActionListener{
 		return rpgmap;
 	}
 	
+	public Combat getCombat(){
+		return combat;
+	}
+	
 	/**
 	 * gets the current time in milliseconds that the game has run
 	 * @return long time
@@ -113,9 +126,6 @@ public class Game implements ActionListener{
 	public void update(){
 		if(!endgame){
 			time=(time+Game.timerSpeed)%(Long.MAX_VALUE-Game.timerSpeed-1);
-			//draw debug graphics
-			DebugGraphics.printall(rpgmap);
-			
 			//Have the entities think
 			getEntities().allThink();
 			getGUI().redrawMap();
@@ -130,8 +140,7 @@ public class Game implements ActionListener{
 		while(!Game.getGame().endgame){
 		//	Game.getGame().update();
 		}
-		
-		Game.getGame().in.close();
+	
 		System.out.println(Game.getGame().endmessage);
 	}
 	
