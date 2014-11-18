@@ -44,16 +44,13 @@ public class Game implements ActionListener{
 		timer.start();
 		
 		//add a player
-		EntityPlayer player=new EntityPlayer();
-		player.setPos(1,RPGMap.mapheight-2);
+		EntityPlayer player=new EntityPlayer(1, RPGMap.mapheight-2);
 		
 		//add a goal to the bottom right corner
-		EntityGoal goal=new EntityGoal();
-		goal.setPos(RPGMap.mapwidth-2,RPGMap.mapheight-2);
+		EntityGoal goal=new EntityGoal(RPGMap.mapwidth-2,RPGMap.mapheight-2);
 		
 		//add an enemy
-		EntityEnemy enemy=new EntityEnemy();
-		enemy.setPos(1,1);
+		EntityEnemy enemy=new EnemyWolf(1,1);
 	}
 	
 	/**

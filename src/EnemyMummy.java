@@ -1,6 +1,6 @@
 public class EnemyMummy extends EntityEnemy {
-	public EnemyMummy() {
-		super();
+	public EnemyMummy(int xcoord, int ycoord) {
+		super(xcoord, ycoord);
 		combatEndurance = 10;
 		combatStrength = 12;
 		combatLuck = 0;

@@ -1,6 +1,6 @@
 public class EnemyForestBandit extends EntityEnemy {
-	public EnemyForestBandit() {
-		super();
+	public EnemyForestBandit(int xcoord, int ycoord) {
+		super(xcoord, ycoord);
 		combatEndurance = 6;
 		combatStrength = 12;
 		combatLuck = 0;

@@ -11,6 +11,13 @@ public abstract class Entity{
 		Game.getGame().getEntities().addEntity(this);
 		defaultImage=Toolkit.getDefaultToolkit().getImage("../img/entity.png");
 	}
+
+	Entity(int xcoord, int ycoord){
+		setPos(xcoord, ycoord);
+		//add this entity to the game's entity manager
+		Game.getGame().getEntities().addEntity(this);
+		defaultImage=Toolkit.getDefaultToolkit().getImage("../img/entity.png");
+	}
 	
 	/**
 	 * Gets a unique id for this entity type.

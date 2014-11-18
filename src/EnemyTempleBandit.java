@@ -1,6 +1,6 @@
 public class EnemyTempleBandit extends EntityEnemy {
-	public EnemyTempleBandit() {
-		super();
+	public EnemyTempleBandit(int xcoord, int ycoord) {
+		super(xcoord, ycoord);
 		combatEndurance = 8;
 		combatStrength = 15;
 		combatLuck = 5;

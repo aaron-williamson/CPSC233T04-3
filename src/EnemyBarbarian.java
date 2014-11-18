@@ -1,6 +1,6 @@
 public class EnemyBarbarian extends EntityEnemy {
-	public EnemyBarbarian() {
-		super();
+	public EnemyBarbarian(int xcoord, int ycoord) {
+		super(xcoord, ycoord);
 		combatEndurance = 12;
 		combatStrength = 20;
 		combatLuck = 0;

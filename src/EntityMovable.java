@@ -31,6 +31,10 @@ public class EntityMovable extends Entity{
 			return false;
 		}
 	};
+
+	public EntityMovable(int xcoord, int ycoord) {
+		super(xcoord, ycoord);
+	}
 	
 	/**
 	 * Sets the Entity's movement speed,

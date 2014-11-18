@@ -3,8 +3,8 @@ import java.util.Random;
 public class EntityEnemy extends EntityCombat{
 	public String getClassID(){return "enemy";}
 	
-	EntityEnemy(){
-		super();
+	EntityEnemy(int xcoord, int ycoord){
+		super(xcoord, ycoord);
 		setMoveSpeed(16);
 	}
 	

@@ -1,6 +1,6 @@
 public class EnemyWolf extends EntityEnemy {
-	public EnemyWolf() {
-		super();
+	public EnemyWolf(int xcoord, int ycoord) {
+		super(xcoord, ycoord);
 		combatEndurance = 6;
 		combatStrength = 12;
 		combatLuck = 0;

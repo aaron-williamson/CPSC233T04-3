@@ -21,8 +21,8 @@ public class EntityPlayer extends EntityCombat{
 								Toolkit.getDefaultToolkit().getImage("../img/player/west_m1.png"),
 								Toolkit.getDefaultToolkit().getImage("../img/player/west_m2.png")}};
 	
-	EntityPlayer(){
-		super();
+	public EntityPlayer(int xcoord, int ycoord){
+		super(xcoord, ycoord);
 		combatEndurance=8;
 		combatStrength=8;
 		combatLuck=8;

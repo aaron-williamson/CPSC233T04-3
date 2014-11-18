@@ -1,6 +1,6 @@
 public class EnemyBoss extends EntityEnemy {
-	public EnemyBoss() {
-		super();
+	public EnemyBoss(int xcoord, int ycoord) {
+		super(xcoord, ycoord);
 		combatEndurance = 20;
 		combatStrength = 30;
 		combatLuck = 15;
