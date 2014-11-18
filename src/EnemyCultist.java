@@ -11,5 +11,6 @@ public class EnemyCultist extends EntityEnemy {
 		combatMissMessage="He didn't chant loud enough!";
 		combatCriticalMessage="It turned out to be a Celine Dion song!";
 		combatDefendMessage="sits down and starts meditating, negating some of your damage.";
+		aggroDistance = 8;
 	}
 }

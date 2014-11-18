@@ -15,6 +15,7 @@ public class EnemyMummy extends EntityEnemy {
 		combatAttackMessage="swipes at you with what remains of it's arm!";
 		combatCriticalMessage="Some of his arm broke off inside you! EW!";
 		combatDefendMessage="stiffens up.";
+		setMoveSpeed(20);
 	}
 
 	public void think(long time){

@@ -10,5 +10,6 @@ public class EnemyBat extends EntityEnemy {
 		combatAttackMessage="flies at you violently!";
 		combatCriticalMessage="IT GOT YOU RIGHT IN THE EYE!!";
 		combatDefendMessage="hides itself with its wings.";
+		setMoveSpeed(5);
 	}
 }

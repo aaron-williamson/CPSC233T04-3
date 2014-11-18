@@ -31,10 +31,10 @@ public class EntityPlayer extends EntityCombat{
 		combatLuck=10;
 		combatXP=8;
 		
-		combatAttackMessage="attacks with her sword!";
+		combatAttackMessage="attacks with their sword!";
 		combatMissMessage="It missed!";
 		combatCriticalMessage="It was a critical hit!";
-		combatDefendMessage="raises her shield.";
+		combatDefendMessage="raises their shield.";
 		
 		setHealth(getMaxHealth());
 		

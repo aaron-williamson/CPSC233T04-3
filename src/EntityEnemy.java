@@ -2,6 +2,8 @@ import java.util.Random;
 
 public class EntityEnemy extends EntityCombat{
 	public String getClassID(){return "enemy";}
+
+	protected int aggroDistance = 5;
 	
 	EntityEnemy(int xcoord, int ycoord){
 		super(xcoord, ycoord);
@@ -17,11 +19,12 @@ public class EntityEnemy extends EntityCombat{
 	
 	public void think(long time){
 		//super cheap 'ai' here
+		super.think(time);
 		
 		//get the nearest player
 		Entity[] playersarray=Game.getGame().getEntities().getByClass("player");
-		Entity target=playersarray[0];
-		double windist=999999;
+		Entity target=null;
+		double windist=aggroDistance;
 		for(int i=0;i<playersarray.length;i++){
 			double dist=this.distance(playersarray[i]);
 			if(dist<windist){
@@ -29,6 +32,9 @@ public class EntityEnemy extends EntityCombat{
 				windist=dist;
 			}
 		}
+
+		if (target == null)
+			return;
 		
 		int difx=target.getX()-this.getX();
 		int dify=target.getY()-this.getY();
@@ -43,6 +49,7 @@ public class EntityEnemy extends EntityCombat{
 			}
 		}
 		
+
 		if(difx>0){
 			this.moveRight();
 		}else if(difx<0){

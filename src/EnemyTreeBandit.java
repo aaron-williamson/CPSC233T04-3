@@ -8,5 +8,6 @@ public class EnemyTreeBandit extends EntityEnemy {
 		combatName = "Tree";
 		combatXP = 1;
 		combatAttackMessage="hits you with a branch!";
+		setMoveSpeed(6);
 	}
 }
