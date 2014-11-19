@@ -29,7 +29,7 @@ public class EntityPlayer extends EntityCombat{
 		combatEndurance=10;
 		combatStrength=15;
 		combatLuck=10;
-		combatXP=8;
+		combatXP=0;
 		
 		combatAttackMessage="attacks with their sword!";
 		combatMissMessage="It missed!";
