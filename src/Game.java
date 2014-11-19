@@ -45,8 +45,6 @@ public class Game implements ActionListener{
 		
 		//make the timer
 		timer=new Timer(Game.timerSpeed,(ActionListener)this);
-		
-		
 	}
 
 	public void nextMap() {
@@ -128,8 +126,28 @@ public class Game implements ActionListener{
 		return rpgmap;
 	}
 	
+	/**
+	 * Get the combat manager
+	 * @return
+	 */
 	public Combat getCombat(){
 		return combat;
+	}
+	
+	/**
+	 * Get the end game message
+	 * @return
+	 */
+	public String getEndmessage(){
+		return endmessage;
+	}
+	
+	/**
+	 * Get if the game is over
+	 * @return
+	 */
+	public boolean isGameEnd(){
+		return endgame;
 	}
 	
 	/**
@@ -150,7 +168,11 @@ public class Game implements ActionListener{
 			getEntities().allThink();
 			getGUI().redrawMap();
 		}else{
-			
+			Game.getGame().pauseTimer(true);
+			Game.getGame().getGUI().disableButton(0);
+			Game.getGame().getGUI().disableButton(1);
+			Game.getGame().getGUI().disableButton(3);
+			getGUI().redrawMap();
 		}
 	}
 	
@@ -164,11 +186,13 @@ public class Game implements ActionListener{
 	
 	//ends the game, sets lose message
 	public void loseGame(){
+		String playername=((EntityPlayer)getEntities().getByClass("player")[0]).getPlayerName();
 		endmessage=playername+" died a terrible death.";
 		endgame=true;
 	}
 	//ends the game, sets win message
 	public void winGame(){
+		String playername=((EntityPlayer)getEntities().getByClass("player")[0]).getPlayerName();
 		endmessage="Congrats, "+playername+"\nThe winner is You!";
 		endgame=true;
 	}

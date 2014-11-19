@@ -272,7 +272,6 @@ public class RPGMap {
 		stringToMap(map1 , true);
 		new EntityPlayerSpawn(33,33);
 		new EntityStairs(130,44);
-		//new EntityStairs(34,34);
 	
 	}
 	//makes map 2

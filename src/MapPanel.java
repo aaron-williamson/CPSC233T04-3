@@ -185,6 +185,14 @@ public class MapPanel extends JComponent{
 		titleScreenShown = a;
 	}
 	
+	
+	private void drawEndScreen(Graphics g){
+		drawBlackMask(g);
+		g.setColor(Color.RED);
+		g.setFont(new Font("default", Font.BOLD, 20));
+		g.drawString(Game.getGame().getEndmessage(), 5, 220);
+	}	
+	
 	@Override
 	public void paint(Graphics g){
 		super.paint(g);
@@ -213,6 +221,8 @@ public class MapPanel extends JComponent{
 			drawHealthBars(g);
 		}else if(Game.getGame().getGUI().isGamePaused() == true){
 			drawPauseScreen(g);
+		}else if(Game.getGame().isGameEnd() == true){
+			drawEndScreen(g);
 		}
 	}
 	
