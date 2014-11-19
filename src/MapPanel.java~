@@ -169,7 +169,7 @@ public class MapPanel extends JComponent{
 		drawBlackMask(g);
 		g.setColor(Color.RED);
 		g.setFont(new Font("default", Font.BOLD, 80));
-		g.drawString("        Paused", 5, 220);
+		g.drawString("          Paused", 5, 200);
 	}
 	
 	private void drawHealthBars(Graphics g){

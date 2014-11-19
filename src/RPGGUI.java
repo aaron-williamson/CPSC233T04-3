@@ -8,12 +8,13 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 	private static int defaultWidth=800;
 	private static int defaultHeight=600;
 	private JTextArea textbox=new JTextArea();
-	private String[] buttonText={"Attack","Defend","Start Game","Exit Game"};
+	private String[] buttonText={"Attack","Defend","Start Game","Pause Game"};
 	private int textboxMaxLines=6;
 	private JButton buttons[]= new JButton[buttonText.length];
 	//private JLabel maplabel=new JLabel("<html>RPG Game of AWESOMENESS!!<br>Made by: T04-03<br>Press Space Bar to continue</html>",JLabel.CENTER);
 	private MapPanel mapPanel;
 	private boolean[] keyDownArray=new boolean[256];
+	private boolean gamePaused = false;
 	
     public RPGGUI() {
     	super(Game.title);
@@ -54,7 +55,7 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 		buttons[1].setEnabled(false);
 		buttons[2].setActionCommand("Start");
 		buttons[2].addActionListener(this);
-		buttons[3].setActionCommand("Exit");
+		buttons[3].setActionCommand("Pause");
 		buttons[3].addActionListener(this);
 		
 		
@@ -116,15 +117,25 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 	
 	public void actionPerformed(ActionEvent event) {
 		String command=event.getActionCommand();
-		printLine(">"+command+" pressed.");
 		//When you press the button "Start Game" it checks if the command Start was sent, then disables the button, disables title screen, and starts the game timer
 		if (command == "Start"){
+			printLine("You have started your adventure!");
 			buttons[2].setEnabled(false);
 			Game.getGame().getGUI().getMapPanel().setTitleScreenShown(true);
 			Game.getGame().pauseTimer(false);
 		}
-		if (command == "Exit"){
-			
+		if (command == "Pause"){
+			if(Game.getGame().getCombat().isInCombat() == false && Game.getGame().getGUI().getMapPanel().titleScreenShown()){
+				if (gamePaused == false){
+				Game.getGame().pauseTimer(true);
+				gamePaused = true;
+				redrawMap();
+				}
+				else{
+				Game.getGame().pauseTimer(false);
+				gamePaused = false;
+				}
+			}
 		}
     }
 	
@@ -138,5 +149,9 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 	
 	public void disableButton(int a){
 		buttons[a].setEnabled(false);
+	}
+
+	public boolean isGamePaused(){
+		return gamePaused;
 	}
 }
