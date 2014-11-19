@@ -8,7 +8,7 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 	private static int defaultWidth=800;
 	private static int defaultHeight=600;
 	private JTextArea textbox=new JTextArea();
-	private String[] buttonText={"Attack","Defend","Start Game","Pause Game"};
+	private String[] buttonText={"Attack","Defend","Start Game","Pause Game","Cheat"};
 	private int textboxMaxLines=6;
 	private JButton buttons[]= new JButton[buttonText.length];
 	private MapPanel mapPanel;
@@ -56,7 +56,9 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 		buttons[2].addActionListener(this);
 		buttons[3].setActionCommand("Pause");
 		buttons[3].addActionListener(this);
-		
+		buttons[4].setActionCommand(Combat.cheatActionCommand);
+		buttons[4].addActionListener(Game.getGame().getCombat());
+		buttons[4].setEnabled(false);
 		
 		p2.add(p,BorderLayout.SOUTH);
 		add(p2,BorderLayout.SOUTH);

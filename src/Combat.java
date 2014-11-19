@@ -5,6 +5,7 @@ import javax.swing.Timer;
 public class Combat implements ActionListener{
 	public static String attackActionCommand="attack";
 	public static String defendActionCommand="defend";
+	public static String cheatActionCommand="cheat";
 	private static String timerActionCommand="timer";
 	private static int timerDelay=1500;
 	private EntityPlayer playerInCombat;
@@ -57,6 +58,7 @@ public class Combat implements ActionListener{
 		Game.getGame().pauseTimer(true);
 		Game.getGame().getGUI().enableButton(0);
 		Game.getGame().getGUI().enableButton(1);	
+		Game.getGame().getGUI().enableButton(4);	
 
 		playerTurn=playerFirst;
 		String message;
@@ -121,6 +123,10 @@ public class Combat implements ActionListener{
 			endTurn();
 		}else if(playerTurn&&command==attackActionCommand){
 			getPlayer().attack(getEnemy());
+			endTurn();
+		}else if(command==cheatActionCommand){
+			Game.getGame().getGUI().printLine(getPlayer().getCombatName()+" cheats to win the battle!");
+			getEnemy().setHealth(0);
 			endTurn();
 		}
 	}
