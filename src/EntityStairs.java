@@ -10,6 +10,10 @@ public class EntityStairs extends Entity{
 		return image;
 	}
 	
+	public boolean isPassable(){
+		return false;
+	}
+	
 	public void onCollide(Entity ent){
 		Game.getGame().nextMap();
 	};

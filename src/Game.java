@@ -63,7 +63,7 @@ public class Game implements ActionListener{
 	
 	private void loadNextMap(){
 		Entity[] entityArray=getEntities().getAll();
-		Entity player=getEntities().getByClass("player")[0];
+		EntityPlayer player=(EntityPlayer)getEntities().getByClass("player")[0];
 		
 		for(int i=0;i<entityArray.length;i++){
 			if(entityArray[i]!=player){

@@ -271,7 +271,8 @@ public class RPGMap {
 		 
 		stringToMap(map1 , true);
 		new EntityPlayerSpawn(33,33);
-		new EntityStairs(33,35);
+		new EntityStairs(130,44);
+		//new EntityStairs(34,34);
 	
 	}
 	//makes map 2
@@ -332,7 +333,7 @@ public class RPGMap {
 		;
 		
 		stringToMap(map2 , false);
-		new EntityPlayerSpawn(58,35);
+		new EntityPlayerSpawn(35,58);
 		
 	}
 	//makes map 3
