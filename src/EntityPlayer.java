@@ -6,6 +6,8 @@ public class EntityPlayer extends EntityCombat{
 	private String playerName="Player";
 	public String getClassID(){return "player";}
 	private int playerXP=0;
+	private int level = 1;
+	private int expToLevel = 5;
 	
 	private int animationDirection=1;
 	private Image[][] animImage={{Toolkit.getDefaultToolkit().getImage("../img/player/north.png"),
@@ -64,10 +66,30 @@ public class EntityPlayer extends EntityCombat{
 	
 	public void giveXP(int XP){
 		playerXP+=XP;
+		if (playerXP >= expToLevel)
+			levelUp();
 	}
 	
 	public String getPlayerName(){
 		return playerName;
+	}
+
+	public void levelUp() {
+		Game.getGame().getGUI().printLine("LEVEL UP!");
+		++level;
+		combatEndurance += level;
+		Game.getGame().getGUI().printLine("Endurance + " + level + "    Endurance now: " + combatEndurance);
+		setHealth(getMaxHealth());
+		Game.getGame().getGUI().printLine("You have been healed to max health!" + "    Max health now: " + getMaxHealth());
+		combatStrength += 2 * level;
+		Game.getGame().getGUI().printLine("Strength + " + (2 * level) + "    Strength now: " + combatStrength);
+		combatLuck += level;
+		Game.getGame().getGUI().printLine("Luck + " + level + "    Luck now: " + combatLuck);
+		setMoveSpeed(6 - (level / 5));
+	}
+
+	public void healPlayer() {
+		setHealth(getMaxHealth());
 	}
 	
 	public String getCombatName(){
