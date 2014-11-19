@@ -31,13 +31,13 @@ public class MapPanel extends JComponent{
 		mapImagePaths[20]="../img/rockright.png";
 		mapImagePaths[21]="../img/rockleft.png";
 		mapImagePaths[22]="../img/rockup.png";
-		mapImagePaths[23]="../img/socksolo.png";
+		mapImagePaths[23]="../img/rocksolo.png";
 		mapImagePaths[24]="../img/water.png";
 		mapImagePaths[25]="../img/grass.png";
-		mapImagePaths[26]="../img/water.png";
-		mapImagePaths[27]="../img/water.png";
-		mapImagePaths[28]="../img/water.png";
-		mapImagePaths[29]="../img/water.png";
+		mapImagePaths[26]="../img/grass2.png";
+		mapImagePaths[27]="../img/grass3.png";
+		mapImagePaths[28]="../img/rockupdown.png";
+		mapImagePaths[29]="../img/rockleftright.png";
 		mapImagePaths[30]="../img/maintress.png";
 		mapImagePaths[31]="../img/treesnoupdown.png";
 		mapImagePaths[32]="../img/treesnoleftright.png";
@@ -75,7 +75,6 @@ public class MapPanel extends JComponent{
 		
 		loadTileImages();
 	}
-	
 	/**
 	 * reload the tile images, use if you've changed the tileset
 	 */
@@ -218,4 +217,3 @@ public class MapPanel extends JComponent{
 	}
 	
 }
-

@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class RPGMap {
 	
 	static String[] debuggraphics = {"X"," "};
@@ -10,7 +12,7 @@ public class RPGMap {
 	public int[][] mapGrid;
 	
 	RPGMap(){
-		makeMap1();
+		makeMap2();
 	}
 	
 	private void makeblankmap(){
@@ -45,22 +47,32 @@ public class RPGMap {
 		String[] lines= str.split("\n");
 		
 		mapGrid=new int[lines.length+65][lines[0].length()+65];
+		Random rand=new Random();
+		
 		
 		for(int j=0;j<lines.length;j++){
 			for(int i=0;i<lines[0].length();i++){
 				if(outside){
 					if(lines[j].charAt(i) == "0".charAt(0))
-						mapGrid[j+31][i+31] = 30;
+						mapGrid[j+31][i+31] = 30;//tree
 					else if(lines[j].charAt(i) == "1".charAt(0))
-						mapGrid[j+31][i+31] = 14;
-					else if(lines[j].charAt(i) == "5".charAt(0))
-						mapGrid[j+31][i+31] = 25;
-					else if(lines[j].charAt(i) == "6".charAt(0))
-						mapGrid[j+31][i+31] = 5;
+						mapGrid[j+31][i+31] = 14;//rock
+					else if(lines[j].charAt(i) == "5".charAt(0)){
+						int grassTile=25;
+						
+						if(rand.nextDouble()<0.1){
+							grassTile=26;
+						}else if(rand.nextDouble()<0.4){
+							grassTile=27;
+						}
+						
+						mapGrid[j+31][i+31] = grassTile;//grass
+					}else if(lines[j].charAt(i) == "6".charAt(0))
+						mapGrid[j+31][i+31] = 5;//stone
 					else if(lines[j].charAt(i) == "4".charAt(0))
-						mapGrid[j+31][i+31] = 63;
+						mapGrid[j+31][i+31] = 63;//temple
 					else if(lines[j].charAt(i) == "9".charAt(0))
-						mapGrid[j+31][i+31] = 9;
+						mapGrid[j+31][i+31] = 9;//stairs
 					else
 						mapGrid[j+31][i+31] = 0;
 				}
@@ -69,62 +81,170 @@ public class RPGMap {
 						mapGrid[j+31][i+31] = 63;
 					}else if(lines[j].charAt(i) == "3".charAt(0)){
 						mapGrid[j+31][i+31] = 0;
+					}else if(lines[j].charAt(i) == "5".charAt(0)){
+						mapGrid[j+31][i+31] = 5;//floor
+					}else if(lines[j].charAt(i) == "9".charAt(0)){
+						mapGrid[j+31][i+31] = 9;//stairs
+					}else if(lines[j].charAt(i) == "8".charAt(0)){
+						mapGrid[j+31][i+31] = 8;//stairs
 					}
-
 				}
 			}
 		}
 		if(outside){
-			//outsideImageAssigner(mapGrid);
+			outsideImageAssigner();
 		}else{
-			//insideImageAssigner(mapGrid);
+			insideImageAssigner();
 		}
 		
 	}
-	//fills in the propper images
-	private void outsideImageAssigner(int[][] mapGrid){
-		for(int i = 31 ; i < mapGrid.length - 32 ; i++){
-			for(int j = 31 ; j < mapGrid[i].length -32 ; j++){
-				if((10 <= mapGrid[i+1][j] && mapGrid[i+1][j] <= 23) && (10 <= mapGrid[i-1][j] && mapGrid[i-1][j]<= 23) && (10 <= mapGrid[i][j+1] && mapGrid[i][j+1] <= 23) && (10 <= mapGrid[i][j-1] && mapGrid[i][j-1] <= 23))
-					mapGrid[i][j] = 14;
-				else if((10 <= mapGrid[i+1][j] && mapGrid[i+1][j] <= 23) && (10 <= mapGrid[i][j-1] && mapGrid[i][j-1] <= 23) && (10 <= mapGrid[i][j+1] && mapGrid[i][j+1] <= 23))
-					mapGrid[i][j] = 11;
-				else if((10 <= mapGrid[i+1][j] && mapGrid[i+1][j] <= 23) && (10 <= mapGrid[i-1][j] && mapGrid[i-1][j] <= 23) && (10 <= mapGrid[i][j-1] && mapGrid[i][j-1] <= 23))
-					mapGrid[i][j] = 15;
-				else if((10 <= mapGrid[i-1][j] && mapGrid[i-1][j] <= 23) && (10 <= mapGrid[i+1][j] && mapGrid[i+1][j] <= 23) && (10 <= mapGrid[i][j+1] && mapGrid[i][j+1] <= 23))
-					mapGrid[i][j] = 13;
-				else if((10 <= mapGrid[i-1][j] && mapGrid[i-1][j] <= 23) && (10 <= mapGrid[i][j+1] && mapGrid[i][j+1] <= 23) && (10 <= mapGrid[i][j-1] && mapGrid[i][j-1] <= 23))
-					mapGrid[i][j] = 17;
-				else if((10 <= mapGrid[i+1][j] && mapGrid[i+1][j] <= 23) && (10 <= mapGrid[i][j-1] && mapGrid[i][j-1] <= 23))
-					mapGrid[i][j] = 12;
-				else if((10 <= mapGrid[i+1][j] && mapGrid[i+1][j] <= 23) && (10 <= mapGrid[i][j+1] && mapGrid[i][j+1] <= 23))
-					mapGrid[i][j] = 10;
-				//else if((10 <= mapGrid[i-1][j] && mapGrid[i-1][j] <= 23) && (10 <= mapGrid[i][j-1] && mapGrid[i][j-1] <= 23))
-					//mapGrid[i][j] = 16;
-				else if((10 <= mapGrid[i-1][j] && mapGrid[i-1][j] <= 23) && (10 <= mapGrid[i][j-1] && mapGrid[i][j-1] <= 23))
-					mapGrid[i][j] = 18;
-				else if(10 <= mapGrid[i+1][j] && mapGrid[i+1][j] <= 23)
-					mapGrid[i][j] = 19;
-				else if(10 <= mapGrid[i][j+1] && mapGrid[i][j+1] <= 23)
-					mapGrid[i][j] = 20;
-				else if(10 <= mapGrid[i][j-1] && mapGrid[i][j-1] <= 23)
-					mapGrid[i][j] = 21;
-				else if(10 <= mapGrid[i-1][j] && mapGrid[i-1][j] <= 23)
-					mapGrid[i][j] = 22;
-				else if((mapGrid[i+1][j] < 10 || mapGrid[i+1][j] > 23) && (mapGrid[i-1][j] < 10 || mapGrid[i-1][j] > 23) && (mapGrid[i][j+1] < 10 || mapGrid[i][j+1] > 23) && (mapGrid[i][j-1] < 10 || mapGrid[i][j-1] > 23))
-					mapGrid[i][j] = 23;
-				else if(mapGrid[i+1][j] < 30 && mapGrid[i-1][j] < 30 && mapGrid[i][j+1] < 30 && mapGrid[i][j-1] < 30)
-					mapGrid[i][j] = 33;
-				else if(mapGrid[i][j+1] < 30 || mapGrid[i][j-1] < 30)
-					mapGrid[i][j] = 32;
-				else if(mapGrid[i+1][j] < 30 || mapGrid[i-1][j] < 30)
-					mapGrid[i][j] = 31;
-				
+	//fills in the proper images
+	private void insideImageAssigner(){
+		int[][] newMap=new int[mapGrid.length][mapGrid[0].length];
+		
+		for(int i=0;i<newMap.length;i++){
+			for(int j=0;j<newMap[0].length;j++){
+				newMap[i][j]=mapGrid[i][j];
 			}
 		}
+		
+		for(int i=31;i<newMap.length-31;i++){
+			for(int j=31;j<newMap[0].length-31;j++){
+				//walls
+				if(mapGrid[i][j]==63){
+					
+					if(mapGrid[i-1][j]==63&&mapGrid[i][j+1]==63&&mapGrid[i+1][j]==63&&mapGrid[i][j-1]==63){
+						newMap[i][j]=60;//uprightdownleft
+					}else if(mapGrid[i-1][j]==63&&mapGrid[i][j+1]==63&&mapGrid[i+1][j]!=63&&mapGrid[i][j-1]!=63){
+						newMap[i][j]=45;//bottomleft
+					}else if(mapGrid[i-1][j]==63&&mapGrid[i][j+1]==63&&mapGrid[i+1][j]!=63&&mapGrid[i][j-1]==63){
+						newMap[i][j]=46;//bottom
+					}else if(mapGrid[i-1][j]==63&&mapGrid[i][j+1]!=63&&mapGrid[i+1][j]!=63&&mapGrid[i][j-1]==63){
+						newMap[i][j]=47;//bottomright
+					}else if(mapGrid[i-1][j]==63&&mapGrid[i][j+1]!=63&&mapGrid[i+1][j]==63&&mapGrid[i][j-1]==63){
+						newMap[i][j]=44;//right
+					}else if(mapGrid[i-1][j]!=63&&mapGrid[i][j+1]!=63&&mapGrid[i+1][j]==63&&mapGrid[i][j-1]==63){
+						newMap[i][j]=42;//topright
+					}else if(mapGrid[i-1][j]!=63&&mapGrid[i][j+1]==63&&mapGrid[i+1][j]==63&&mapGrid[i][j-1]==63){
+						newMap[i][j]=41;//top
+					}else if(mapGrid[i-1][j]!=63&&mapGrid[i][j+1]==63&&mapGrid[i+1][j]==63&&mapGrid[i][j-1]!=63){
+						newMap[i][j]=40;//topleft
+					}else if(mapGrid[i-1][j]==63&&mapGrid[i][j+1]==63&&mapGrid[i+1][j]==63&&mapGrid[i][j-1]!=63){
+						newMap[i][j]=43;//left
+					}else if(mapGrid[i-1][j]!=63&&mapGrid[i][j+1]!=63&&mapGrid[i+1][j]==63&&mapGrid[i][j-1]!=63){
+						newMap[i][j]=56;//captop
+					}else if(mapGrid[i-1][j]!=63&&mapGrid[i][j+1]==63&&mapGrid[i+1][j]!=63&&mapGrid[i][j-1]!=63){
+						newMap[i][j]=57;//capleft
+					}else if(mapGrid[i-1][j]==63&&mapGrid[i][j+1]!=63&&mapGrid[i+1][j]!=63&&mapGrid[i][j-1]!=63){
+						newMap[i][j]=59;//capbottom
+					}else if(mapGrid[i-1][j]!=63&&mapGrid[i][j+1]!=63&&mapGrid[i+1][j]!=63&&mapGrid[i][j-1]==63){
+						newMap[i][j]=58;//capright
+					}else if(mapGrid[i-1][j]!=63&&mapGrid[i][j+1]!=63&&mapGrid[i+1][j]!=63&&mapGrid[i][j-1]!=63){
+						newMap[i][j]=23;//capsingle
+					}else if(mapGrid[i-1][j]==63&&mapGrid[i][j+1]!=63&&mapGrid[i+1][j]==63&&mapGrid[i][j-1]!=63){
+						newMap[i][j]=62;//verticalwall
+					}else if(mapGrid[i-1][j]!=63&&mapGrid[i][j+1]==63&&mapGrid[i+1][j]!=63&&mapGrid[i][j-1]==63){
+						newMap[i][j]=61;//horizontalwall
+					}
+				}
+			}
+		}	
+		
+		for(int i=0;i<newMap.length;i++){
+			for(int j=0;j<newMap[0].length;j++){
+				if(newMap[i][j]==0){
+					newMap[i][j]=60;
+				}
+			}
+		}
+		
+		mapGrid=newMap;
+		
 	}
 	
-	//makes map 1
+	private void outsideImageAssigner(){
+		int[][] newMap=new int[mapGrid.length][mapGrid[0].length];
+		
+		for(int i=0;i<newMap.length;i++){
+			for(int j=0;j<newMap[0].length;j++){
+				newMap[i][j]=mapGrid[i][j];
+			}
+		}
+		
+		for(int i=31;i<newMap.length-31;i++){
+			for(int j=31;j<newMap[0].length-31;j++){
+				//trees
+				if(mapGrid[i][j]==30){
+					//uprughtdownleft
+					if(mapGrid[i-1][j]==30&&mapGrid[i][j+1]==30&&mapGrid[i+1][j]!=30&&mapGrid[i][j-1]!=30){
+						newMap[i][j]=33;//bottomleft
+					}else if(mapGrid[i-1][j]==30&&mapGrid[i][j+1]==30&&mapGrid[i+1][j]!=30&&mapGrid[i][j-1]==30){
+						newMap[i][j]=31;//bottom
+					}else if(mapGrid[i-1][j]==30&&mapGrid[i][j+1]!=30&&mapGrid[i+1][j]!=30&&mapGrid[i][j-1]==30){
+						newMap[i][j]=33;//bottomright
+					}else if(mapGrid[i-1][j]==30&&mapGrid[i][j+1]!=30&&mapGrid[i+1][j]==30&&mapGrid[i][j-1]==30){
+						newMap[i][j]=32;//right
+					}else if(mapGrid[i-1][j]!=30&&mapGrid[i][j+1]!=30&&mapGrid[i+1][j]==30&&mapGrid[i][j-1]==30){
+						newMap[i][j]=33;//topright
+					}else if(mapGrid[i-1][j]!=30&&mapGrid[i][j+1]==30&&mapGrid[i+1][j]==30&&mapGrid[i][j-1]==30){
+						newMap[i][j]=31;//top
+					}else if(mapGrid[i-1][j]!=30&&mapGrid[i][j+1]==30&&mapGrid[i+1][j]==30&&mapGrid[i][j-1]!=30){
+						newMap[i][j]=33;//topleft
+					}else if(mapGrid[i-1][j]==30&&mapGrid[i][j+1]==30&&mapGrid[i+1][j]==30&&mapGrid[i][j-1]!=30){
+						newMap[i][j]=32;//left
+					}
+				}
+				//rock
+				if(mapGrid[i][j]==14){
+					//uprughtdownleft
+					if(mapGrid[i-1][j]==14&&mapGrid[i][j+1]==14&&mapGrid[i+1][j]!=14&&mapGrid[i][j-1]!=14){
+						newMap[i][j]=16;//bottomleft
+					}else if(mapGrid[i-1][j]==14&&mapGrid[i][j+1]==14&&mapGrid[i+1][j]!=14&&mapGrid[i][j-1]==14){
+						newMap[i][j]=17;//bottom
+					}else if(mapGrid[i-1][j]==14&&mapGrid[i][j+1]!=14&&mapGrid[i+1][j]!=14&&mapGrid[i][j-1]==14){
+						newMap[i][j]=18;//bottomright
+					}else if(mapGrid[i-1][j]==14&&mapGrid[i][j+1]!=14&&mapGrid[i+1][j]==14&&mapGrid[i][j-1]==14){
+						newMap[i][j]=15;//right
+					}else if(mapGrid[i-1][j]!=14&&mapGrid[i][j+1]!=14&&mapGrid[i+1][j]==14&&mapGrid[i][j-1]==14){
+						newMap[i][j]=12;//topright
+					}else if(mapGrid[i-1][j]!=14&&mapGrid[i][j+1]==14&&mapGrid[i+1][j]==14&&mapGrid[i][j-1]==14){
+						newMap[i][j]=11;//top
+					}else if(mapGrid[i-1][j]!=14&&mapGrid[i][j+1]==14&&mapGrid[i+1][j]==14&&mapGrid[i][j-1]!=14){
+						newMap[i][j]=10;//topleft
+					}else if(mapGrid[i-1][j]==14&&mapGrid[i][j+1]==14&&mapGrid[i+1][j]==14&&mapGrid[i][j-1]!=14){
+						newMap[i][j]=13;//left
+					}else if(mapGrid[i-1][j]!=14&&mapGrid[i][j+1]!=14&&mapGrid[i+1][j]==14&&mapGrid[i][j-1]!=14){
+						newMap[i][j]=19;//captop
+					}else if(mapGrid[i-1][j]!=14&&mapGrid[i][j+1]==14&&mapGrid[i+1][j]!=14&&mapGrid[i][j-1]!=14){
+						newMap[i][j]=20;//capleft
+					}else if(mapGrid[i-1][j]==14&&mapGrid[i][j+1]!=14&&mapGrid[i+1][j]!=14&&mapGrid[i][j-1]!=14){
+						newMap[i][j]=22;//capbottom
+					}else if(mapGrid[i-1][j]!=14&&mapGrid[i][j+1]!=14&&mapGrid[i+1][j]!=14&&mapGrid[i][j-1]==14){
+						newMap[i][j]=21;//capright
+					}else if(mapGrid[i-1][j]!=14&&mapGrid[i][j+1]!=14&&mapGrid[i+1][j]!=14&&mapGrid[i][j-1]!=14){
+						newMap[i][j]=23;//capsingle
+					}else if(mapGrid[i-1][j]==14&&mapGrid[i][j+1]!=14&&mapGrid[i+1][j]==14&&mapGrid[i][j-1]!=14){
+						newMap[i][j]=28;//verticalwall
+					}else if(mapGrid[i-1][j]!=14&&mapGrid[i][j+1]==14&&mapGrid[i+1][j]!=14&&mapGrid[i][j-1]==14){
+						newMap[i][j]=29;//horizontalwall
+					}
+				}
+			}
+		}
+		
+		for(int i=0;i<newMap.length;i++){
+			for(int j=0;j<newMap[0].length;j++){
+				if(newMap[i][j]==0){
+					newMap[i][j]=30;
+				}
+			}
+		}
+		
+		mapGrid=newMap;
+		
+	}
+
+//makes map 1
 	private void makeMap1(){
 		String map1=
 		"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\n"
@@ -270,7 +390,7 @@ public class RPGMap {
 	   +"55766666755\n"
 	   +"05576867550\n"
 		;
-		
+	
 		stringToMap(map4 , false);	
 	}
 	
@@ -281,7 +401,7 @@ public class RPGMap {
 	 * @return boolean true if position on map is passable
 	 */
 	public boolean isPassable(int x,int y){
-		if((5 <= mapGrid[y][x] && mapGrid[y][x] <= 9) || mapGrid[y][x] == 25)
+		if((5 <= mapGrid[y][x] && mapGrid[y][x] <= 9) || (mapGrid[y][x] >= 25 && mapGrid[y][x]<=27))
 			return true;
 		else
 			return false;

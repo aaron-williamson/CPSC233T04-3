@@ -11,7 +11,7 @@ public class EnemyForestBandit extends EntityEnemy {
 		combatLuck = 0;
 		setHealth(getMaxHealth());
 		combatName = "Forest Bandit";
-		combatXP = 5;
+		combatXP = 1;
 		combatAttackMessage="stabs at you with a butter knife!";
 		combatCriticalMessage="He buttered your bread!";
 	}

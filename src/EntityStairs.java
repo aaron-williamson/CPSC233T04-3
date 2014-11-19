@@ -11,7 +11,7 @@ public class EntityStairs extends Entity{
 	}
 	
 	public void onCollide(Entity ent){
-		Game.getGame().nextMap();
+		
 	};
 	
 	
