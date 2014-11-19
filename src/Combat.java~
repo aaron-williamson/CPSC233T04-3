@@ -83,8 +83,6 @@ public class Combat implements ActionListener{
 			Game.getGame().getGUI().printLine(getPlayer().getCombatName()+" beat "+getEnemy().getCombatName()+", and gained "+getEnemy().getRewardedXP()+"XP!");
 			getPlayer().giveXP(getEnemy().getRewardedXP());
 			getEnemy().remove();
-			Game.getGame().getGUI().disableButton(0);
-			Game.getGame().getGUI().disableButton(1);
 		}else{
 			Game.getGame().loseGame();
 		}
