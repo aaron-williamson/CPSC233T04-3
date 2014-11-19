@@ -50,7 +50,6 @@ public class Game implements ActionListener{
 	}
 
 	public void nextMap() {
-		Game.getGame().getGUI().printLine("Next Map!");
 		loadNextMap();
 	}
 	
