@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class EnemyBat extends EntityEnemy {
 	protected String moveDirection = "leftright";
 	protected String currentDirection = "left";
@@ -14,6 +16,7 @@ public class EnemyBat extends EntityEnemy {
 		combatCriticalMessage="IT GOT YOU RIGHT IN THE EYE!!";
 		combatDefendMessage="defends itself with its wings.";
 		setMoveSpeed(5);
+		defaultImage = Toolkit.getDefaultToolkit().getImage("../img/bat/south.png");
 	}
 
 	public void think(long time){

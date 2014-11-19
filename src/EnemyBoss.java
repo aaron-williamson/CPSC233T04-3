@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class EnemyBoss extends EntityEnemy {
 	public EnemyBoss(int xcoord, int ycoord) {
 		super(xcoord, ycoord);
@@ -7,9 +9,10 @@ public class EnemyBoss extends EntityEnemy {
 		setHealth(getMaxHealth());
 		combatName = "BIG BAD BOSS";
 		combatXP = 9001;
-		combatAttackMessage="SWINGS AT YOU WITH HIS GIANT SWORD OF AWESOMENESS!";
-		combatCriticalMessage="HIS ATTACK WAS JUST TOO AWESOME!!!!!!";
+		combatAttackMessage="ATTACKS YOU WITH HIS SWORD OF AWESOMENESS!";
+		combatCriticalMessage="IT WAS JUST TOO AWESOME!";
 		combatDefendMessage="JUST STANDS THERE BEING SO AWESOME THAT YOUR ATTACKS DO LESS DAMAGE.";
+		defaultImage = Toolkit.getDefaultToolkit().getImage("../img/boss/south.png");
 	}
 
 	public void think(long time){

@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class EnemyCultist extends EntityEnemy {
 	public EnemyCultist(int xcoord, int ycoord) {
 		super(xcoord, ycoord);
@@ -12,5 +14,6 @@ public class EnemyCultist extends EntityEnemy {
 		combatCriticalMessage="It turned out to be a Celine Dion song!";
 		combatDefendMessage="sits down and starts meditating, negating some of your damage.";
 		aggroDistance = 8;
+		defaultImage = Toolkit.getDefaultToolkit().getImage("../img/cultist/south.png");
 	}
 }

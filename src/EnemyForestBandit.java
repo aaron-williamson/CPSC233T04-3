@@ -1,3 +1,5 @@
+import java.awt.*;
+
 import java.util.Random;
 
 public class EnemyForestBandit extends EntityEnemy {
@@ -14,6 +16,7 @@ public class EnemyForestBandit extends EntityEnemy {
 		combatXP = 1;
 		combatAttackMessage="stabs at you with a butter knife!";
 		combatCriticalMessage="He buttered your bread!";
+		defaultImage = Toolkit.getDefaultToolkit().getImage("../img/forestbandit/south.png");
 	}
 	
 	private void chargeAttack(EntityCombat defender){

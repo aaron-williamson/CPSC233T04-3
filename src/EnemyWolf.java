@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class EnemyWolf extends EntityEnemy {
 	private int count = 0;
 	public EnemyWolf(int xcoord, int ycoord) {
@@ -10,6 +12,7 @@ public class EnemyWolf extends EntityEnemy {
 		combatXP = 1;
 		combatAttackMessage="bites you!";
 		setMoveSpeed(10);
+		defaultImage = Toolkit.getDefaultToolkit().getImage("../img/wolf/south.png");
 	}
 
 	public void think(long time){

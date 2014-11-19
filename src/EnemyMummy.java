@@ -1,3 +1,5 @@
+import java.awt.*;
+
 import java.util.Random;
 
 public class EnemyMummy extends EntityEnemy {
@@ -16,6 +18,7 @@ public class EnemyMummy extends EntityEnemy {
 		combatCriticalMessage="Some of his arm broke off inside you! EW!";
 		combatDefendMessage="stiffens up.";
 		setMoveSpeed(20);
+		defaultImage = Toolkit.getDefaultToolkit().getImage("../img/mummy/south.png");
 	}
 
 	public void think(long time){

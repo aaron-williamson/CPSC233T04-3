@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class EnemyTempleBandit extends EntityEnemy {
 	public EnemyTempleBandit(int xcoord, int ycoord) {
 		super(xcoord, ycoord);
@@ -8,5 +10,6 @@ public class EnemyTempleBandit extends EntityEnemy {
 		combatName = "Temple Bandit";
 		combatXP = 2;
 		combatAttackMessage="stabs you with his sword!";
+		defaultImage = Toolkit.getDefaultToolkit().getImage("../img/templebandit/south.png");
 	}
 }

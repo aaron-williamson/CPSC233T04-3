@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class EnemyTreeBandit extends EntityEnemy {
 	public EnemyTreeBandit(int xcoord, int ycoord) {
 		super(xcoord, ycoord);
@@ -9,5 +11,6 @@ public class EnemyTreeBandit extends EntityEnemy {
 		combatXP = 1;
 		combatAttackMessage="hits you with a branch!";
 		setMoveSpeed(6);
+		defaultImage = Toolkit.getDefaultToolkit().getImage("../img/treeslone.png");
 	}
 }

@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class EnemyBarbarian extends EntityEnemy {
 	public EnemyBarbarian(int xcoord, int ycoord) {
 		super(xcoord, ycoord);
@@ -8,5 +10,6 @@ public class EnemyBarbarian extends EntityEnemy {
 		combatName = "Barbarian";
 		combatXP = 4;
 		combatAttackMessage="swing's his axe!";
+		defaultImage = Toolkit.getDefaultToolkit().getImage("../img/barbarian/south.png");
 	}
 }
