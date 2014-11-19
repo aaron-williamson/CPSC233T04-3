@@ -45,9 +45,6 @@ public class Game implements ActionListener{
 		//add a player
 		EntityPlayer player=new EntityPlayer(33, 33);
 		
-		//add a goal to the bottom right corner
-		EntityGoal goal=new EntityGoal(RPGMap.mapwidth-2,RPGMap.mapheight-2);
-		
 		//add an enemy
 		EntityEnemy enemy=new EnemyForestBandit(37,37);
 
