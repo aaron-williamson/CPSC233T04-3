@@ -59,6 +59,8 @@ public class RPGMap {
 						mapGrid[j+31][i+31] = 5;
 					else if(lines[j].charAt(i) == "4".charAt(0))
 						mapGrid[j+31][i+31] = 63;
+					else if(lines[j].charAt(i) == "9".charAt(0))
+						mapGrid[j+31][i+31] = 9;
 					else
 						mapGrid[j+31][i+31] = 0;
 				}

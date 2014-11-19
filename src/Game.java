@@ -51,6 +51,10 @@ public class Game implements ActionListener{
 		//add an enemy
 		EntityEnemy enemy=new EnemyForestBandit(37,37);
 	}
+
+	public void nextMap() {
+		Game.getGame().getGUI().printLine("Next Map!");
+	}
 	
 	/**
 	 * Get the game instance
