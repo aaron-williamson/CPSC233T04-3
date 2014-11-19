@@ -151,6 +151,7 @@ public class MapPanel extends JComponent{
 	}
 	
 	private void drawTitleScreen(Graphics g){
+		Game.getGame().getGUI().disableButton(3);
 		drawBlackMask(g);
 		g.setColor(Color.RED);
 		g.setFont(new Font("default", Font.BOLD, 40));
@@ -183,6 +184,8 @@ public class MapPanel extends JComponent{
 	
 	public void setTitleScreenShown(boolean a){
 		titleScreenShown = a;
+
+		Game.getGame().getGUI().enableButton(3);
 	}
 	
 	
@@ -190,7 +193,7 @@ public class MapPanel extends JComponent{
 		drawBlackMask(g);
 		g.setColor(Color.RED);
 		g.setFont(new Font("default", Font.BOLD, 20));
-		g.drawString(Game.getGame().getEndmessage(), 5, 220);
+		g.drawString(Game.getGame().getEndmessage(), 220, 220);
 	}	
 	
 	@Override

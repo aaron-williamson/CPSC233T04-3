@@ -114,7 +114,5 @@ public class EntityPlayer extends EntityCombat{
 			animationDirection=1;
 		}
 		
-		Game.getGame().getGUI().printLine(getX()+","+getY());
-		
 	}
 };

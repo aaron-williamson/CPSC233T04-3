@@ -193,7 +193,7 @@ public class Game implements ActionListener{
 	//ends the game, sets win message
 	public void winGame(){
 		String playername=((EntityPlayer)getEntities().getByClass("player")[0]).getPlayerName();
-		endmessage="Congrats, "+playername+"\nThe winner is You!";
+		endmessage="Congrats, "+playername+", the winner is You!";
 		endgame=true;
 	}
 };

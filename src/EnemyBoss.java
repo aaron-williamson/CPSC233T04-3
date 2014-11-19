@@ -17,4 +17,9 @@ public class EnemyBoss extends EntityEnemy {
 
 	public void think(long time){
 	}
+
+	public void remove() {
+		super.remove();
+		Game.getGame().winGame();
+	}
 }

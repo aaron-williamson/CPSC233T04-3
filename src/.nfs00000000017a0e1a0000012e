@@ -3,9 +3,9 @@ import java.awt.*;
 public class EntityHealthFountain extends Entity{
 	private int fountainUses = 3;
 	public String getClassID(){return "fountain";}
-	public boolean isPassable(){return false;}
 	
 	private Image  image=Toolkit.getDefaultToolkit().getImage("../img/fountain.png");
+	//private Image  image=Toolkit.getDefaultToolkit().getImage("../img/invisible.png");
 	
 	public Image getImage(){
 		return image;
@@ -14,7 +14,6 @@ public class EntityHealthFountain extends Entity{
 	public void onCollide(Entity ent){
 		if (ent.getClassID() == "player" && fountainUses > 0) {
 			((EntityPlayer)ent).healPlayer();
-			ent.setNextThink(Game.getGame().getTime()+1599);
 			--fountainUses;
 			Game.getGame().getGUI().printLine(fountainUses + " health fountain uses remaining!");
 			if (fountainUses == 0) {

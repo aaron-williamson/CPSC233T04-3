@@ -20,7 +20,7 @@ public class RPGMap {
 			makeMap2();
 			break;
 		case 2:
-			makeMap2();
+			makeMap3();
 			break;
 		case 3:
 			makeMap4();
@@ -272,6 +272,29 @@ public class RPGMap {
 		stringToMap(map1 , true);
 		new EntityPlayerSpawn(33,33);
 		new EntityStairs(130,44);
+		new EnemyForestBandit(34,55);
+		new EnemyForestBandit(38,52);
+		new EnemyForestBandit(58,48);
+		new EnemyForestBandit(71,45);
+		new EnemyForestBandit(57,57);
+		new EnemyForestBandit(73,57);
+		new EnemyForestBandit(79,43);
+		new EnemyForestBandit(62,32);
+		new EnemyForestBandit(58,39);
+		new EnemyForestBandit(121,57);
+		new EnemyForestBandit(115,44);
+		new EnemyForestBandit(115,39);
+		new EnemyWolf(100,39);
+		new EnemyWolf(108,46);
+		new EnemyWolf(70,51);
+		new EnemyWolf(67,36);
+		new EnemyTreeBandit(89,33);
+		new EnemyTreeBandit(125,36);
+		new EnemyTreeBandit(122,45);
+		new EnemyTreeBandit(107,55);
+		new EntityHealthFountain(37,32);
+		new EntityHealthFountain(64,32);
+		new EntityHealthFountain(98,55);
 	
 	}
 	//makes map 2
@@ -333,6 +356,26 @@ public class RPGMap {
 		
 		stringToMap(map2 , false);
 		new EntityPlayerSpawn(35,58);
+		new EntityStairs(57,32);
+		new EnemyMummy(56,60);
+		new EnemyMummy(48,79);
+		new BatUpDown(71,53);
+		new BatLeftRight(66,50);
+		new BatLeftRight(81,58);
+		new BatLeftRight(81,61);
+		new EnemyTempleBandit(62,43);
+		new EnemyTempleBandit(42,35);
+		new EnemyTempleBandit(79,46);
+		new EnemyTempleBandit(77,61);
+		new EnemyTempleBandit(78,80);
+		new EntityHealthFountain(34,34);
+		new EntityHealthFountain(81,47);
+		
+		
+		
+		
+		
+		
 		
 	}
 	//makes map 3
@@ -372,7 +415,24 @@ public class RPGMap {
 	   +"0000000000000000000000000000000\n"
 		;
 		
-		stringToMap(map3 , false);	
+		stringToMap(map3 , false);
+		new EntityPlayerSpawn(46,61);
+		new EntityStairs(46,32);
+		new EnemyCultist(52,58);
+		new EnemyCultist(40,52);
+		new EnemyCultist(52,46);
+		new EnemyCultist(40,40);
+		new EnemyCultist(52,34);
+		new EnemyCultist(40,34);
+		new EnemyBarbarian(32,32);
+		new EnemyBarbarian(35,40);
+		new EnemyBarbarian(35,46);
+		new EnemyBarbarian(35,59);
+		new EnemyBarbarian(57,57);
+		new EnemyBarbarian(57,46);
+		new EnemyBarbarian(60,32);
+		new EntityHealthFountain(46,34);
+		new EntityHealthFountain(32,61);
 	}
 	//makes map 4
 	private void makeMap4(){
@@ -391,7 +451,10 @@ public class RPGMap {
 	   +"0000000000000\n"
 		;
 		
-		stringToMap(map4 , false);	
+		stringToMap(map4 , false);
+		new EntityPlayerSpawn(37,41);
+		new EnemyBoss(37,32);
+
 	}
 
 	/**
