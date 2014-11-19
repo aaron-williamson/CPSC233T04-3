@@ -14,6 +14,7 @@ public class Game implements ActionListener{
 	private RPGGUI gui;
 	private Entities entities;
 	private Combat combat;
+	private int level=0;
 	
 	public String playername="NONAME";
 	
@@ -43,7 +44,7 @@ public class Game implements ActionListener{
 		timer.start();
 		
 		//add a player
-		EntityPlayer player=new EntityPlayer(1, RPGMap.mapheight-2);
+		EntityPlayer player=new EntityPlayer(33, 33);
 		
 		//add a goal to the bottom right corner
 		EntityGoal goal=new EntityGoal(RPGMap.mapwidth-2,RPGMap.mapheight-2);
@@ -58,6 +59,10 @@ public class Game implements ActionListener{
 	 */
 	public static Game getGame(){
 		return Game.game;
+	}
+	
+	public void loadNextMap(){
+		
 	}
 	
 	/**

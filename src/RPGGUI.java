@@ -50,6 +50,10 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 		buttons[0].addActionListener(Game.getGame().getCombat());
 		buttons[1].setActionCommand(Combat.defendActionCommand);
 		buttons[1].addActionListener(Game.getGame().getCombat());
+		buttons[2].setActionCommand("Start");
+		buttons[2].addActionListener(this);
+		buttons[3].setActionCommand("Exit");
+		buttons[3].addActionListener(this);
 		
 		
 		p2.add(p,BorderLayout.SOUTH);
@@ -110,7 +114,27 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 	
 	public void actionPerformed(ActionEvent event) {
 		String command=event.getActionCommand();
-				
 		printLine(">"+command+" pressed.");
+		//When you press the button "Start Game" it checks if the command Start was sent, then disables the button, disables title screen, and starts the game timer
+		if (command == "Start"){
+			buttons[2].setEnabled(false);
+			Game.getGame().getGUI().getMapPanel().setTitleScreenShown(true);
+			Game.getGame().pauseTimer(false);
+		}
+		if (command == "Exit"){
+			
+		}
     }
+	
+	public MapPanel getMapPanel() {
+		return mapPanel;
+	}
+	
+	public void enableButton(int a){
+		buttons[a].setEnabled(true);
+	}
+	
+	public void disableButton(int a){
+		buttons[a].setEnabled(false);
+	}
 }

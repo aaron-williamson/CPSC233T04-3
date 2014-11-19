@@ -3,10 +3,76 @@ import javax.swing.*;
 
 public class MapPanel extends JComponent{
 	public int tileSize=32;
-	private String[] mapImagePaths = {"../img/water.png" ,"../img/grass.png"};
+	private String[] mapImagePaths = new String[64];
 	private Image[] mapImages=new Image[mapImagePaths.length];
+	private boolean titleScreenShown = false;
 	
 	MapPanel(){
+		mapImagePaths[0]="../img/water.png";
+		mapImagePaths[1]="../img/water.png";
+		mapImagePaths[2]="../img/water.png";
+		mapImagePaths[3]="../img/water.png";
+		mapImagePaths[4]="../img/water.png";
+		mapImagePaths[5]="../img/floormain.png";
+		mapImagePaths[6]="../img/redfloor.png";
+		mapImagePaths[7]="../img/yellowfloor.png";
+		mapImagePaths[8]="../img/stairsdown.png";
+		mapImagePaths[9]="../img/stairsup.png";
+		mapImagePaths[10]="../img/rockdownright.png";
+		mapImagePaths[11]="../img/rockdownleftright.png";
+		mapImagePaths[12]="../img/rockdownleft.png";
+		mapImagePaths[13]="../img/rockupdownright.png";
+		mapImagePaths[14]="../img/rockmain.png";
+		mapImagePaths[15]="../img/rockupdownleft.png";
+		mapImagePaths[16]="../img/rockupright.png";
+		mapImagePaths[17]="../img/rockupleftright.png";
+		mapImagePaths[18]="../img/rockupleft.png";
+		mapImagePaths[19]="../img/rockdown.png";
+		mapImagePaths[20]="../img/rockright.png";
+		mapImagePaths[21]="../img/rockleft.png";
+		mapImagePaths[22]="../img/rockup.png";
+		mapImagePaths[23]="../img/socksolo.png";
+		mapImagePaths[24]="../img/water.png";
+		mapImagePaths[25]="../img/grass.png";
+		mapImagePaths[26]="../img/water.png";
+		mapImagePaths[27]="../img/water.png";
+		mapImagePaths[28]="../img/water.png";
+		mapImagePaths[29]="../img/water.png";
+		mapImagePaths[30]="../img/maintress.png";
+		mapImagePaths[31]="../img/treesnoupdown.png";
+		mapImagePaths[32]="../img/treesnoleftright.png";
+		mapImagePaths[33]="../img/treeslone.png";
+		mapImagePaths[34]="../img/water.png";
+		mapImagePaths[35]="../img/water.png";
+		mapImagePaths[36]="../img/water.png";
+		mapImagePaths[37]="../img/water.png";
+		mapImagePaths[38]="../img/water.png";
+		mapImagePaths[39]="../img/water.png";
+		mapImagePaths[40]="../img/walldownright.png";
+		mapImagePaths[41]="../img/walldownleftright.png";
+		mapImagePaths[42]="../img/walldownleft.png";
+		mapImagePaths[43]="../img/wallupdownright.png";
+		mapImagePaths[44]="../img/wallupdownleft.png";
+		mapImagePaths[45]="../img/wallupright.png";
+		mapImagePaths[46]="../img/wallupleftright.png";
+		mapImagePaths[47]="../img/wallupleft.png";
+		mapImagePaths[48]="../img/wallcornerTL.png";
+		mapImagePaths[49]="../img/water.png";
+		mapImagePaths[50]="../img/wallcornerTR.png";
+		mapImagePaths[51]="../img/water.png";
+		mapImagePaths[52]="../img/water.png";
+		mapImagePaths[53]="../img/wallcornerBL.png";
+		mapImagePaths[54]="../img/water.png";
+		mapImagePaths[55]="../img/wallcornerBR.png";
+		mapImagePaths[56]="../img/walldown.png";
+		mapImagePaths[57]="../img/wallright.png";
+		mapImagePaths[58]="../img/wallleft.png";
+		mapImagePaths[59]="../img/wallup.png";
+		mapImagePaths[60]="../img/black.png";
+		mapImagePaths[61]="../img/wallleftright.png";
+		mapImagePaths[62]="../img/wallupdown.png";
+		mapImagePaths[63]="../img/wallfull.png";
+		
 		loadTileImages();
 	}
 	
@@ -85,6 +151,34 @@ public class MapPanel extends JComponent{
 		g.fillRect(0, 0, getWidth(), getHeight());
 	}
 	
+	private void drawTitleScreen(Graphics g){
+		drawBlackMask(g);
+		g.setColor(Color.RED);
+		g.setFont(new Font("default", Font.BOLD, 40));
+		g.drawString("    Welcome to "+Game.title, 5, 100);
+		g.setFont(new Font("default", Font.BOLD, 16));
+		g.drawString("Controls:", 5, 200);
+		g.drawString("Move Up: (up arrow)(w)", 5, 220);
+		g.drawString("Move Down: (down arrow)(s)", 5, 240);
+		g.drawString("Move Left: (left arrow)(a)", 5, 260);
+		g.drawString("Move Right: (right arrow)(d)", 5, 280);
+		g.drawString("Press Start Game to continue...", 5, 300);
+	}
+	
+	private void drawHealthBars(Graphics g){
+		drawBlackMask(g);
+		Game.getGame().getCombat().getPlayer().drawHealthBar(g,16,getHeight()-24,getWidth()/3,16,(float)0.9,(float)0.0,(float)0.9);
+		Game.getGame().getCombat().getEnemy().drawHealthBar(g,getWidth()-32-getWidth()/3,getHeight()-24,getWidth()/3,16,(float)0.9,(float)0.0,(float)0.0);
+	}
+	
+	public boolean titleScreenShown() {
+		return titleScreenShown;
+	}
+	
+	public void setTitleScreenShown(boolean a){
+		titleScreenShown = a;
+	}
+	
 	@Override
 	public void paint(Graphics g){
 		super.paint(g);
@@ -106,10 +200,11 @@ public class MapPanel extends JComponent{
 		drawMap(g,offsetX,offsetY);
 		drawEntities(g,offsetX,offsetY);
 		
-		if(Game.getGame().getCombat().isInCombat()){
-			drawBlackMask(g);
-			Game.getGame().getCombat().getPlayer().drawHealthBar(g,16,getHeight()-24,getWidth()/3,16,(float)0.9,(float)0.0,(float)0.9);
-			Game.getGame().getCombat().getEnemy().drawHealthBar(g,getWidth()-32-getWidth()/3,getHeight()-24,getWidth()/3,16,(float)0.9,(float)0.0,(float)0.0);
+		//Draws the title screen
+		if(titleScreenShown == false){
+			drawTitleScreen(g);
+		}else if(Game.getGame().getCombat().isInCombat()){
+			drawHealthBars(g);
 		}
 	}
 	
