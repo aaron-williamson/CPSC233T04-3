@@ -3,7 +3,7 @@ import java.awt.*;
 public abstract class Entity{
 	private int xPos;
 	private int yPos;
-	private Image defaultImage;
+	protected Image defaultImage;
 	private long nextThink=-1;
 	
 	Entity(){
@@ -13,10 +13,8 @@ public abstract class Entity{
 	}
 
 	Entity(int xcoord, int ycoord){
+		this();
 		setPos(xcoord, ycoord);
-		//add this entity to the game's entity manager
-		Game.getGame().getEntities().addEntity(this);
-		defaultImage=Toolkit.getDefaultToolkit().getImage("../img/entity.png");
 	}
 	
 	/**

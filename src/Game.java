@@ -14,7 +14,7 @@ public class Game implements ActionListener{
 	private RPGGUI gui;
 	private Entities entities;
 	private Combat combat;
-	private int level=0;
+	private int level=-1;
 	
 	public String playername="NONAME";
 	
@@ -32,9 +32,13 @@ public class Game implements ActionListener{
 		
 		//make the combat manager
 		combat=new Combat();
-				
-		//intialize the map
-		rpgmap=new RPGMap();
+		
+		//add a player
+		new EntityPlayer(0,0);
+		
+		//make the default map
+		level=-1;
+		loadNextMap();
 		
 		//make the gui
 		gui=new RPGGUI();
@@ -42,18 +46,12 @@ public class Game implements ActionListener{
 		//make the timer
 		timer=new Timer(Game.timerSpeed,(ActionListener)this);
 		
-		//add a player
-		EntityPlayer player=new EntityPlayer(33, 33);
 		
-		//add an enemy
-		EntityEnemy enemy=new EnemyForestBandit(37,37);
-
-		// add a healing fountain
-		EntityHealthFountain fountain = new EntityHealthFountain(36, 33);
 	}
 
 	public void nextMap() {
 		Game.getGame().getGUI().printLine("Next Map!");
+		loadNextMap();
 	}
 	
 	/**
@@ -64,8 +62,27 @@ public class Game implements ActionListener{
 		return Game.game;
 	}
 	
-	public void loadNextMap(){
+	private void loadNextMap(){
+		Entity[] entityArray=getEntities().getAll();
+		Entity player=getEntities().getByClass("player")[0];
 		
+		for(int i=0;i<entityArray.length;i++){
+			if(entityArray[i]!=player){
+				entityArray[i].remove();
+			}
+		}
+		
+		level++;
+		rpgmap=new RPGMap(level);
+		
+		entityArray=getEntities().getAll();
+		for(int i=0;i<entityArray.length;i++){
+			if(entityArray[i].getClassID().equals("playerspawn")){
+				player.setPos(entityArray[i].getX(),entityArray[i].getY());
+				entityArray[i].remove();
+				break;
+			}
+		}
 	}
 	
 	/**
