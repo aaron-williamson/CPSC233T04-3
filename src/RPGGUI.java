@@ -11,7 +11,6 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 	private String[] buttonText={"Attack","Defend","Start Game","Pause Game"};
 	private int textboxMaxLines=6;
 	private JButton buttons[]= new JButton[buttonText.length];
-	//private JLabel maplabel=new JLabel("<html>RPG Game of AWESOMENESS!!<br>Made by: T04-03<br>Press Space Bar to continue</html>",JLabel.CENTER);
 	private MapPanel mapPanel;
 	private boolean[] keyDownArray=new boolean[256];
 	private boolean gamePaused = false;
