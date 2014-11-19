@@ -50,6 +50,9 @@ public class Game implements ActionListener{
 		
 		//add an enemy
 		EntityEnemy enemy=new EnemyForestBandit(37,37);
+
+		// add a healing fountain
+		EntityHealthFountain fountain = new EntityHealthFountain(36, 33);
 	}
 
 	public void nextMap() {

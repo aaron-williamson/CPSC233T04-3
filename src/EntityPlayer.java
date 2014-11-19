@@ -94,6 +94,7 @@ public class EntityPlayer extends EntityCombat{
 
 	public void healPlayer() {
 		setHealth(getMaxHealth());
+		Game.getGame().getGUI().printLine("You have been healed! Health is now: " + getHealth());
 	}
 
 	public void think(long time){
