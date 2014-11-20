@@ -16,6 +16,7 @@ public class EntityHealthFountain extends Entity{
 			((EntityPlayer)ent).healPlayer();
 			ent.setNextThink(Game.getGame().getTime()+1599);
 			--fountainUses;
+			Game.getGame().getGUI().printLine("You take a drink from the health fountain, you have been healed to full health!");
 			Game.getGame().getGUI().printLine(fountainUses + " health fountain uses remaining!");
 			if (fountainUses == 0) {
 				image = Toolkit.getDefaultToolkit().getImage("../img/depletedfountain.png");

@@ -25,8 +25,6 @@ public class Game implements ActionListener{
 	Game(){
 		Game.game=this;
 		
-		System.out.println("lets start the game!");
-		
 		//make the entity manager
 		entities=new Entities();
 		
@@ -196,4 +194,4 @@ public class Game implements ActionListener{
 		endmessage="Congrats, "+playername+", the winner is You!";
 		endgame=true;
 	}
-};
+}
