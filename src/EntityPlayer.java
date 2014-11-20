@@ -66,8 +66,10 @@ public class EntityPlayer extends EntityCombat{
 	
 	public void giveXP(int XP){
 		playerXP+=XP;
-		if (playerXP >= expToLevel)
+		if (playerXP >= expToLevel) {
 			levelUp();
+			expToLevel = expToLevel * 2;
+		}
 	}
 	
 	public String getPlayerName(){

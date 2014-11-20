@@ -18,7 +18,7 @@ public class EntityCombat extends EntityMovable{
 	
 	private Random rand;
 	
-	EntityCombat(int xcoord, int ycoord){
+	public EntityCombat(int xcoord, int ycoord){
 		super(xcoord, ycoord);
 		combatEndurance=5;
 		combatStrength=5;
