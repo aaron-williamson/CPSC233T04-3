@@ -8,7 +8,7 @@ public abstract class Entity{
 	
 	Entity(){
 		//add this entity to the game's entity manager
-		Game.getGame().getEntities().addEntity(this);
+		Game.getInstance().getEntities().addEntity(this);
 		defaultImage=Toolkit.getDefaultToolkit().getImage("../img/entity.png");
 	}
 
@@ -91,7 +91,7 @@ public abstract class Entity{
 		setNextThink(Long.MAX_VALUE);
 		setPos(-999,-999);
 		defaultImage=null;
-		Game.getGame().getEntities().removeEntity(this);
+		Game.getInstance().getEntities().removeEntity(this);
 	}
 	
 	

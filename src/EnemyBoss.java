@@ -20,6 +20,6 @@ public class EnemyBoss extends EntityEnemy {
 
 	public void remove() {
 		super.remove();
-		Game.getGame().winGame();
+		Game.getInstance().winGame();
 	}
 }

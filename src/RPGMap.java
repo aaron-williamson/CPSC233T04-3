@@ -2,13 +2,6 @@ import java.util.Random;
 
 public class RPGMap {
 	
-	static String[] debuggraphics = {"X"," "};
-	//boolean[] passableMap={false,false,false,false,false,true,true,true,true,true};
-	static public int mapwidth = 100;
-	static public int mapheight = 100;
-	
-	
-	//passablrMap[1]=true;
 	public int[][] mapGrid;
 	
 	RPGMap(int level){

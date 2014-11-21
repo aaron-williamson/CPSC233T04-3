@@ -21,29 +21,29 @@ public class EnemyBat extends EntityEnemy {
 
 	public void think(long time){
 		if (moveDirection.equals("leftright")) {
-			if ((currentDirection.equals("left")) && (Game.getGame().getMap().isPassable(this.getX() - 1, this.getY())))
+			if ((currentDirection.equals("left")) && (Game.getInstance().getMap().isPassable(this.getX() - 1, this.getY())))
 				this.moveLeft();
-			else if ((currentDirection.equals("left")) && !(Game.getGame().getMap().isPassable(this.getX() - 1, this.getY()))) {
+			else if ((currentDirection.equals("left")) && !(Game.getInstance().getMap().isPassable(this.getX() - 1, this.getY()))) {
 				this.moveRight();
 				currentDirection = "right";
 			}
-			else if ((currentDirection.equals("right")) && (Game.getGame().getMap().isPassable(this.getX() + 1, this.getY())))
+			else if ((currentDirection.equals("right")) && (Game.getInstance().getMap().isPassable(this.getX() + 1, this.getY())))
 				this.moveRight();
-			else if ((currentDirection.equals("right")) && !(Game.getGame().getMap().isPassable(this.getX() + 1, this.getY()))) {
+			else if ((currentDirection.equals("right")) && !(Game.getInstance().getMap().isPassable(this.getX() + 1, this.getY()))) {
 				this.moveLeft();
 				currentDirection = "left";
 			}
 		}
 		else if (moveDirection.equals("updown")) {
-			if ((currentDirection.equals("up")) && (Game.getGame().getMap().isPassable(this.getX(), this.getY() - 1)))
+			if ((currentDirection.equals("up")) && (Game.getInstance().getMap().isPassable(this.getX(), this.getY() - 1)))
 				this.moveUp();
-			else if ((currentDirection.equals("up")) && !(Game.getGame().getMap().isPassable(this.getX(), this.getY() - 1))) {
+			else if ((currentDirection.equals("up")) && !(Game.getInstance().getMap().isPassable(this.getX(), this.getY() - 1))) {
 				this.moveDown();
 				currentDirection = "down";
 			}
-			else if ((currentDirection.equals("down")) && (Game.getGame().getMap().isPassable(this.getX(), this.getY() + 1)))
+			else if ((currentDirection.equals("down")) && (Game.getInstance().getMap().isPassable(this.getX(), this.getY() + 1)))
 				this.moveDown();
-			else if ((currentDirection.equals("down")) && !(Game.getGame().getMap().isPassable(this.getX(), this.getY() + 1))) {
+			else if ((currentDirection.equals("down")) && !(Game.getInstance().getMap().isPassable(this.getX(), this.getY() + 1))) {
 				this.moveUp();
 				currentDirection = "up";
 			}

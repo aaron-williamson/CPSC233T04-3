@@ -152,7 +152,7 @@ public class EntityCombat extends EntityMovable{
 			message+=" "+combatMissMessage;
 		}
 		
-		Game.getGame().getGUI().printLine(getCombatName()+" "+message);
+		Game.getInstance().getGUI().printLine(getCombatName()+" "+message);
 	}
 	
 	/**
@@ -161,7 +161,7 @@ public class EntityCombat extends EntityMovable{
 	 */
 	public void defend(){
 		combatDefense=0.8;
-		Game.getGame().getGUI().printLine(getCombatName()+" "+combatDefendMessage);
+		Game.getInstance().getGUI().printLine(getCombatName()+" "+combatDefendMessage);
 	}
 	
 	/**

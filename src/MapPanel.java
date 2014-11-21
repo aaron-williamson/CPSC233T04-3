@@ -100,7 +100,7 @@ public class MapPanel extends JComponent{
 	 * @param offsetY Y offset for the camera position
 	 */
 	private void drawMap(Graphics g,int offsetX,int offsetY){
-		RPGMap rpgmap=Game.getGame().getMap();
+		RPGMap rpgmap=Game.getInstance().getMap();
 		
 		for(int i=0;i<rpgmap.mapGrid[0].length;i++){
 			for(int j=0;j<rpgmap.mapGrid.length;j++){
@@ -121,7 +121,7 @@ public class MapPanel extends JComponent{
 	 * @param offsetY Y camera position
 	 */
 	private void drawEntities(Graphics g,int offsetX,int offsetY){
-		Entity[] entityArray=Game.getGame().getEntities().getAll();
+		Entity[] entityArray=Game.getInstance().getEntities().getAll();
 		
 		for(int i=0;i<entityArray.length;i++){
 			int xpos=entityArray[i].getX()*tileSize;
@@ -151,11 +151,11 @@ public class MapPanel extends JComponent{
 	}
 	
 	private void drawTitleScreen(Graphics g){
-		Game.getGame().getGUI().disableButton(3);
+		Game.getInstance().getGUI().disableButton(3);
 		drawBlackMask(g);
 		g.setColor(Color.RED);
 		g.setFont(new Font("default", Font.BOLD, 40));
-		g.drawString("    Welcome to "+Game.title, 5, 100);
+		g.drawString("    Welcome to "+Game.GAME_TITLE, 5, 100);
 		g.setFont(new Font("default", Font.BOLD, 16));
 		g.drawString("Controls:", 5, 200);
 		g.drawString("Move Up: (up arrow)(w)", 5, 220);
@@ -174,8 +174,8 @@ public class MapPanel extends JComponent{
 	
 	private void drawHealthBars(Graphics g){
 		drawBlackMask(g);
-		Game.getGame().getCombat().getPlayer().drawHealthBar(g,16,getHeight()-24,getWidth()/3,16,(float)0.9,(float)0.0,(float)0.9);
-		Game.getGame().getCombat().getEnemy().drawHealthBar(g,getWidth()-32-getWidth()/3,getHeight()-24,getWidth()/3,16,(float)0.9,(float)0.0,(float)0.0);
+		Game.getInstance().getCombat().getPlayer().drawHealthBar(g,16,getHeight()-24,getWidth()/3,16,(float)0.9,(float)0.0,(float)0.9);
+		Game.getInstance().getCombat().getEnemy().drawHealthBar(g,getWidth()-32-getWidth()/3,getHeight()-24,getWidth()/3,16,(float)0.9,(float)0.0,(float)0.0);
 	}
 	
 	public boolean titleScreenShown() {
@@ -185,7 +185,7 @@ public class MapPanel extends JComponent{
 	public void setTitleScreenShown(boolean a){
 		titleScreenShown = a;
 
-		Game.getGame().getGUI().enableButton(3);
+		Game.getInstance().getGUI().enableButton(3);
 	}
 	
 	
@@ -193,7 +193,7 @@ public class MapPanel extends JComponent{
 		drawBlackMask(g);
 		g.setColor(Color.RED);
 		g.setFont(new Font("default", Font.BOLD, 20));
-		g.drawString(Game.getGame().getEndmessage(), 220, 220);
+		g.drawString(Game.getInstance().getEndmessage(), 220, 220);
 	}	
 	
 	@Override
@@ -203,7 +203,7 @@ public class MapPanel extends JComponent{
 		int offsetX=0;
 		int offsetY=0;
 		
-		Entity player=Game.getGame().getEntities().getByClass("player")[0];
+		Entity player=Game.getInstance().getEntities().getByClass("player")[0];
 		
 		if(player!=null){
 			offsetX=player.getX()*tileSize-getSize().width/2+tileSize/2;
@@ -220,11 +220,11 @@ public class MapPanel extends JComponent{
 		//Draws the title screen
 		if(titleScreenShown == false){
 			drawTitleScreen(g);
-		}else if(Game.getGame().getCombat().isInCombat()){
+		}else if(Game.getInstance().getCombat().isInCombat()){
 			drawHealthBars(g);
-		}else if(Game.getGame().getGUI().isGamePaused() == true){
+		}else if(Game.getInstance().getGUI().isGamePaused() == true){
 			drawPauseScreen(g);
-		}else if(Game.getGame().isGameEnd() == true){
+		}else if(Game.getInstance().isGameEnd() == true){
 			drawEndScreen(g);
 		}
 	}

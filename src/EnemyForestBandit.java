@@ -23,12 +23,12 @@ public class EnemyForestBandit extends EntityEnemy {
 		chargeStatus=false;
 		int damage=getDamage(defender)*3;
 		defender.inflictDamage(damage);
-		Game.getGame().getGUI().printLine(getCombatName()+" powerfully slashes! You're toast. "+defender.getCombatName()+" takes "+damage+" Damage!");
+		Game.getInstance().getGUI().printLine(getCombatName()+" powerfully slashes! You're toast. "+defender.getCombatName()+" takes "+damage+" Damage!");
 	}
 	
 	private void charge(){
 		chargeStatus=true;
-		Game.getGame().getGUI().printLine(getCombatName()+" charges a powerful blow.");
+		Game.getInstance().getGUI().printLine(getCombatName()+" charges a powerful blow.");
 	}
 	
 	public void doTurn(EntityCombat defender){

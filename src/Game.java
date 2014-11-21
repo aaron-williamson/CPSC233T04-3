@@ -4,9 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Game implements ActionListener{
-	private static Game game;
-	public static String title="Temple Raider"; 
-	private static int timerSpeed=16;//delay in ms between game updates
+	private static Game instance;
+	private static final int GAME_TIMER_SPEED=16;//delay in ms between game updates
+	public static final String GAME_TITLE="Temple Raider"; 
 	
 	private String endmessage="Undefined game over condition";
 	private boolean endgame=false;
@@ -19,45 +19,54 @@ public class Game implements ActionListener{
 	public String playername="NONAME";
 	
 	private Timer timer;
-	
 	private long time=0;
 	
-	Game(){
-		Game.game=this;
-		
+	private Game(){
+		instance=this;
 		//make the entity manager
 		entities=new Entities();
 		
 		//make the combat manager
 		combat=new Combat();
 		
-		//add a player
-		new EntityPlayer(0,0);
-		
-		//make the default map
-		level=-1;
-		loadNextMap();
+		//start a new game when we instantiate the game
+		startNewGame();
 		
 		//make the gui
 		gui=new RPGGUI();
 		
 		//make the timer
-		timer=new Timer(Game.timerSpeed,(ActionListener)this);
-	}
-
-	public void nextMap() {
-		loadNextMap();
+		timer=new Timer(Game.GAME_TIMER_SPEED,(ActionListener)this);
 	}
 	
 	/**
 	 * Get the game instance
 	 * @return
 	 */
-	public static Game getGame(){
-		return Game.game;
+	public static Game getInstance(){
+		if(instance==null){
+			instance=new Game();
+		}
+		return instance;
 	}
 	
-	private void loadNextMap(){
+	public void startNewGame(){
+		//remove any entities that already exist
+		getEntities().removeAll();
+		
+		//add a player
+		new EntityPlayer(0,0);
+				
+		//make the default map
+		level=-1;
+		nextMap();
+	}
+
+	
+	/**
+	 * Loads the next map
+	 */
+	public void nextMap(){
 		Entity[] entityArray=getEntities().getAll();
 		EntityPlayer player=(EntityPlayer)getEntities().getByClass("player")[0];
 		
@@ -85,7 +94,7 @@ public class Game implements ActionListener{
 	 * @return
 	 */
 	public int getTimerSpeed(){
-		return Game.timerSpeed;
+		return Game.GAME_TIMER_SPEED;
 	}
 	
 	/**
@@ -161,25 +170,25 @@ public class Game implements ActionListener{
 	 */
 	public void update(){
 		if(!endgame){
-			time=(time+Game.timerSpeed)%(Long.MAX_VALUE-Game.timerSpeed-1);
+			time=(time+Game.GAME_TIMER_SPEED)%(Long.MAX_VALUE-Game.GAME_TIMER_SPEED-1);
 			//Have the entities think
 			getEntities().allThink();
 			getGUI().redrawMap();
 		}else{
-			Game.getGame().pauseTimer(true);
-			Game.getGame().getGUI().disableButton(0);
-			Game.getGame().getGUI().disableButton(1);
-			Game.getGame().getGUI().disableButton(3);
+			Game.getInstance().pauseTimer(true);
+			Game.getInstance().getGUI().disableButton(0);
+			Game.getInstance().getGUI().disableButton(1);
+			Game.getInstance().getGUI().disableButton(3);
 			getGUI().redrawMap();
 		}
 	}
 	
 	public static void main(String[] args){
-		Game.game=new Game();
+		Game.getInstance();//instantiate the game
 	}
 	
 	public void actionPerformed(ActionEvent event) {
-		Game.getGame().update();
+		Game.getInstance().update();
     }
 	
 	//ends the game, sets lose message

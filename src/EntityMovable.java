@@ -8,8 +8,8 @@ public class EntityMovable extends Entity{
 	public boolean moveTo(int x,int y){
 		boolean domove=false;
 		
-		if(Game.getGame().getMap().isPassable(x,y)){
-			Entity collidedent=Game.getGame().getEntities().getEntInPos(x,y);
+		if(Game.getInstance().getMap().isPassable(x,y)){
+			Entity collidedent=Game.getInstance().getEntities().getEntInPos(x,y);
 			if(collidedent!=null){
 				collidedent.onCollide(this);
 				if(collidedent.isPassable()){
@@ -25,7 +25,7 @@ public class EntityMovable extends Entity{
 			oldY=getY();
 			setPos(x,y);
 			moving=true;
-			setNextThink(Game.getGame().getTime()+Game.getGame().getTimerSpeed()*getMoveSpeed());
+			setNextThink(Game.getInstance().getTime()+Game.getInstance().getTimerSpeed()*getMoveSpeed());
 			return true;
 		}else{
 			return false;
@@ -68,7 +68,7 @@ public class EntityMovable extends Entity{
 	 * @return
 	 */
 	private double getMovementInterp(){
-		return (double)(Game.getGame().getTime()-getNextThink())/(double)(Game.getGame().getTimerSpeed()*getMoveSpeed());
+		return (double)(Game.getInstance().getTime()-getNextThink())/(double)(Game.getInstance().getTimerSpeed()*getMoveSpeed());
 	}
 	
 	/**

@@ -10,8 +10,8 @@ public class Entities{
 	 * @return Entity[] containing all ents
 	 */
 	public Entity[] getAll(){
-		Entity[] entsarray=new Entity[0];
-		return entityList.toArray(entsarray);
+		Entity[] entityArray=new Entity[0];
+		return entityList.toArray(entityArray);
 	}
 	
 	/**
@@ -103,11 +103,34 @@ public class Entities{
 	}
 	
 	/**
+	 * Removes every entity
+	 */
+	public void removeAll(){
+		Entity[] entityArray=getAll();
+		
+		for(int i=0;i<entityArray.length;i++){
+			entityArray[i].remove();
+			entityArray[i]=null;
+		}
+	}
+	
+	public void removeAll(String classid){
+		Entity[] entityArray=getAll();
+		
+		for(int i=0;i<entityArray.length;i++){
+			if(!entityArray[i].getClassID().equals(classid)){
+				entityArray[i].remove();
+				entityArray[i]=null;
+			}
+		}
+	}
+	
+	/**
 	 * Calls Entity.think() for all entities in the entity manager.
 	 */
 	public void allThink(){
 		Entity[] entityArray=getAll();
-		long time=Game.getGame().getTime();
+		long time=Game.getInstance().getTime();
 		for(int i=0;i<entityArray.length;i++){
 			if(entityArray[i].getNextThink()<=time){
 				entityArray[i].think(time);

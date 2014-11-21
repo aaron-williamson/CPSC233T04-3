@@ -13,7 +13,7 @@ public class EntityEnemy extends EntityCombat{
 	//lose the game if the player runs into an enemy
 	public void onCollide(Entity ent){
 		if(ent.getClassID().equals("player")){
-			Game.getGame().getCombat().startCombat((EntityPlayer)ent, (EntityCombat)this, true);
+			Game.getInstance().getCombat().startCombat((EntityPlayer)ent, (EntityCombat)this, true);
 		}
 	};
 	
@@ -22,7 +22,7 @@ public class EntityEnemy extends EntityCombat{
 		super.think(time);
 		
 		//get the nearest player
-		Entity[] playersarray=Game.getGame().getEntities().getByClass("player");
+		Entity[] playersarray=Game.getInstance().getEntities().getByClass("player");
 		Entity target=null;
 		double windist=aggroDistance;
 		for(int i=0;i<playersarray.length;i++){

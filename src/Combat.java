@@ -3,11 +3,11 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 public class Combat implements ActionListener{
-	public static String attackActionCommand="attack";
-	public static String defendActionCommand="defend";
-	public static String cheatActionCommand="cheat";
-	private static String timerActionCommand="timer";
-	private static int timerDelay=1500;
+	public static final String COMBAT_ATTACK_ACTION_CMD="attack";
+	public static final String COMBAT_DEFEND_ACTION_CMD="defend";
+	public static final String COMBAT_CHEAT_ACTION_CMD="cheat";
+	private static final String COMBAT_TIMER_ACTION_CMD="timer";
+	private static final int COMBAT_TIMER_DELAY=1500;
 	private EntityPlayer playerInCombat;
 	private EntityCombat enemyInCombat;
 	private boolean isInCombat=false;
@@ -15,9 +15,9 @@ public class Combat implements ActionListener{
 	private Timer timer;
 	
 	Combat(){
-		timer=new Timer(timerDelay,(ActionListener)this);
-		timer.setActionCommand(timerActionCommand);
-		timer.setInitialDelay(timerDelay);
+		timer=new Timer(COMBAT_TIMER_DELAY,(ActionListener)this);
+		timer.setActionCommand(COMBAT_TIMER_ACTION_CMD);
+		timer.setInitialDelay(COMBAT_TIMER_DELAY);
 		timer.setRepeats(false);
 	}
 	
@@ -55,11 +55,11 @@ public class Combat implements ActionListener{
 		playerInCombat=player;
 		enemyInCombat=enemy;
 		isInCombat=true;
-		Game.getGame().pauseTimer(true);
-		Game.getGame().getGUI().enableButton(0);
-		Game.getGame().getGUI().enableButton(1);
-		Game.getGame().getGUI().disableButton(3);	
-		Game.getGame().getGUI().enableButton(4);	
+		Game.getInstance().pauseTimer(true);
+		Game.getInstance().getGUI().enableButton(0);
+		Game.getInstance().getGUI().enableButton(1);
+		Game.getInstance().getGUI().disableButton(3);	
+		Game.getInstance().getGUI().enableButton(4);	
 
 		playerTurn=playerFirst;
 		String message;
@@ -68,7 +68,7 @@ public class Combat implements ActionListener{
 		}else{
 			message=enemy.getCombatName()+" attacks you! It's their move first.";
 		}
-		Game.getGame().getGUI().printLine(message);
+		Game.getInstance().getGUI().printLine(message);
 		
 		timer.restart();
 		timer.start();
@@ -79,19 +79,19 @@ public class Combat implements ActionListener{
 	 */
 	private void endCombat(){
 		isInCombat=false;
-		Game.getGame().pauseTimer(false);
+		Game.getInstance().pauseTimer(false);
 		timer.stop();
 		
 		if(getEnemy().getHealth()==0){
-			Game.getGame().getGUI().printLine(getPlayer().getCombatName()+" beat "+getEnemy().getCombatName()+", and gained "+getEnemy().getRewardedXP()+"XP!");
+			Game.getInstance().getGUI().printLine(getPlayer().getCombatName()+" beat "+getEnemy().getCombatName()+", and gained "+getEnemy().getRewardedXP()+"XP!");
 			getPlayer().giveXP(getEnemy().getRewardedXP());
 			getEnemy().remove();
-			Game.getGame().getGUI().disableButton(0);
-			Game.getGame().getGUI().disableButton(1);
-			Game.getGame().getGUI().enableButton(3);
-			Game.getGame().getGUI().disableButton(4);
+			Game.getInstance().getGUI().disableButton(0);
+			Game.getInstance().getGUI().disableButton(1);
+			Game.getInstance().getGUI().enableButton(3);
+			Game.getInstance().getGUI().disableButton(4);
 		}else{
-			Game.getGame().loseGame();
+			Game.getInstance().loseGame();
 		}
 	}
 	
@@ -105,7 +105,7 @@ public class Combat implements ActionListener{
 	}
 	
 	public void endTurn(){
-		Game.getGame().getGUI().redrawMap();
+		Game.getInstance().getGUI().redrawMap();
 		playerTurn=!playerTurn;
 		timer.restart();
 	}
@@ -113,7 +113,7 @@ public class Combat implements ActionListener{
 	public void actionPerformed(ActionEvent event) {
 		String command=event.getActionCommand();
 		
-		if(command==timerActionCommand){
+		if(command==COMBAT_TIMER_ACTION_CMD){
 			timer.stop();
 			
 			if(getEnemy().getHealth()==0||getPlayer().getHealth()==0){
@@ -121,14 +121,14 @@ public class Combat implements ActionListener{
 			}else{
 				startTurn();
 			}
-		}else if(playerTurn&&command==defendActionCommand){
+		}else if(playerTurn&&command==COMBAT_DEFEND_ACTION_CMD){
 			getPlayer().defend();
 			endTurn();
-		}else if(playerTurn&&command==attackActionCommand){
+		}else if(playerTurn&&command==COMBAT_ATTACK_ACTION_CMD){
 			getPlayer().attack(getEnemy());
 			endTurn();
-		}else if(command==cheatActionCommand){
-			Game.getGame().getGUI().printLine(getPlayer().getCombatName()+" cheats to win the battle!");
+		}else if(command==COMBAT_CHEAT_ACTION_CMD){
+			Game.getInstance().getGUI().printLine(getPlayer().getCombatName()+" cheats to win the battle!");
 			getEnemy().setHealth(0);
 			endTurn();
 		}

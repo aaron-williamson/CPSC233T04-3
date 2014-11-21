@@ -4,9 +4,9 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class RPGGUI extends JFrame implements KeyListener, ActionListener {
-	private static int mapPanelSizeOffset=180;
-	private static int defaultWidth=800;
-	private static int defaultHeight=600;
+	private static final int MAP_PANEL_SIZE_OFFSET=180;
+	private static final int DEFAULT_WIDTH=800;
+	private static final int DEFAULT_HEIGHT=600;
 	private JTextArea textbox=new JTextArea();
 	private String[] buttonText={"Attack","Defend","Start Game","Pause Game","Cheat"};
 	private int textboxMaxLines=6;
@@ -16,7 +16,7 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 	private boolean gamePaused = false;
 	
     public RPGGUI() {
-    	super(Game.title);
+    	super(Game.GAME_TITLE);
 		
 		//add key listener, make frame focusable so it works properly
 		this.addKeyListener(this);
@@ -28,7 +28,7 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 		
 		//add the map panel
 		mapPanel=new MapPanel();
-		mapPanel.setSize(RPGGUI.defaultWidth,RPGGUI.defaultHeight-RPGGUI.mapPanelSizeOffset);
+		mapPanel.setSize(RPGGUI.DEFAULT_WIDTH,RPGGUI.DEFAULT_HEIGHT-RPGGUI.MAP_PANEL_SIZE_OFFSET);
 		add(mapPanel,BorderLayout.SOUTH);
 		
 		//set up the combat log textbox
@@ -46,24 +46,24 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 			p.add(buttons[i]);
 		}
 		
-		buttons[0].setActionCommand(Combat.attackActionCommand);
-		buttons[0].addActionListener(Game.getGame().getCombat());
+		buttons[0].setActionCommand(Combat.COMBAT_ATTACK_ACTION_CMD);
+		buttons[0].addActionListener(Game.getInstance().getCombat());
 		buttons[0].setEnabled(false);
-		buttons[1].setActionCommand(Combat.defendActionCommand);
-		buttons[1].addActionListener(Game.getGame().getCombat());
+		buttons[1].setActionCommand(Combat.COMBAT_DEFEND_ACTION_CMD);
+		buttons[1].addActionListener(Game.getInstance().getCombat());
 		buttons[1].setEnabled(false);
 		buttons[2].setActionCommand("Start");
 		buttons[2].addActionListener(this);
 		buttons[3].setActionCommand("Pause");
 		buttons[3].addActionListener(this);
-		buttons[4].setActionCommand(Combat.cheatActionCommand);
-		buttons[4].addActionListener(Game.getGame().getCombat());
+		buttons[4].setActionCommand(Combat.COMBAT_CHEAT_ACTION_CMD);
+		buttons[4].addActionListener(Game.getInstance().getCombat());
 		buttons[4].setEnabled(false);
 		
 		p2.add(p,BorderLayout.SOUTH);
 		add(p2,BorderLayout.SOUTH);
 		
-		setPreferredSize(new Dimension(RPGGUI.defaultWidth,RPGGUI.defaultHeight));
+		setPreferredSize(new Dimension(RPGGUI.DEFAULT_WIDTH,RPGGUI.DEFAULT_HEIGHT));
 		
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
@@ -112,7 +112,7 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 	 * Redraws the map panel
 	 */
 	public void redrawMap(){
-		mapPanel.setSize(getSize().width,getSize().height-RPGGUI.mapPanelSizeOffset);
+		mapPanel.setSize(getSize().width,getSize().height-RPGGUI.MAP_PANEL_SIZE_OFFSET);
 		mapPanel.repaint();
 	}
 	
@@ -122,18 +122,18 @@ public class RPGGUI extends JFrame implements KeyListener, ActionListener {
 		if (command == "Start"){
 			printLine("You have started your adventure!");
 			buttons[2].setEnabled(false);
-			Game.getGame().getGUI().getMapPanel().setTitleScreenShown(true);
-			Game.getGame().pauseTimer(false);
+			Game.getInstance().getGUI().getMapPanel().setTitleScreenShown(true);
+			Game.getInstance().pauseTimer(false);
 		}
 		if (command == "Pause"){
-			if(Game.getGame().getCombat().isInCombat() == false && Game.getGame().getGUI().getMapPanel().titleScreenShown()){
+			if(Game.getInstance().getCombat().isInCombat() == false && Game.getInstance().getGUI().getMapPanel().titleScreenShown()){
 				if (gamePaused == false){
-				Game.getGame().pauseTimer(true);
+				Game.getInstance().pauseTimer(true);
 				gamePaused = true;
 				redrawMap();
 				}
 				else{
-				Game.getGame().pauseTimer(false);
+				Game.getInstance().pauseTimer(false);
 				gamePaused = false;
 				}
 			}

@@ -40,14 +40,14 @@ public class EntityPlayer extends EntityCombat{
 		
 		setHealth(getMaxHealth());
 		
-		playerName=JOptionPane.showInputDialog(null,"What is your name?",Game.title,JOptionPane.QUESTION_MESSAGE);
+		playerName=JOptionPane.showInputDialog(null,"What is your name?",Game.GAME_TITLE,JOptionPane.QUESTION_MESSAGE);
 	}
 	
 	public Image getImage(){
 		Image displayImage=animImage[1][0];
 		if(isMoving()){
 			int offset=0;
-			if(Game.getGame().getTime()%200<100){
+			if(Game.getInstance().getTime()%200<100){
 				offset=1;
 			}
 			displayImage=animImage[animationDirection][1+offset];
@@ -60,7 +60,7 @@ public class EntityPlayer extends EntityCombat{
 	
 	public void onCollide(Entity ent){
 		if(ent.getClassID().equals("enemy")){
-			Game.getGame().getCombat().startCombat(this, (EntityCombat)ent, false);
+			Game.getInstance().getCombat().startCombat(this, (EntityCombat)ent, false);
 		}
 	};
 	
@@ -77,16 +77,16 @@ public class EntityPlayer extends EntityCombat{
 	}
 
 	public void levelUp() {
-		Game.getGame().getGUI().printLine("LEVEL UP!");
+		Game.getInstance().getGUI().printLine("LEVEL UP!");
 		++level;
 		combatEndurance += level;
-		Game.getGame().getGUI().printLine("Endurance + " + level + "    Endurance now: " + combatEndurance);
+		Game.getInstance().getGUI().printLine("Endurance + " + level + "    Endurance now: " + combatEndurance);
 		setHealth(getMaxHealth());
-		Game.getGame().getGUI().printLine("You have been healed to max health!" + "    Max health now: " + getMaxHealth());
+		Game.getInstance().getGUI().printLine("You have been healed to max health!" + "    Max health now: " + getMaxHealth());
 		combatStrength += 2 * level;
-		Game.getGame().getGUI().printLine("Strength + " + (2 * level) + "    Strength now: " + combatStrength);
+		Game.getInstance().getGUI().printLine("Strength + " + (2 * level) + "    Strength now: " + combatStrength);
 		combatLuck += level;
-		Game.getGame().getGUI().printLine("Luck + " + level + "    Luck now: " + combatLuck);
+		Game.getInstance().getGUI().printLine("Luck + " + level + "    Luck now: " + combatLuck);
 		setMoveSpeed(6 - (level / 5));
 	}
 
@@ -102,16 +102,16 @@ public class EntityPlayer extends EntityCombat{
 		super.think(time);
 		
 		//I can't use a switch here, huah huah
-		if(Game.getGame().getGUI().isKeyDown(38) || Game.getGame().getGUI().isKeyDown(87)){
+		if(Game.getInstance().getGUI().isKeyDown(38) || Game.getInstance().getGUI().isKeyDown(87)){
 			moveUp();
 			animationDirection=0;
-		}else if(Game.getGame().getGUI().isKeyDown(39) || Game.getGame().getGUI().isKeyDown(68)){
+		}else if(Game.getInstance().getGUI().isKeyDown(39) || Game.getInstance().getGUI().isKeyDown(68)){
 			moveRight();
 			animationDirection=2;
-		}else if(Game.getGame().getGUI().isKeyDown(37) || Game.getGame().getGUI().isKeyDown(65)){
+		}else if(Game.getInstance().getGUI().isKeyDown(37) || Game.getInstance().getGUI().isKeyDown(65)){
 			moveLeft();
 			animationDirection=3;
-		}else if(Game.getGame().getGUI().isKeyDown(40) || Game.getGame().getGUI().isKeyDown(83)){
+		}else if(Game.getInstance().getGUI().isKeyDown(40) || Game.getInstance().getGUI().isKeyDown(83)){
 			moveDown();
 			animationDirection=1;
 		}
