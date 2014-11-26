@@ -1,0 +1,480 @@
+package templeraider.gui;
+import java.util.Random;
+
+import templeraider.combat.enemies.BatLeftRight;
+import templeraider.combat.enemies.BatUpDown;
+import templeraider.combat.enemies.EnemyBarbarian;
+import templeraider.combat.enemies.EnemyBoss;
+import templeraider.combat.enemies.EnemyCultist;
+import templeraider.combat.enemies.EnemyForestBandit;
+import templeraider.combat.enemies.EnemyMummy;
+import templeraider.combat.enemies.EnemyTempleBandit;
+import templeraider.combat.enemies.EnemyTreeBandit;
+import templeraider.combat.enemies.EnemyWolf;
+import templeraider.entity.EntityHealthFountain;
+import templeraider.entity.EntityPlayerSpawn;
+import templeraider.entity.EntityStairs;
+
+public class RPGMap {
+	
+	public int[][] mapGrid;
+	
+	public RPGMap(int level){
+		switch(level){
+		case 0:
+			makeMap1();
+			break;
+		case 1:
+			makeMap2();
+			break;
+		case 2:
+			makeMap3();
+			break;
+		case 3:
+			makeMap4();
+			break;
+		}
+	}
+
+	//converts the map from String to int and places it in the mapGrid
+	private void stringToMap(String str , boolean outside){
+		String[] lines= str.split("\n");
+		
+		mapGrid=new int[lines.length+65][lines[0].length()+65];
+		Random rand=new Random();
+		
+		
+		for(int j=0;j<lines.length;j++){
+			for(int i=0;i<lines[0].length();i++){
+				if(outside){
+					if(lines[j].charAt(i) == "0".charAt(0))
+						mapGrid[j+31][i+31] = 30;//tree
+					else if(lines[j].charAt(i) == "1".charAt(0))
+						mapGrid[j+31][i+31] = 14;//rock
+					else if(lines[j].charAt(i) == "5".charAt(0)){
+						int grassTile=25;
+						
+						if(rand.nextDouble()<0.1){
+							grassTile=26;
+						}else if(rand.nextDouble()<0.4){
+							grassTile=27;
+						}
+						
+						mapGrid[j+31][i+31] = grassTile;//grass
+					}else if(lines[j].charAt(i) == "6".charAt(0))
+						mapGrid[j+31][i+31] = 5;//stone
+					else if(lines[j].charAt(i) == "4".charAt(0))
+						mapGrid[j+31][i+31] = 63;//temple
+					else if(lines[j].charAt(i) == "9".charAt(0))
+						mapGrid[j+31][i+31] = 9;//stairs
+					else
+						mapGrid[j+31][i+31] = 0;
+				}
+				else{
+					if(lines[j].charAt(i) == "0".charAt(0)){
+						mapGrid[j+31][i+31] = 63;
+					}else if(lines[j].charAt(i) == "3".charAt(0)){
+						mapGrid[j+31][i+31] = 6;
+					}else if(lines[j].charAt(i) == "5".charAt(0)){
+						mapGrid[j+31][i+31] = 5;//floor
+					}else if(lines[j].charAt(i) == "9".charAt(0)){
+						mapGrid[j+31][i+31] = 9;//stairs
+					}else if(lines[j].charAt(i) == "8".charAt(0)){
+						mapGrid[j+31][i+31] = 8;//stairs
+					}else if(lines[j].charAt(i) == "7".charAt(0)){
+						mapGrid[j+31][i+31] = 7;//carpet
+					}else if(lines[j].charAt(i) == "6".charAt(0)){
+						mapGrid[j+31][i+31] = 6;//carpet
+					}
+				}
+			}
+		}
+		if(outside){
+			outsideImageAssigner();
+		}else{
+			insideImageAssigner();
+		}
+		
+	}
+	//fills in the proper images
+	private void insideImageAssigner(){
+		int[][] newMap=new int[mapGrid.length][mapGrid[0].length];
+		
+		for(int i=0;i<newMap.length;i++){
+			for(int j=0;j<newMap[0].length;j++){
+				newMap[i][j]=mapGrid[i][j];
+			}
+		}
+		
+		for(int i=31;i<newMap.length-31;i++){
+			for(int j=31;j<newMap[0].length-31;j++){
+				//walls
+				if(mapGrid[i][j]==63){
+					
+					if(mapGrid[i-1][j]==63&&mapGrid[i][j+1]==63&&mapGrid[i+1][j]==63&&mapGrid[i][j-1]==63){
+						newMap[i][j]=60;//uprightdownleft
+					}else if(mapGrid[i-1][j]==63&&mapGrid[i][j+1]==63&&mapGrid[i+1][j]!=63&&mapGrid[i][j-1]!=63){
+						newMap[i][j]=45;//bottomleft
+					}else if(mapGrid[i-1][j]==63&&mapGrid[i][j+1]==63&&mapGrid[i+1][j]!=63&&mapGrid[i][j-1]==63){
+						newMap[i][j]=46;//bottom
+					}else if(mapGrid[i-1][j]==63&&mapGrid[i][j+1]!=63&&mapGrid[i+1][j]!=63&&mapGrid[i][j-1]==63){
+						newMap[i][j]=47;//bottomright
+					}else if(mapGrid[i-1][j]==63&&mapGrid[i][j+1]!=63&&mapGrid[i+1][j]==63&&mapGrid[i][j-1]==63){
+						newMap[i][j]=44;//right
+					}else if(mapGrid[i-1][j]!=63&&mapGrid[i][j+1]!=63&&mapGrid[i+1][j]==63&&mapGrid[i][j-1]==63){
+						newMap[i][j]=42;//topright
+					}else if(mapGrid[i-1][j]!=63&&mapGrid[i][j+1]==63&&mapGrid[i+1][j]==63&&mapGrid[i][j-1]==63){
+						newMap[i][j]=41;//top
+					}else if(mapGrid[i-1][j]!=63&&mapGrid[i][j+1]==63&&mapGrid[i+1][j]==63&&mapGrid[i][j-1]!=63){
+						newMap[i][j]=40;//topleft
+					}else if(mapGrid[i-1][j]==63&&mapGrid[i][j+1]==63&&mapGrid[i+1][j]==63&&mapGrid[i][j-1]!=63){
+						newMap[i][j]=43;//left
+					}else if(mapGrid[i-1][j]!=63&&mapGrid[i][j+1]!=63&&mapGrid[i+1][j]==63&&mapGrid[i][j-1]!=63){
+						newMap[i][j]=56;//captop
+					}else if(mapGrid[i-1][j]!=63&&mapGrid[i][j+1]==63&&mapGrid[i+1][j]!=63&&mapGrid[i][j-1]!=63){
+						newMap[i][j]=57;//capleft
+					}else if(mapGrid[i-1][j]==63&&mapGrid[i][j+1]!=63&&mapGrid[i+1][j]!=63&&mapGrid[i][j-1]!=63){
+						newMap[i][j]=59;//capbottom
+					}else if(mapGrid[i-1][j]!=63&&mapGrid[i][j+1]!=63&&mapGrid[i+1][j]!=63&&mapGrid[i][j-1]==63){
+						newMap[i][j]=58;//capright
+					}else if(mapGrid[i-1][j]!=63&&mapGrid[i][j+1]!=63&&mapGrid[i+1][j]!=63&&mapGrid[i][j-1]!=63){
+						newMap[i][j]=23;//capsingle
+					}else if(mapGrid[i-1][j]==63&&mapGrid[i][j+1]!=63&&mapGrid[i+1][j]==63&&mapGrid[i][j-1]!=63){
+						newMap[i][j]=62;//verticalwall
+					}else if(mapGrid[i-1][j]!=63&&mapGrid[i][j+1]==63&&mapGrid[i+1][j]!=63&&mapGrid[i][j-1]==63){
+						newMap[i][j]=61;//horizontalwall
+					}
+				}
+			}
+		}	
+		
+		for(int i=0;i<newMap.length;i++){
+			for(int j=0;j<newMap[0].length;j++){
+				if(newMap[i][j]==0){
+					newMap[i][j]=60;
+				}
+			}
+		}
+		
+		mapGrid=newMap;
+		
+	}
+	
+	private void outsideImageAssigner(){
+		int[][] newMap=new int[mapGrid.length][mapGrid[0].length];
+		
+		for(int i=0;i<newMap.length;i++){
+			for(int j=0;j<newMap[0].length;j++){
+				newMap[i][j]=mapGrid[i][j];
+			}
+		}
+		
+		for(int i=31;i<newMap.length-31;i++){
+			for(int j=31;j<newMap[0].length-31;j++){
+				//trees
+				if(mapGrid[i][j]==30){
+					//uprughtdownleft
+					if(mapGrid[i-1][j]==30&&mapGrid[i][j+1]==30&&mapGrid[i+1][j]!=30&&mapGrid[i][j-1]!=30){
+						newMap[i][j]=33;//bottomleft
+					}else if(mapGrid[i-1][j]==30&&mapGrid[i][j+1]==30&&mapGrid[i+1][j]!=30&&mapGrid[i][j-1]==30){
+						newMap[i][j]=31;//bottom
+					}else if(mapGrid[i-1][j]==30&&mapGrid[i][j+1]!=30&&mapGrid[i+1][j]!=30&&mapGrid[i][j-1]==30){
+						newMap[i][j]=33;//bottomright
+					}else if(mapGrid[i-1][j]==30&&mapGrid[i][j+1]!=30&&mapGrid[i+1][j]==30&&mapGrid[i][j-1]==30){
+						newMap[i][j]=32;//right
+					}else if(mapGrid[i-1][j]!=30&&mapGrid[i][j+1]!=30&&mapGrid[i+1][j]==30&&mapGrid[i][j-1]==30){
+						newMap[i][j]=33;//topright
+					}else if(mapGrid[i-1][j]!=30&&mapGrid[i][j+1]==30&&mapGrid[i+1][j]==30&&mapGrid[i][j-1]==30){
+						newMap[i][j]=31;//top
+					}else if(mapGrid[i-1][j]!=30&&mapGrid[i][j+1]==30&&mapGrid[i+1][j]==30&&mapGrid[i][j-1]!=30){
+						newMap[i][j]=33;//topleft
+					}else if(mapGrid[i-1][j]==30&&mapGrid[i][j+1]==30&&mapGrid[i+1][j]==30&&mapGrid[i][j-1]!=30){
+						newMap[i][j]=32;//left
+					}
+				}
+				//rock
+				if(mapGrid[i][j]==14){
+					//uprughtdownleft
+					if(mapGrid[i-1][j]==14&&mapGrid[i][j+1]==14&&mapGrid[i+1][j]!=14&&mapGrid[i][j-1]!=14){
+						newMap[i][j]=16;//bottomleft
+					}else if(mapGrid[i-1][j]==14&&mapGrid[i][j+1]==14&&mapGrid[i+1][j]!=14&&mapGrid[i][j-1]==14){
+						newMap[i][j]=17;//bottom
+					}else if(mapGrid[i-1][j]==14&&mapGrid[i][j+1]!=14&&mapGrid[i+1][j]!=14&&mapGrid[i][j-1]==14){
+						newMap[i][j]=18;//bottomright
+					}else if(mapGrid[i-1][j]==14&&mapGrid[i][j+1]!=14&&mapGrid[i+1][j]==14&&mapGrid[i][j-1]==14){
+						newMap[i][j]=15;//right
+					}else if(mapGrid[i-1][j]!=14&&mapGrid[i][j+1]!=14&&mapGrid[i+1][j]==14&&mapGrid[i][j-1]==14){
+						newMap[i][j]=12;//topright
+					}else if(mapGrid[i-1][j]!=14&&mapGrid[i][j+1]==14&&mapGrid[i+1][j]==14&&mapGrid[i][j-1]==14){
+						newMap[i][j]=11;//top
+					}else if(mapGrid[i-1][j]!=14&&mapGrid[i][j+1]==14&&mapGrid[i+1][j]==14&&mapGrid[i][j-1]!=14){
+						newMap[i][j]=10;//topleft
+					}else if(mapGrid[i-1][j]==14&&mapGrid[i][j+1]==14&&mapGrid[i+1][j]==14&&mapGrid[i][j-1]!=14){
+						newMap[i][j]=13;//left
+					}else if(mapGrid[i-1][j]!=14&&mapGrid[i][j+1]!=14&&mapGrid[i+1][j]==14&&mapGrid[i][j-1]!=14){
+						newMap[i][j]=19;//captop
+					}else if(mapGrid[i-1][j]!=14&&mapGrid[i][j+1]==14&&mapGrid[i+1][j]!=14&&mapGrid[i][j-1]!=14){
+						newMap[i][j]=20;//capleft
+					}else if(mapGrid[i-1][j]==14&&mapGrid[i][j+1]!=14&&mapGrid[i+1][j]!=14&&mapGrid[i][j-1]!=14){
+						newMap[i][j]=22;//capbottom
+					}else if(mapGrid[i-1][j]!=14&&mapGrid[i][j+1]!=14&&mapGrid[i+1][j]!=14&&mapGrid[i][j-1]==14){
+						newMap[i][j]=21;//capright
+					}else if(mapGrid[i-1][j]!=14&&mapGrid[i][j+1]!=14&&mapGrid[i+1][j]!=14&&mapGrid[i][j-1]!=14){
+						newMap[i][j]=23;//capsingle
+					}else if(mapGrid[i-1][j]==14&&mapGrid[i][j+1]!=14&&mapGrid[i+1][j]==14&&mapGrid[i][j-1]!=14){
+						newMap[i][j]=28;//verticalwall
+					}else if(mapGrid[i-1][j]!=14&&mapGrid[i][j+1]==14&&mapGrid[i+1][j]!=14&&mapGrid[i][j-1]==14){
+						newMap[i][j]=29;//horizontalwall
+					}
+				}
+			}
+		}
+		
+		for(int i=0;i<newMap.length;i++){
+			for(int j=0;j<newMap[0].length;j++){
+				if(newMap[i][j]==0){
+					newMap[i][j]=30;
+				}
+			}
+		}
+		
+		mapGrid=newMap;
+		
+	}
+
+	//makes map 1
+	private void makeMap1(){
+		String map1=
+		"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\n"
+	   +"0555555000000000011111000000000555555500000000000005555550000000000000000000000000000000000000000000\n"
+	   +"0555555550000000011110000000000000005500000000055555555555500100000000555555555000000000000000000000\n"
+	   +"0555555555000000000111110000000000005500000055555555555000001115555555550000000000000000000000000000\n"
+	   +"0555555555500000000000000000000000005500000055555555500000000100000555555555000000000000000000000000\n"
+	   +"0555555555550000000000555555550000005500000055555500000000000000000555555550000000000000055555500000\n"
+	   +"0555555555550000000000000555555555555555555555555555555550000000000555555550000000000055555555000000\n"
+	   +"0555555555555000000000000005555555555555555555555555555555000000005555555555555555555555555500000000\n"
+	   +"0555555555555500000000000005555555555555555555555555555555000000555555555555555555555555500000000000\n"
+	   +"0555555555555500000000000000000555555555555555555555555555000000005555555555500000555550000000000444\n"
+	   +"0555555555555550000011111110000000055555555555555555555555500005555555000000000055555110000000444444\n"
+	   +"0555555555555550000000111111111100055555555555555555550000000011111550000000005555111110000004444444\n"
+	   +"0555111115555550000000011111111110055555555555555111100000000011111000000005555511111106660044444444\n"
+	   +"0555511115555555500001111111000000005555555555500011110000000000000000000555555111116666666666666669\n"
+	   +"0555111111111555555555555555555555555551555555555511111555555555555555055555000001111111666544444444\n"
+	   +"0555111155555555555555555555555555555551155555555555555555555555555555555555555551111111666554444444\n"
+	   +"0555111155555555555555555555555555555555555555555555555555555555555555555555555551111100666555444444\n"
+	   +"0555551111155555555555555555555555555555555555555555551111115555555555555555555501111111166555550444\n"
+	   +"0555111111555555555555551111155555555550005555555555511111155555555550000000000011111111666555500000\n"
+	   +"0555111111555555555555511111115555555550011555555555551111155555555500000000000000001111555550000000\n"
+	   +"0555111111155555555551111111111555555555555555555055555555555555555000000000000000000005555555000000\n"
+	   +"0551111555555555555555111111115555555555555555555555555555555551111100000000000000000005555555500000\n"
+	   +"0551111155555555555555511111115555555551155555155555555555555555111111555555555555555555555000000000\n"
+	   +"0551111155555555555555555511155555555555555555555555555555555555555555555555555555555555555555000000\n"
+	   +"0555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555500000\n"
+	   +"0555555555555555555555555555555555555555551155555555555555555555555555555555555555555555511115000000\n"
+	   +"0555555555555555555555555155555555555555555155555555555555511555555555555555555555555555555111110000\n"
+	   +"0555555555555555555555555555555555555555555555555550555555111110000000000000000000000000000000000000\n"
+	   +"0555555555111111115555555555555555555555555555555555555551111100000000000000000000000000000000000000\n"
+	   +"0000000000011111111100000000000000000000000000000000000001111100000000000000000000000000000000000000\n"
+		;
+		 
+		stringToMap(map1 , true);
+		new EntityPlayerSpawn(33,33);
+		new EntityStairs(130,44);
+		new EnemyForestBandit(34,55);
+		new EnemyForestBandit(38,52);
+		new EnemyForestBandit(58,48);
+		new EnemyForestBandit(71,45);
+		new EnemyForestBandit(57,57);
+		new EnemyForestBandit(73,57);
+		new EnemyForestBandit(79,43);
+		new EnemyForestBandit(62,32);
+		new EnemyForestBandit(58,39);
+		new EnemyForestBandit(121,57);
+		new EnemyForestBandit(115,44);
+		new EnemyForestBandit(115,39);
+		new EnemyWolf(100,39);
+		new EnemyWolf(108,46);
+		new EnemyWolf(70,51);
+		new EnemyWolf(67,36);
+		new EnemyTreeBandit(89,33);
+		new EnemyTreeBandit(125,36);
+		new EnemyTreeBandit(122,45);
+		new EnemyTreeBandit(107,55);
+		new EntityHealthFountain(37,32);
+		new EntityHealthFountain(64,32);
+		new EntityHealthFountain(98,55);
+	
+	}
+	//makes map 2
+	private void makeMap2(){
+		String map2=
+		"0000000000000000000000000000000000000000000000000000\n"
+	   +"0555555555555555555555555595000000050000000055555550\n"
+	   +"0500000000000000000000000555000000050555550000005500\n"
+	   +"0505555555555500000005005555555555555500050555555500\n"
+	   +"0500000555555555550005005000005000000500000500000500\n"
+	   +"0500050000050000000005005005555555000500000500000550\n"
+	   +"0500550000555555555555005000000000055555555555555550\n"
+	   +"0500500000550000005000000055555555550000005000000500\n"
+	   +"0500555555550055555555555550000000550000555000555550\n"
+	   +"0500000000550000000000000000000000000000000000000000\n"
+	   +"0505550000555555555555555555555555555555555555555500\n"
+	   +"0500055555555555555555555555555555555555555555555500\n"
+	   +"0500050000000000000000000000000550000000000000005500\n"
+	   +"0550055555000000000000000000000050055555555555555500\n"
+	   +"0500000005055555555555555555555050055555555555555500\n"
+	   +"0505555505055555555555555555555055055000000000005000\n"
+	   +"0500000505050000000000500000055005055000055550005050\n"
+	   +"0500000505055555550000500000055005055005550050005050\n"
+	   +"0500000500000000550000555500055005055000000050005050\n"
+	   +"0505555555555550500055500550055005055555555550005050\n"
+	   +"0505000000000000500000000050055055055000000050005050\n"
+	   +"0505005555555555555555555050055050055000000000005050\n"
+	   +"0505005000000000000000050055055050055555555555505050\n"
+	   +"0505005000555555555000000050055050055555555555500050\n"
+	   +"0505005000500000000055555550055055000050000000500550\n"
+	   +"0505050000500000555550005000550005555055000000500500\n"
+	   +"0505550000500000000000000000055000000000000000500500\n"
+	   +"0555855555555555555555555555555555555555555000505550\n"
+	   +"0005550000000500000055000000000500000050000000500050\n"
+	   +"0005000000000500000055555500000500000050000000500050\n"
+	   +"0005000000000500000000000005555500000005555555505550\n"
+	   +"0005000055555505555555555555000000000000000000500050\n"
+	   +"0005000000055005005005000005000000000000000000500050\n"
+	   +"0005000000055005005005500005555555555555555555500050\n"
+	   +"0005555555055005555000555500005000000000000000000050\n"
+	   +"0005000500000005000000000500005000005055555000000050\n"
+	   +"0055000555555505555555550555505000005050000000000050\n"
+	   +"0050000000000005500000050000505555555055555555555550\n"
+	   +"0055555500055555500000050000000000000000000000000050\n"
+	   +"0000000500000000500000055555555555555555555555555050\n"
+	   +"0000000500000000555550050000500000000000055000005050\n"
+	   +"0005555555555550000050055500500000055550005550555050\n"
+	   +"0005005000000050000050005500555555550055000000005050\n"
+	   +"0005000005555550000000505500000500000000000000055050\n"
+	   +"0005550055000000055550500555550550000005555555550050\n"
+	   +"0000000550000000000050000000000055000000500000000050\n"
+	   +"0000005500000000000055555555555550000000500000000550\n"
+	   +"0000005000000000000000000000005000005555500055555500\n"
+	   +"0000555555555555555555555500005000000000500050000000\n"
+	   +"0055500000050000000000000500000000000000555555550000\n"
+	   +"0550500000055555555500000555555555555555500000055550\n"
+	   +"0000000000000000000000000000000000000000000000000000\n"
+		;
+		
+		stringToMap(map2 , false);
+		new EntityPlayerSpawn(35,58);
+		new EntityStairs(57,32);
+		new EnemyMummy(56,60);
+		new EnemyMummy(48,79);
+		new BatUpDown(71,53);
+		new BatLeftRight(66,50);
+		new BatLeftRight(81,58);
+		new BatLeftRight(81,61);
+		new EnemyTempleBandit(62,43);
+		new EnemyTempleBandit(42,35);
+		new EnemyTempleBandit(79,46);
+		new EnemyTempleBandit(77,61);
+		new EnemyTempleBandit(78,80);
+		new EntityHealthFountain(34,34);
+		new EntityHealthFountain(81,47);
+		
+		
+		
+		
+		
+		
+		
+	}
+	//makes map 3
+	private void makeMap3(){
+		String map3=
+		"0000000000000000000000000000000\n"
+	   +"0555555555557668667555555555550\n"
+	   +"0555500055557666667555500055550\n"
+	   +"0555500055557666667555500055550\n"
+	   +"0555500055557666667555500055550\n"
+	   +"0555555555557666667555555555550\n"
+	   +"0555555555557666667555555555550\n"
+	   +"0555555555557666667555555555550\n"
+	   +"0555500055557666667555500055550\n"
+	   +"0555500055557666667555500055550\n"
+	   +"0555500055557666667555500055550\n"
+	   +"0555555555557666667555555555550\n"
+	   +"0555555555557666667555555555550\n"
+	   +"0555555555557666667555555555550\n"
+	   +"0555500055557666667555500055550\n"
+	   +"0555500055557666667555500055550\n"
+	   +"0555500055557666667555500055550\n"
+	   +"0555555555557666667555555555550\n"
+	   +"0555555555557666667555555555550\n"
+	   +"0555555555557666667555555555550\n"
+	   +"0555500055557666667555500055550\n"
+	   +"0555500055557666667555500055550\n"
+	   +"0555500055557666667555500055550\n"
+	   +"0555555555557666667555555555550\n"
+	   +"0555555555557666667555555555550\n"
+	   +"0555555555557666667555555555550\n"
+	   +"0555500055557666667555500055550\n"
+	   +"0555500055557666667555500055550\n"
+	   +"0555500055557666667555500055550\n"
+	   +"0555555555557666667555555555550\n"
+	   +"0555555555550009000555555555550\n"
+	   +"0000000000000000000000000000000\n"
+		;
+		
+		stringToMap(map3 , false);
+		new EntityPlayerSpawn(46,61);
+		new EntityStairs(46,32);
+		new EnemyCultist(52,58);
+		new EnemyCultist(40,52);
+		new EnemyCultist(52,46);
+		new EnemyCultist(40,40);
+		new EnemyCultist(52,34);
+		new EnemyCultist(40,34);
+		new EnemyBarbarian(32,32);
+		new EnemyBarbarian(35,40);
+		new EnemyBarbarian(35,46);
+		new EnemyBarbarian(35,59);
+		new EnemyBarbarian(57,57);
+		new EnemyBarbarian(57,46);
+		new EnemyBarbarian(60,32);
+		new EntityHealthFountain(46,34);
+		new EntityHealthFountain(32,61);
+	}
+	//makes map 4
+	private void makeMap4(){
+		String map4=
+		"0000000000000\n"	
+	   +"0000033300000\n"
+	   +"0576636366750\n"
+	   +"0576666666750\n"
+	   +"0576666666750\n"
+	   +"0576666666750\n"
+	   +"0576666666750\n"
+	   +"0576666666750\n"
+	   +"0576666666750\n"
+	   +"0557666667550\n"
+	   +"0055768675500\n"
+	   +"0000000000000\n"
+		;
+		
+		stringToMap(map4 , false);
+		new EntityPlayerSpawn(37,41);
+		new EnemyBoss(37,32);
+
+	}
+
+	/**
+	 * Returns true if a position on the map is passable or not
+	 * @param x coordinate
+	 * @param y coordinate
+	 * @return boolean true if position on map is passable
+	 */
+	public boolean isPassable(int x,int y){
+		if((5 <= mapGrid[y][x] && mapGrid[y][x] <= 9) || (mapGrid[y][x] >= 25 && mapGrid[y][x]<=27))
+			return true;
+		else
+			return false;
+	}
+}
