@@ -21,7 +21,10 @@ import templeraider.entity.EntityStairs;
 public class RPGMap {
 	
 	public int[][] mapGrid;
-	
+	/**
+	 * Constructor: takes level as int and crates and moves the player to the new map
+	 * @param int level
+	 */
 	public RPGMap(int level){
 		switch(level){
 		case 0:
@@ -38,7 +41,11 @@ public class RPGMap {
 			break;
 		}
 	}
-	
+	/**
+	 * Returns true if a position on the map is passable or not
+	 * @param String file's name
+	 * @return String the map as a string
+	 */
 	private String readFile(String fileName) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		try {
@@ -58,14 +65,18 @@ public class RPGMap {
 	}
 
 	
-	//converts the map from String to int and places it in the mapGrid
+	/**
+	 * converts the map from String to int and places it in the mapGrid
+	 * @param String the map as a string
+	 * @param boolean true if the map is an outside map
+	 */
 	private void stringToMap(String str , boolean outside){
 		String[] lines= str.split("\n");
 		
-		mapGrid=new int[lines.length+65][lines[0].length()+65];
+		mapGrid=new int[lines.length+65][lines[0].length()+65]; //the map is made extra large to add a boarder
 		Random rand=new Random();
 		
-		
+		//Note: Because of the expanted boarder the new corner of the map is 31X31
 		for(int j=0;j<lines.length;j++){
 			for(int i=0;i<lines[0].length();i++){
 				if(outside){
@@ -75,7 +86,7 @@ public class RPGMap {
 						mapGrid[j+31][i+31] = 14;//rock
 					else if(lines[j].charAt(i) == "5".charAt(0)){
 						int grassTile=25;
-						
+						//these ramdomize the grass tiles to add some depth
 						if(rand.nextDouble()<0.1){
 							grassTile=26;
 						}else if(rand.nextDouble()<0.4){
@@ -92,7 +103,7 @@ public class RPGMap {
 					else
 						mapGrid[j+31][i+31] = 0;
 				}
-				else{
+				else{ //if the map isn't outside it is assumed to be in the temple
 					if(lines[j].charAt(i) == "0".charAt(0)){
 						mapGrid[j+31][i+31] = 63;
 					}else if(lines[j].charAt(i) == "3".charAt(0)){
@@ -111,6 +122,7 @@ public class RPGMap {
 				}
 			}
 		}
+		// this calls the smoothing method
 		if(outside){
 			outsideImageAssigner();
 		}else{
@@ -118,10 +130,12 @@ public class RPGMap {
 		}
 		
 	}
-	//fills in the proper images
+	/**
+	 * This fills in the special images like corners for the inside levels
+	 */
 	private void insideImageAssigner(){
+		//copies the map so we can quickly assign the new images
 		int[][] newMap=new int[mapGrid.length][mapGrid[0].length];
-		
 		for(int i=0;i<newMap.length;i++){
 			for(int j=0;j<newMap[0].length;j++){
 				newMap[i][j]=mapGrid[i][j];
@@ -169,7 +183,7 @@ public class RPGMap {
 				}
 			}
 		}	
-		
+		//switches the out line areas to black tiles
 		for(int i=0;i<newMap.length;i++){
 			for(int j=0;j<newMap[0].length;j++){
 				if(newMap[i][j]==0){
@@ -177,14 +191,16 @@ public class RPGMap {
 				}
 			}
 		}
-		
+		//over writes the mapGrid with the new smoothed map
 		mapGrid=newMap;
 		
 	}
-	
+	/**
+	 * This fills in the special images like corners for the out door levels
+	 */
 	private void outsideImageAssigner(){
+		//copies the map so we can quickly assign the new images
 		int[][] newMap=new int[mapGrid.length][mapGrid[0].length];
-		
 		for(int i=0;i<newMap.length;i++){
 			for(int j=0;j<newMap[0].length;j++){
 				newMap[i][j]=mapGrid[i][j];
@@ -251,7 +267,7 @@ public class RPGMap {
 				}
 			}
 		}
-		
+		//fills in the boarder with trees so it looks like the forest goes on forever
 		for(int i=0;i<newMap.length;i++){
 			for(int j=0;j<newMap[0].length;j++){
 				if(newMap[i][j]==0){
@@ -259,16 +275,20 @@ public class RPGMap {
 				}
 			}
 		}
-		
+		//over writes the mapGrid with the new smoothed map
 		mapGrid=newMap;
 		
 	}
 
-	//makes map 1
+	/**
+	 * makes map 1 when called
+	 */
 	private void makeMap1(){
 		try{
 			String map1=readFile("templeraider/maps/map1.txt");
+			//calls the converter from string to 2D int array
 			stringToMap(map1 , true);
+			//adds the Entities to the map at the (x,Y) coordinates
 			new EntityPlayerSpawn(33,33);
 			new EntityStairs(130,44);
 			new EnemyForestBandit(34,55);
@@ -300,11 +320,15 @@ public class RPGMap {
 		 }
 	
 	}
-	//makes map 2
+	/**
+	 * makes map 2 when called
+	 */
 	private void makeMap2(){
 		try{
 			String map2=readFile("templeraider/maps/map2.txt");
+			//calls the converter from string to 2D int array
 			stringToMap(map2 , false);
+			//adds the Entities to the map at the (x,Y) coordinates
 			new EntityPlayerSpawn(35,58);
 			new EntityStairs(57,32);
 			new EnemyMummy(56,60);
@@ -326,11 +350,15 @@ public class RPGMap {
 		 }
 		
 	}
-	//makes map 3
+	/**
+	 * makes map 3 when called 
+	 */
 	private void makeMap3(){
 		try{
 			String map3=readFile("templeraider/maps/map3.txt");
+			//calls the converter from string to 2D int array
 			stringToMap(map3 , false);
+			//adds the Entities to the map at the (x,Y) coordinates
 			new EntityPlayerSpawn(46,61);
 			new EntityStairs(46,32);
 			new EnemyCultist(52,58);
@@ -354,11 +382,15 @@ public class RPGMap {
 		 }
 	
 	}
-	//makes map 4
+	/**
+	 * makes map 4 when called
+	 */
 	private void makeMap4(){
 		try{
 			String map4=readFile("templeraider/maps/map4.txt");
+			//calls the converter from string to 2D int array
 			stringToMap(map4 , false);
+			//adds the Entities to the map at the (x,Y) coordinates
 			new EntityPlayerSpawn(37,41);
 			new EnemyBoss(37,32);
 		}
