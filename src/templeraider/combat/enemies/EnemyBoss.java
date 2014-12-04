@@ -4,7 +4,17 @@ import java.awt.*;
 import templeraider.Game;
 import templeraider.combat.EntityEnemy;
 
+/**
+ * The boss enemy for Temple Raider. Doesn't move but is extremely strong in combat
+ */
 public class EnemyBoss extends EntityEnemy {
+	/**
+	 * Constructor - creates a boss enemy at the provided coordinates and sets
+	 * all parameters for the boss
+	 * 
+	 * @param xcoord desired x-coordinate
+	 * @param ycoord desired y-coordinate
+	 */
 	public EnemyBoss(int xcoord, int ycoord) {
 		super(xcoord, ycoord);
 		combatEndurance = 20;
@@ -19,9 +29,16 @@ public class EnemyBoss extends EntityEnemy {
 		defaultImage = Toolkit.getDefaultToolkit().getImage("templeraider/img/boss/south.png");
 	}
 
+	/**
+	 * The bosses AI - empty so that the boss doesn't move
+	 * @param time the game time
+	 */
 	public void think(long time){
 	}
-
+	
+	/**
+	 * The remove function for the boss, upon removing the boss win the game
+	 */
 	public void remove() {
 		super.remove();
 		Game.getInstance().winGame();

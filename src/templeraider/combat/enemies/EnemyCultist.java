@@ -3,7 +3,17 @@ import java.awt.*;
 
 import templeraider.combat.EntityEnemy;
 
+/**
+ * The cultist enemy for Temple Raider, chases the player at a higher distance
+ * than the standard bandit, and is stronger in combat.
+ */
 public class EnemyCultist extends EntityEnemy {
+	/**
+	 * Constructor - creates a cultist at the desired coordinates and sets
+	 * all parameters appropriately
+	 * @param xcoord desired x-coordinate
+	 * @param ycoord desired y-coordinate
+	 */
 	public EnemyCultist(int xcoord, int ycoord) {
 		super(xcoord, ycoord);
 		combatEndurance = 8;

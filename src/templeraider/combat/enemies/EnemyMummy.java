@@ -4,10 +4,21 @@ import java.util.Random;
 
 import templeraider.combat.EntityEnemy;
 
+/**
+ * The mummy enemy for Temple Raider, stumbles around in random directions,
+ * fairly strong in combat.
+ */
 public class EnemyMummy extends EntityEnemy {
-
+	
+	// Random generator for the AI
 	Random rand = new Random();
 
+	/**
+	 * Constructor creates a mummy at the desired coordinates and
+	 * sets all parameters accordingly
+	 * @param xcoord the desired x-coordinate
+	 * @param ycoord the desired y-coordinate
+	 */
 	public EnemyMummy(int xcoord, int ycoord) {
 		super(xcoord, ycoord);
 		combatEndurance = 10;
@@ -23,6 +34,11 @@ public class EnemyMummy extends EntityEnemy {
 		defaultImage = Toolkit.getDefaultToolkit().getImage("templeraider/img/mummy/south.png");
 	}
 
+	/**
+	 * Overrides the AI for the mummy so it merely moves in random directions instead of
+	 * chasing the player
+	 * @param time the game time
+	 */
 	public void think(long time){
 		int direction = rand.nextInt(4);
 
