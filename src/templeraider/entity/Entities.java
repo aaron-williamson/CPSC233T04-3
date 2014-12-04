@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import templeraider.Game;
-//this is mostly entity utility functions
+
 public class Entities{
 	private List<Entity> entityList=new ArrayList<Entity>();
 	
@@ -25,6 +25,7 @@ public class Entities{
 		int n=0;
 		int size=entityList.size();
 		
+		//increment n if the entity class matches the supplied classid
 		for(int i=0;i<size;i++){
 			if(classid.equalsIgnoreCase(entityList.get(i).getClassID())){
 				n++;
@@ -39,8 +40,12 @@ public class Entities{
 	 * @return Entity[] containing entities of class classid
 	 */
 	public Entity[] getByClass(String classid){
+		//size our output array to fit
 		Entity[] entsarray=new Entity[countByClass(classid)];
+		
 		int size=entityList.size();
+		
+		//add entity to the output array if it matches the supplied classid
 		for(int i=0;i<size;i++){
 			Entity ent=entityList.get(i);
 			if(classid.equalsIgnoreCase(ent.getClassID())){
@@ -82,6 +87,8 @@ public class Entities{
 		Entity[] entsarray=getAll();
 		for(int i=0;i<entsarray.length;i++){
 			if(entsarray[i].getX()==x && entsarray[i].getY()==y){
+				//no reason to continue iterating if we've found an entity,
+				//using a return will be slightly faster than a break and a boolean var.
 				return true;
 			}
 		}
@@ -98,9 +105,12 @@ public class Entities{
 		Entity[] entsarray=getAll();
 		for(int i=0;i<entsarray.length;i++){
 			if(entsarray[i].getX()==x && entsarray[i].getY()==y){
+				//no reason to continue iterating if we've found an entity
 				return entsarray[i];
 			}
 		}
+		
+		//return null since there is no entity in the supplied position
 		return null;
 	}
 	
@@ -116,10 +126,15 @@ public class Entities{
 		}
 	}
 	
+	/**
+	 * Removes every entity of the specified classid
+	 * @param classid
+	 */
 	public void removeAll(String classid){
 		Entity[] entityArray=getAll();
 		
 		for(int i=0;i<entityArray.length;i++){
+			//check if the entity has the same classid as specified in argument
 			if(!entityArray[i].getClassID().equals(classid)){
 				entityArray[i].remove();
 				entityArray[i]=null;
@@ -134,6 +149,7 @@ public class Entities{
 		Entity[] entityArray=getAll();
 		long time=Game.getInstance().getTime();
 		for(int i=0;i<entityArray.length;i++){
+			//only call the think method if we're at the entity's next think time
 			if(entityArray[i].getNextThink()<=time){
 				entityArray[i].think(time);
 			}

@@ -14,6 +14,7 @@ public class GameCanvas extends JComponent{
 	private boolean titleScreenShown = false;
 	
 	GameCanvas(){
+		//specify what image file to use for a specific tile on the map
 		mapImagePaths[0]="templeraider/img/water.png";
 		mapImagePaths[1]="templeraider/img/water.png";
 		mapImagePaths[2]="templeraider/img/water.png";
@@ -81,6 +82,7 @@ public class GameCanvas extends JComponent{
 		
 		loadTileImages();
 	}
+	
 	/**
 	 * reload the tile images, use if you've changed the tileset
 	 */
@@ -108,12 +110,16 @@ public class GameCanvas extends JComponent{
 	private void drawMap(Graphics g,int offsetX,int offsetY){
 		RPGMap rpgmap=Game.getInstance().getMap();
 		
+		//iterate through every tile of the map
 		for(int i=0;i<rpgmap.mapGrid[0].length;i++){
 			for(int j=0;j<rpgmap.mapGrid.length;j++){
+				//offset the draw position by our camera position
 				int xpos=i*tileSize-offsetX;
 				int ypos=j*tileSize-offsetY;
 				
+				//dont draw anything if it would be entirely outside of the panel
 				if(xpos>-tileSize&&xpos<getWidth()&&ypos>-tileSize&&ypos<getHeight()){
+					//draw the image that corresponds to this tile on the map
 					g.drawImage(mapImages[rpgmap.mapGrid[j][i]],xpos,ypos,tileSize,tileSize,this);
 				}
 			}
@@ -129,19 +135,26 @@ public class GameCanvas extends JComponent{
 	private void drawEntities(Graphics g,int offsetX,int offsetY){
 		Entity[] entityArray=Game.getInstance().getEntities().getAll();
 		
+		//iterate through evvery entity
 		for(int i=0;i<entityArray.length;i++){
 			int xpos=entityArray[i].getX()*tileSize;
 			int ypos=entityArray[i].getY()*tileSize;
+			//get the appropriate image to draw for the entity
 			Image img=entityArray[i].getImage();
 			
 			if(entityArray[i].isMovable()){
+				//if the entity can move, we need to apply an offset to its position
+				//for the movement interpolation between tiles
 				EntityMovable movable=(EntityMovable)entityArray[i];
 				xpos+=movable.getInterpolationX()*tileSize;
 				ypos+=movable.getInterpolationY()*tileSize;
 			}
 			
+			//offset the draw position by our camera position
 			xpos-=offsetX;
 			ypos-=offsetY;
+			
+			//dont draw anything if it would be entirely outside of the panel
 			if(xpos>-tileSize&&xpos<getWidth()&&ypos>-tileSize&&ypos<getHeight()){
 				g.drawImage(img,xpos,ypos,tileSize,tileSize,this);
 			}
@@ -152,10 +165,15 @@ public class GameCanvas extends JComponent{
 	 * darkens the entire map
 	 */
 	private void drawBlackMask(Graphics g){
+		//just draw a big translucent black rectangle over everything
 		g.setColor(new Color((float)0.0,(float)0.0,(float)0.0,(float)0.5));
 		g.fillRect(0, 0, getWidth(), getHeight());
 	}
 	
+	/**
+	 * Draw the title screen
+	 * @param g
+	 */
 	private void drawTitleScreen(Graphics g){
 		Game.getInstance().getGUI().disableButton(3);
 		drawBlackMask(g);
@@ -171,6 +189,10 @@ public class GameCanvas extends JComponent{
 		g.drawString("Press Start Game to continue...", 5, 300);
 	}
 
+	/**
+	 * Draw the pause screen
+	 * @param g
+	 */
 	private void drawPauseScreen(Graphics g){
 		drawBlackMask(g);
 		g.setColor(Color.RED);
@@ -178,27 +200,48 @@ public class GameCanvas extends JComponent{
 		g.drawString("        Paused", 5, 220);
 	}
 	
+	/**
+	 * Draw the health bars for both entities in combat
+	 * @param g
+	 */
 	private void drawHealthBars(Graphics g){
 		drawBlackMask(g);
-		Game.getInstance().getCombat().getPlayer().drawHealthBar(g,16,getHeight()-24,getWidth()/3,16,(float)0.9,(float)0.0,(float)0.9);
-		Game.getInstance().getCombat().getEnemy().drawHealthBar(g,getWidth()-32-getWidth()/3,getHeight()-24,getWidth()/3,16,(float)0.9,(float)0.0,(float)0.0);
+		//draw the player health bar on the left
+		Game.getInstance().getCombat().getPlayer().drawHealthBar(g,16,getHeight()-24,getWidth()/3,
+																 16,(float)0.9,(float)0.0,(float)0.9);
+		//draw the enemy health bar on the right
+		Game.getInstance().getCombat().getEnemy().drawHealthBar(g,getWidth()-32-getWidth()/3,
+																getHeight()-24,getWidth()/3,16,
+																(float)0.9,(float)0.0,(float)0.0);
 	}
 	
+	/**
+	 * Get if the title screen has been shown
+	 * @return true if the title screen has been shown
+	 */
 	public boolean titleScreenShown() {
 		return titleScreenShown;
 	}
 	
-	public void setTitleScreenShown(boolean a){
-		titleScreenShown = a;
+	/**
+	 * set weather the title screen has been shown
+	 * @param shown
+	 */
+	public void setTitleScreenShown(boolean shown){
+		titleScreenShown = shown;
 
 		Game.getInstance().getGUI().enableButton(3);
 	}
 	
-	
+	/**
+	 * draw the end screen
+	 * @param g
+	 */
 	private void drawEndScreen(Graphics g){
 		drawBlackMask(g);
 		g.setColor(Color.RED);
 		g.setFont(new Font("default", Font.BOLD, 20));
+		//draw the end message specified by the game
 		g.drawString(Game.getInstance().getEndmessage(), 220, 220);
 	}	
 	
@@ -211,6 +254,7 @@ public class GameCanvas extends JComponent{
 		
 		Entity player=Game.getInstance().getEntities().getByClass("player")[0];
 		
+		//if the player entity exists, use it to get the camera position
 		if(player!=null){
 			offsetX=player.getX()*tileSize-getSize().width/2+tileSize/2;
 			offsetY=player.getY()*tileSize-getSize().height/2+tileSize/2;
@@ -221,9 +265,10 @@ public class GameCanvas extends JComponent{
 		}
 		
 		drawMap(g,offsetX,offsetY);
+		//draw entity graphics overtop of the map
 		drawEntities(g,offsetX,offsetY);
 		
-		//Draws the title screen
+		//draw the other screens overtop of everything else
 		if(titleScreenShown == false){
 			drawTitleScreen(g);
 		}else if(Game.getInstance().getCombat().isInCombat()){

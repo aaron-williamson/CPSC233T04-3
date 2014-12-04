@@ -12,9 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Game implements ActionListener{
-	private static Game instance;
+	private static Game instance;//Our singleton instance of the game
 	private static final int GAME_TIMER_SPEED=16;//delay in ms between game updates
-	public static final String GAME_TITLE="Temple Raider"; 
+	public static final String GAME_TITLE="Temple Raider"; //The game title
 	
 	private String endmessage="Undefined game over condition";
 	private boolean endgame=false;
@@ -23,8 +23,6 @@ public class Game implements ActionListener{
 	private Entities entities;
 	private Combat combat;
 	private int level=-1;
-	
-	public String playername="NONAME";
 	
 	private Timer timer;
 	private long time=0;
@@ -44,6 +42,9 @@ public class Game implements ActionListener{
 		return instance;
 	}
 	
+	/**
+	 * Starts a new game
+	 */
 	public void startNewGame(){
 		//make the entity manager
 		entities=new Entities();
@@ -73,6 +74,7 @@ public class Game implements ActionListener{
 		Entity[] entityArray=getEntities().getAll();
 		EntityPlayer player=(EntityPlayer)getEntities().getByClass("player")[0];
 		
+		//remove every entity except for the player
 		for(int i=0;i<entityArray.length;i++){
 			if(entityArray[i]!=player){
 				entityArray[i].remove();
@@ -80,13 +82,16 @@ public class Game implements ActionListener{
 		}
 		
 		level++;
+		//load the next map
 		rpgmap=new RPGMap(level);
 		
+		//place the player in the position of the 'playerspawn' entity
 		entityArray=getEntities().getAll();
 		for(int i=0;i<entityArray.length;i++){
 			if(entityArray[i].getClassID().equals("playerspawn")){
 				player.setPos(entityArray[i].getX(),entityArray[i].getY());
 				entityArray[i].remove();
+				//break once we've set the player position, since there should only be one spawn.
 				break;
 			}
 		}
@@ -188,20 +193,26 @@ public class Game implements ActionListener{
 	
 	public static void main(String[] args){
 		Game.getInstance();//instantiate the game
-		Game.getInstance().startNewGame();
+		Game.getInstance().startNewGame();//start a new game
 	}
 	
 	public void actionPerformed(ActionEvent event) {
+		//this will be called whenever the game timer ticks
 		Game.getInstance().update();
     }
 	
-	//ends the game, sets lose message
+	/**
+	 * ends the game, sets the end message to the lose message
+	 */
 	public void loseGame(){
 		String playername=((EntityPlayer)getEntities().getByClass("player")[0]).getPlayerName();
 		endmessage=playername+" died a terrible death.";
 		endgame=true;
 	}
-	//ends the game, sets win message
+
+	/**
+	 * ends the game, sets the end message to the win message
+	 */
 	public void winGame(){
 		String playername=((EntityPlayer)getEntities().getByClass("player")[0]).getPlayerName();
 		endmessage="Congrats, "+playername+", the winner is You!";

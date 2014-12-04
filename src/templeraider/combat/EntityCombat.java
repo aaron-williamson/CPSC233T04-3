@@ -227,5 +227,7 @@ public class EntityCombat extends EntityMovable{
 		
 		g.setColor(Color.WHITE);
 		g.drawString(getHealth()+"/"+getMaxHealth(), xpos+2, ypos+10);
+		
+		g.drawString(getCombatName(), xpos+2, ypos-6);
 	}
 };
