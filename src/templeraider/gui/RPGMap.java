@@ -356,24 +356,15 @@ public class RPGMap {
 	}
 	//makes map 4
 	private void makeMap4(){
-		String map4=
-		"0000000000000\n"	
-	   +"0000033300000\n"
-	   +"0576636366750\n"
-	   +"0576666666750\n"
-	   +"0576666666750\n"
-	   +"0576666666750\n"
-	   +"0576666666750\n"
-	   +"0576666666750\n"
-	   +"0576666666750\n"
-	   +"0557666667550\n"
-	   +"0055768675500\n"
-	   +"0000000000000\n"
-		;
-		
-		stringToMap(map4 , false);
-		new EntityPlayerSpawn(37,41);
-		new EnemyBoss(37,32);
+		try{
+			String map4=readFile("templeraider/maps/map4.txt");
+			stringToMap(map4 , false);
+			new EntityPlayerSpawn(37,41);
+			new EnemyBoss(37,32);
+		}
+		catch(IOException e){
+			System.out.println("invalid map name....");
+		}
 
 	}
 

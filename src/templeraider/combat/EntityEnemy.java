@@ -32,6 +32,7 @@ public class EntityEnemy extends EntityCombat{
 	
 	/**
 	 * The function that get's called when there is a collision with this enemy
+	 *
 	 * @param ent the entity which has collided with this enemy
 	 */
 	public void onCollide(Entity ent){
