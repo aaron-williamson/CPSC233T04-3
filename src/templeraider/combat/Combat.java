@@ -18,6 +18,10 @@ public class Combat implements ActionListener{
 	private boolean playerTurn=false;
 	private Timer timer;
 	
+	/**
+	 * Default Constructor for combat class 
+	 * This creates a new timer used in combat
+	 */
 	public Combat(){
 		timer=new Timer(COMBAT_TIMER_DELAY,(ActionListener)this);
 		timer.setActionCommand(COMBAT_TIMER_ACTION_CMD);
@@ -35,7 +39,7 @@ public class Combat implements ActionListener{
 	
 	/**
 	 * get the player in combat
-	 * @return
+	 * @return the player in combat
 	 */
 	public EntityPlayer getPlayer(){
 		return playerInCombat;
@@ -43,7 +47,7 @@ public class Combat implements ActionListener{
 	
 	/**
 	 * get the enemy in combat
-	 * @return
+	 * @return the enemy in combat
 	 */
 	public EntityCombat getEnemy(){
 		return enemyInCombat;
@@ -59,10 +63,10 @@ public class Combat implements ActionListener{
 		playerInCombat=player;
 		enemyInCombat=enemy;
 		isInCombat=true;
-		Game.getInstance().pauseTimer(true);
+		Game.getInstance().pauseTimer(true); //this pauses the main game timer
 		Game.getInstance().getGUI().enableButton(0);
 		Game.getInstance().getGUI().enableButton(1);
-		Game.getInstance().getGUI().disableButton(3);	
+		Game.getInstance().getGUI().disableButton(3); //stops the game from being paused
 		Game.getInstance().getGUI().enableButton(4);	
 
 		playerTurn=playerFirst;
@@ -74,7 +78,7 @@ public class Combat implements ActionListener{
 		}
 		Game.getInstance().getGUI().printLine(message);
 		
-		timer.restart();
+		timer.restart(); 
 		timer.start();
 	}
 	
@@ -83,8 +87,8 @@ public class Combat implements ActionListener{
 	 */
 	private void endCombat(){
 		isInCombat=false;
-		Game.getInstance().pauseTimer(false);
-		timer.stop();
+		Game.getInstance().pauseTimer(false); //restarts the main game timer
+		timer.stop(); // stops the combat timer
 		
 		if(getEnemy().getHealth()==0){
 			Game.getInstance().getGUI().printLine(getPlayer().getCombatName()+" beat "+getEnemy().getCombatName()+", and gained "+getEnemy().getRewardedXP()+"XP!");
@@ -98,7 +102,9 @@ public class Combat implements ActionListener{
 			Game.getInstance().loseGame();
 		}
 	}
-	
+	/**
+	 * starts a turn
+	 */
 	public void startTurn(){
 		if(playerTurn){
 			
@@ -107,13 +113,18 @@ public class Combat implements ActionListener{
 			endTurn();
 		}
 	}
-	
+	/**
+	 * ends the turn
+	 */
 	public void endTurn(){
 		Game.getInstance().getGUI().redrawMap();
 		playerTurn=!playerTurn;
 		timer.restart();
 	}
-	
+	/**
+	 * Executes the selected action
+	 * @param event 
+	 */
 	public void actionPerformed(ActionEvent event) {
 		String command=event.getActionCommand();
 		

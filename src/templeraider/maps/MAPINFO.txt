@@ -1,0 +1,29 @@
+Temple Raider Map INFO
+
+OUTSIDE MAPS
+
+Page Layout: The map will be printed as it is drawn with numbers 0-9 use return to make the next row in the map.
+Symbol key: 0: Trees
+			1: Rocks
+			2: N/A
+			3: N/A
+			4: Temple Bricks
+			5: Grass
+			6: Temple Floor
+			7: N/A
+			8: N/A
+ 			9: Stairs UP (exit)
+			
+INSIDE MAPS
+
+Page Layout: The map will be printed as it is drawn with numbers 0-9 use return to make the next row in the map.
+Symbol key: 0: Walls
+			1: N/A
+			2: N/A
+			3: Flat Temple Wals
+			4: N/A
+			5: Temple Floor
+			6: Red Carpet
+			7: Yellow Carpet
+			8: Stairs DOWN (entrance)
+ 			9: Stairs UP (exit)

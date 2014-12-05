@@ -7,6 +7,7 @@ import templeraider.Game;
 import templeraider.entity.EntityMovable;
 
 public class EntityCombat extends EntityMovable{
+
 	protected int combatEndurance;
 	protected int combatStrength;
 	protected int combatLuck;
@@ -23,6 +24,7 @@ public class EntityCombat extends EntityMovable{
 	private Random rand;
 	
 	public EntityCombat(int xcoord, int ycoord){
+	   //initializing intance variables
 		super(xcoord, ycoord);
 		combatEndurance=5;
 		combatStrength=5;
@@ -43,7 +45,7 @@ public class EntityCombat extends EntityMovable{
 	
 	/**
 	 * get the combat name for the entity
-	 * @return
+	 * @return Enemy name
 	 */
 	public String getCombatName(){
 		return combatName;
@@ -51,7 +53,7 @@ public class EntityCombat extends EntityMovable{
 	
 	/**
 	 * Get the maximum health value of this entity
-	 * @return
+	 * @return health limit for entity
 	 */
 	public int getMaxHealth(){
 		return combatEndurance*10;
@@ -59,7 +61,7 @@ public class EntityCombat extends EntityMovable{
 	
 	/**
 	 * Get the current health of this entity
-	 * @return
+	 * @return current health
 	 */
 	public int getHealth(){
 		return combatHealth;
@@ -70,6 +72,7 @@ public class EntityCombat extends EntityMovable{
 	 * @param health
 	 */
 	public void setHealth(int health){
+	   //setting health and limits
 		if(health>getMaxHealth()){
 			combatHealth=getMaxHealth();
 		}else if(health<0){
@@ -78,7 +81,10 @@ public class EntityCombat extends EntityMovable{
 			combatHealth=health;
 		}
 	}
-	
+	/**
+	*Reward/strength points for entity
+	*@return reward points
+	*/
 	public int getRewardedXP(){
 		return combatXP;
 	}
@@ -93,7 +99,7 @@ public class EntityCombat extends EntityMovable{
 	
 	/**
 	 * Gets the chance this entity has to hit
-	 * @return
+	 * @return hit accuracy 
 	 */
 	private double getHitChance(){
 		return 0.8+combatLuck*0.5-0.01;
@@ -101,7 +107,7 @@ public class EntityCombat extends EntityMovable{
 	
 	/**
 	 * Gets the chance this entity has to get a critical hit
-	 * @return
+	 * @return players ability to evade attack
 	 */
 	private double getCriticalChance(){
 		return combatLuck*0.01;
@@ -109,7 +115,7 @@ public class EntityCombat extends EntityMovable{
 	
 	/**
 	 * Get this entity's defense value, 0 is no defense, 1 is full defense
-	 * @return
+	 * @return ability to defend
 	 */
 	public double getDefense(){
 		return combatDefense;
@@ -118,9 +124,10 @@ public class EntityCombat extends EntityMovable{
 	/**
 	 * Get the base damage that this entity would do to another combat entity
 	 * @param defender
-	 * @return
+	 * @return damage
 	 */
 	public int getDamage(EntityCombat defender){
+	   //amount to take away from attacked entities
 		int damage=combatStrength;
 		damage+=rand.nextInt(5+combatLuck);
 		damage*=1-defender.getDefense();
@@ -135,14 +142,14 @@ public class EntityCombat extends EntityMovable{
 	/**
 	 * Attack another combat entity
 	 * @param defender
-	 * @return message
 	 */
 	public void attack(EntityCombat defender){
+	   //damage in an attack
 		String message=new String(combatAttackMessage);
 		if(rand.nextDouble()<=getHitChance()){
 			
 			int damage=getDamage(defender);
-			
+			//hit accuracy
 			if(rand.nextDouble()<=getCriticalChance()){
 				damage*=2;
 				message+=" "+combatCriticalMessage;
@@ -161,7 +168,6 @@ public class EntityCombat extends EntityMovable{
 	
 	/**
 	 * defend on this turn
-	 * @return message
 	 */
 	public void defend(){
 		combatDefense=0.8;
@@ -173,12 +179,13 @@ public class EntityCombat extends EntityMovable{
 	 * @param defender
 	 */
 	public void attackOrDefend(EntityCombat defender){
+	   // controls entities decision to attack or defend
 		double defendChance=0.2;
-		if(getHealth()<getMaxHealth()/2){
+		if(getHealth()<getMaxHealth()/2){//condition for defend
 			defendChance*=2;
 		}
 		
-		if(rand.nextDouble()<=defendChance){
+		if(rand.nextDouble()<=defendChance){//condition for defend
 			defend();
 		}else{
 			attack(defender);
@@ -209,6 +216,8 @@ public class EntityCombat extends EntityMovable{
 	 * @param color B
 	 */
 	public void drawHealthBar(Graphics g,int xpos,int ypos,int width,int height, float colR, float colG, float colB){
+	
+	   //health bar attributes variables
 		double r=(double)getHealth()/(double)getMaxHealth();
 		
 		g.setColor(Color.BLACK);
@@ -219,6 +228,7 @@ public class EntityCombat extends EntityMovable{
 		width-=4;
 		height-=4;
 		
+		//draw bars
 		g.setColor(new Color((float)(colR*0.5),(float)(colG*0.5),(float)(colB*0.5)));
 		g.fillRect(xpos,ypos,width,height);
 		
@@ -227,7 +237,5 @@ public class EntityCombat extends EntityMovable{
 		
 		g.setColor(Color.WHITE);
 		g.drawString(getHealth()+"/"+getMaxHealth(), xpos+2, ypos+10);
-		
-		g.drawString(getCombatName(), xpos+2, ypos-6);
 	}
 };
