@@ -248,7 +248,7 @@ public class GameCanvas extends JComponent{
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("default", Font.BOLD, 36));
 		//draw the end message specified by the game
-		g.drawString(Game.getInstance().getEndmessage(), 90, 220);
+		g.drawString(Game.getInstance().getEndmessage(), 35, 220);
 	}	
 	
 	@Override
