@@ -2,11 +2,22 @@ package templeraider.entity;
 
 import templeraider.Game;
 
+/**
+ * The Entity movable class for Temple Raider. 
+ */
 public class EntityMovable extends Entity{
+	/**
+	 * Function for getting the class id used to identify a movable entity
+	 * 
+	 * @return the class id for a movable entity
+	 */
 	public String getClassID(){return "movable_entity";}
+	//default move speed on entities
 	private int moveSpeed=6;
+	//boolean if the entity is moving
 	private boolean moving=false;
-	private int oldX;//used for interpolation of entity position
+	//used for interpolation of entity position (x,y)
+	private int oldX;
 	private int oldY;
 	
 	/**
@@ -52,6 +63,11 @@ public class EntityMovable extends Entity{
 		}
 	};
 
+	/**
+	 * Constructor for EntityMovable
+	 * @param x-coordinate
+	 * @param y-coordinate
+	 */
 	public EntityMovable(int xcoord, int ycoord) {
 		super(xcoord, ycoord);
 	}
@@ -69,7 +85,7 @@ public class EntityMovable extends Entity{
 	
 	/**
 	 * get the old x pos before this entity last moved
-	 * @return
+	 * @return the oldX value
 	 */
 	private int getOldX(){
 		return oldX;
@@ -77,7 +93,7 @@ public class EntityMovable extends Entity{
 	
 	/**
 	 * get the old y pos before this entity last moved
-	 * @return
+	 * @return the oldY value
 	 */
 	private int getOldY(){
 		return oldY;
@@ -85,7 +101,7 @@ public class EntityMovable extends Entity{
 	
 	/**
 	 * get the interpolation ratio between 0 and 1 for movement interpolation
-	 * @return
+	 * @return a double 
 	 */
 	private double getMovementInterp(){
 		return (double)(Game.getInstance().getTime()-getNextThink())/(double)(Game.getInstance().getTimerSpeed()*getMoveSpeed());
@@ -93,7 +109,7 @@ public class EntityMovable extends Entity{
 	
 	/**
 	 * get the Y interpolation offset
-	 * @return
+	 * @return a double of the interpolated Y value
 	 */
 	public double getInterpolationY(){
 		if(isMoving()){
@@ -105,7 +121,7 @@ public class EntityMovable extends Entity{
 	
 	/**
 	 * get the x interpolation offset
-	 * @return
+	 * @return a double of the interpolated X value
 	 */
 	public double getInterpolationX(){
 			if(isMoving()){
@@ -118,7 +134,7 @@ public class EntityMovable extends Entity{
 	/**
 	 * get the Entity's movement speed.
 	 * it takes the entity this many game ticks to move from one tile to the next
-	 * @return
+	 * @return int of the movement speed
 	 */
 	public int getMoveSpeed(){
 		return moveSpeed;
@@ -126,7 +142,7 @@ public class EntityMovable extends Entity{
 	
 	/**
 	 * get weather the entity can move,
-	 * @return
+	 * @return boolean if it is movable
 	 */
 	public boolean isMovable(){
 		return true;
@@ -134,12 +150,16 @@ public class EntityMovable extends Entity{
 	
 	/**
 	 * get weather the entity is currently moving or not
-	 * @return
+	 * @return boolean if it is moving
 	 */
 	public boolean isMoving(){
 		return moving;
 	}
 	
+	/**
+	 * set the moving boolean false when the entity is not moving
+	 * @param long of the time when not moving
+	 */
 	public void think(long time){
 		moving=false;
 	}

@@ -3,18 +3,34 @@ import java.awt.*;
 
 import templeraider.Game;
 
+/**
+ * The Entity class for Temple Raider. 
+ * base code for all entities 
+ */
 public abstract class Entity{
+	//x and y positions for a entity
 	private int xPos;
 	private int yPos;
+	//image for enitiy
 	protected Image defaultImage;
+	//Next think
 	private long nextThink=-1;
 	
+	/**
+	 * Default constructor that just adds a entity
+	 */
 	Entity(){
 		//add this entity to the game's entity manager
 		Game.getInstance().getEntities().addEntity(this);
+		//sets a default entity image
 		defaultImage=Toolkit.getDefaultToolkit().getImage("templeraider/img/entity.png");
 	}
 
+	/**
+	 * Constructor that sets a entity at a given location
+	 * @param x-coordinate on the map
+	 * @param y-coordinate on the map
+	 */
 	Entity(int xcoord, int ycoord){
 		this();
 		setPos(xcoord, ycoord);
@@ -90,6 +106,10 @@ public abstract class Entity{
 		return nextThink;
 	}
 	
+	/**
+	 * Removes an entity from the map
+	 * moves them to a position that is way off the map ie. they will never be seen again
+	 */
 	public void remove(){
 		setNextThink(Long.MAX_VALUE);
 		setPos(-999,-999);
