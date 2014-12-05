@@ -177,16 +177,22 @@ public class GameCanvas extends JComponent{
 	private void drawTitleScreen(Graphics g){
 		Game.getInstance().getGUI().disableButton(3);
 		drawBlackMask(g);
-		g.setColor(Color.RED);
+		g.setColor(Color.WHITE);
 		g.setFont(new Font("default", Font.BOLD, 40));
-		g.drawString("    Welcome to "+Game.GAME_TITLE, 5, 100);
+		g.drawString("    Welcome to "+Game.GAME_TITLE, 5, 80);
 		g.setFont(new Font("default", Font.BOLD, 16));
-		g.drawString("Controls:", 5, 200);
-		g.drawString("Move Up: (up arrow)(w)", 5, 220);
-		g.drawString("Move Down: (down arrow)(s)", 5, 240);
-		g.drawString("Move Left: (left arrow)(a)", 5, 260);
-		g.drawString("Move Right: (right arrow)(d)", 5, 280);
-		g.drawString("Press Start Game to continue...", 5, 300);
+		g.drawString("The objective of this game is to get through each level by climbing the stairs.", 5, 140);
+		g.drawString("You will face many enemies in combat and must defend yourself or attack with", 5, 160);
+		g.drawString("the buttons at the bottom of the window. Choose your move wisely.", 5, 180);
+		g.drawString("Your quest: kill The Big Bad Boss on the final level. Only then will you win the game!", 5, 200);
+		g.drawString("Or die trying...", 5, 220);
+		g.drawString("Controls:", 5, 260);
+		g.drawString("Move Up: (up arrow) or (w)", 5, 280);
+		g.drawString("Move Down: (down arrow) or (s)", 5, 300);
+		g.drawString("Move Left: (left arrow) or (a)", 5, 320);
+		g.drawString("Move Right: (right arrow) or (d)", 5, 340);
+		g.drawString("Oh and one last thing: beware of trees.", 5, 380);
+		g.drawString("Press start game to continue...", 5, 400);
 	}
 
 	/**
@@ -239,10 +245,10 @@ public class GameCanvas extends JComponent{
 	 */
 	private void drawEndScreen(Graphics g){
 		drawBlackMask(g);
-		g.setColor(Color.RED);
-		g.setFont(new Font("default", Font.BOLD, 20));
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("default", Font.BOLD, 36));
 		//draw the end message specified by the game
-		g.drawString(Game.getInstance().getEndmessage(), 220, 220);
+		g.drawString(Game.getInstance().getEndmessage(), 90, 220);
 	}	
 	
 	@Override
